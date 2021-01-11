@@ -18,22 +18,7 @@ gulp.task('watch', (callback) => {
             console.log(event);
         });
 
-    // gulp.watch(css.cssAdminConcat, gulp.series('css_admin'))
-    //     .on('change', (event) => {
-    //         console.log(event);
-    //     });
-
-    // gulp.watch(css.cssThemeConcat, gulp.series('css_theme'))
-    //     .on('change', (event) => {
-    //         console.log(event);
-    //     });
-
-    gulp.watch(js.fileJs_, gulp.series('js_default'))
-        .on('change', (event) => {
-            console.log(event);
-        });
-
-    gulp.watch(js.fileJs_admin_, gulp.series('js_admin_default'))
+    gulp.watch(js.fileAll, gulp.series('buildJs'))
         .on('change', (event) => {
             console.log(event);
         });
