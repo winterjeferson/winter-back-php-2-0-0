@@ -1,22 +1,6 @@
-<div class="row">
-    <div class="col-es-12">
-        <h1 class="text-center">
-            <?php
+<div class="row"><div class="col-es-12"><h1 class="text-center"> <?php
             echo $arrContent['head']['translation']['thumbnail']
-            ?>
-        </h1>
-    </div>
-</div>
-<div class="row">
-    <table class="table table-grey thumbnail-table">
-        <thead>
-            <tr>
-                <th><?php echo $arrContent['head']['translation']['image']; ?></th>
-                <th><?php echo $arrContent['head']['translation']['name']; ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
+            ?> </h1></div></div><div class="row"><table class="table table-grey thumbnail-table"><thead><tr><th><?php echo $arrContent['head']['translation']['image']; ?></th><th><?php echo $arrContent['head']['translation']['name']; ?></th></tr></thead><tbody> <?php
             if ($arrContent['admin']['listThumbnail']['isEmpty']) {
                 $string =  '
                         <tr>
@@ -47,7 +31,4 @@
 
                 echo $string;
             }
-            ?>
-        </tbody>
-    </table>
-</div>
+            ?> </tbody></table></div>

@@ -9,10 +9,8 @@ gulp.task('deploy', gulp.series(
         'buildCssMinify',
         'buildJsRemoveCode',
         'buildJsMinify',
-        'application_dist_move',
-        'application_dist_move2',
+        'buildApplicationMinify',
         'project_move_dist',
-        'application_minify',
         'image_imagemin',
         'beep'
 ));

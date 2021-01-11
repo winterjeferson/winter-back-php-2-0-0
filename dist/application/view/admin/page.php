@@ -25,36 +25,11 @@ function buildListHTML($value, $language, $status)
 
     return removeLineBreak($string);
 }
-?>
-
-
-
-<div class="col-es-12">
-    <section id="pageAdminPageEdit" class="row">
-        <?php
+?> <div class="col-es-12"><section id="pageAdminPageEdit" class="row"> <?php
         include __DIR__ . '/page-form.php';
-        ?>
-
-        <div class="col-es-12 form-field">
-            <nav class="menu menu-horizontal text-right">
-                <ul>
-                    <li>
-                        <button type="button" class="bt bt-re bt-green" data-id="btRegister">
-                            <?php echo $arrContent['head']['translation']['save']; ?>
-                        </button>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-
-    </section>
-
-    <section id="pageAdminPageList" class="row">
-        <?php
+        ?> <div class="col-es-12 form-field"><nav class="menu menu-horizontal text-right"><ul><li><button type="button" class="bt bt-re bt-green" data-id="btRegister"> <?php echo $arrContent['head']['translation']['save']; ?> </button></li></ul></nav></div></section><section id="pageAdminPageList" class="row"> <?php
         $temp = 'active';
         include __DIR__ . '/page-list.php';
         $temp = 'inactive';
         include __DIR__ . '/page-list.php';
-        ?>
-    </section>
-</div>
+        ?> </section></div>

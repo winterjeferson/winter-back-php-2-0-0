@@ -1,24 +1,10 @@
-<article class="row">
-    <div class="col-es-12">
-        <div class="container">
-            <h1 class="page-title">
-                <?php
+<article class="row"><div class="col-es-12"><div class="container"><h1 class="page-title"> <?php
                 echo $arrContent['post']['postTitle'];
-                ?>
-            </h1>
-        </div>
-    </div>
-    <div class="col-es-12">
-        <div class="container">
-            <?php
+                ?> </h1></div></div><div class="col-es-12"><div class="container"> <?php
             echo $arrContent['post']['postContent'];
-            ?>
-            <h4 class="author">
-                <?php
+            ?> <h4 class="author"> <?php
                 echo $arrContent['head']['translation']['author'] . ': ' . $arrContent['post']['postAuthor'];
-                ?>
-            </h4>
-            <?php
+                ?> </h4> <?php
             $tag = $arrContent['post']['postTag'];
 
             if (!is_null($tag) && $tag !== '') {
@@ -54,7 +40,4 @@
 
                 echo removeLineBreak($string);
             }
-            ?>
-        </div>
-    </div>
-</article>
+            ?> </div></div></article>

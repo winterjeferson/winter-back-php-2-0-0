@@ -8,7 +8,7 @@ const image = require('./image.js');
 
 
 gulp.task('watch', (callback) => {
-    gulp.watch(application.fileApplicationWatch, gulp.series('application'))
+    gulp.watch(application.fileAll, gulp.series('buildApplication'))
         .on('change', (event) => {
             console.log(event);
         });
