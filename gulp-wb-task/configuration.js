@@ -11,4 +11,9 @@ module.exports = {
     allFile: allFile,
     allFolderFile: `**/${allFile}`,
     prefix: 'wb-',
+    folderFtp: '/www/test/',
+    ftpHost: '',
+    ftpPort: '',
+    ftpUser: '',
+    ftpPassword: '',
 }

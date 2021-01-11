@@ -28,7 +28,7 @@ gulp.task('watch', (callback) => {
             console.log(event);
         });
 
-    gulp.watch(image.fileImg, gulp.series('image'))
+    gulp.watch(image.fileAll, gulp.series('buildImage'))
         .on('change', (event) => {
             console.log(event);
         });

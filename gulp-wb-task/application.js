@@ -3,7 +3,6 @@ const rename = require("gulp-rename"); //npm install gulp-rename --save-dev // h
 const htmlmin = require('gulp-htmlmin'); //npm install gulp-htmlmin --save-dev  //https://www.npmjs.com/package/gulp-htmlmin/
 const del = require('del'); //npm install del --save-dev //https://www.npmjs.com/package/del
 const configuration = require('./configuration.js');
-const util = require('./util.js');
 const helper = require('./helper.js');
 const application = 'app/';
 const folderView = 'view/';
