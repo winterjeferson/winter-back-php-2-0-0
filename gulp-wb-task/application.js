@@ -5,7 +5,7 @@ const del = require('del'); //npm install del --save-dev //https://www.npmjs.com
 const configuration = require('./configuration.js');
 const util = require('./util.js');
 const helper = require('./helper.js');
-const application = 'application/';
+const application = 'app/';
 const folderView = 'view/';
 
 
