@@ -9,12 +9,12 @@ const configuration = require('./configuration.js');
 const extensionCss = 'css';
 const extensionSass = `s${extensionCss}`;
 const filePrefix = `${configuration.prefix}${configuration.theme}`;
-const filePrefixPlugin = `${configuration.prefix}${configuration.plugin}`;
+const filePrefixAdmin = `${configuration.prefix}${configuration.admin}`;
 const folder = `${configuration.src}${extensionSass}/`;
 const file = folder + `${filePrefix}/${configuration.index}.${extensionSass}`;
-const filePlugin = folder + `${filePrefixPlugin}/${configuration.index}.${extensionSass}`;
+const fileAdmin = folder + `${filePrefixAdmin}/${configuration.admin}.${extensionSass}`;
 const fileName = `${filePrefix}.${extensionCss}`;
-const fileNamePlugin = `${filePrefixPlugin}.${extensionCss}`;
+const fileNameAdmin = `${filePrefixAdmin}.${extensionCss}`;
 const fileAll = folder + configuration.allFolderFile;
 
 
@@ -24,14 +24,6 @@ gulp.task('buildCssSass', () => {
         .src(file)
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(rename(fileName))
-        .pipe(gulp.dest(`${configuration.dist}${configuration.assets}${extensionCss}/`));
-});
-
-gulp.task('buildCssSassPlugin', () => {
-    return gulp
-        .src(filePlugin)
-        .pipe(sass.sync().on('error', sass.logError))
-        .pipe(rename(fileNamePlugin))
         .pipe(gulp.dest(`${configuration.dist}${configuration.assets}${extensionCss}/`));
 });
 
@@ -68,7 +60,6 @@ gulp.task('buildCssLint', function lintCssTask(done) {
 gulp.task('buildCss', gulp.series(
     'buildCssLint',
     'buildCssSass',
-    'buildCssSassPlugin',
     'buildCssSassAdmin',
 ));
 
