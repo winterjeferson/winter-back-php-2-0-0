@@ -6,7 +6,7 @@ const js = require('./js.js');
 const application = require('./application.js');
 
 gulp.task('deploy', gulp.series(
-        'css_minify',
+        'buildCssMinify',
         'js_remove_code',
         'js_minify',
         'application_dist_move',

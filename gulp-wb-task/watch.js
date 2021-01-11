@@ -13,15 +13,20 @@ gulp.task('watch', (callback) => {
             console.log(event);
         });
 
-    gulp.watch(css.cssAdminConcat, gulp.series('css_admin'))
+    gulp.watch(css.fileAll, gulp.series('buildCss'))
         .on('change', (event) => {
             console.log(event);
         });
 
-    gulp.watch(css.cssThemeConcat, gulp.series('css_theme'))
-        .on('change', (event) => {
-            console.log(event);
-        });
+    // gulp.watch(css.cssAdminConcat, gulp.series('css_admin'))
+    //     .on('change', (event) => {
+    //         console.log(event);
+    //     });
+
+    // gulp.watch(css.cssThemeConcat, gulp.series('css_theme'))
+    //     .on('change', (event) => {
+    //         console.log(event);
+    //     });
 
     gulp.watch(js.fileJs_, gulp.series('js_default'))
         .on('change', (event) => {
