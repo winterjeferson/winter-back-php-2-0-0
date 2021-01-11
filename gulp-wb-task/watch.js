@@ -23,7 +23,7 @@ gulp.task('watch', (callback) => {
             console.log(event);
         });
 
-    gulp.watch(other.fileOther, gulp.series('other'))
+    gulp.watch(other.fileAll, gulp.series('buildOther'))
         .on('change', (event) => {
             console.log(event);
         });
