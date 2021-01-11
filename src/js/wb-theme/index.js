@@ -1,11 +1,17 @@
-/*removeIf(production)*/
-var objWbDebug = new WbDebug();
-/*endRemoveIf(production)*/
+class WbManagement {
+    verifyLoad() {
+        window.addEventListener('load', this.applyClass(), {
+            once: true
+        });
+    }
 
-var objWbBlog = new WbBlog();
-var objWbForm  = new WbForm();
-var objWbManagement = new WbManagement();
-var objWbTranslation = new WbTranslation();
-var objWbUrl = new WbUrl();
+    applyClass() {
+        objWbTranslation.build();
+        objWbBlog.build();
+        objWbForm.build();
+    }
+}
+
+const objWbManagement = new WbManagement();
 
 objWbManagement.verifyLoad();

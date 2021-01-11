@@ -1,12 +1,10 @@
 class WbAdminBlog {
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('admin/blog')) {
+        if (!window.helper.getUrlWord('admin/blog')) {
             return;
         }
 
-        CKEDITOR.replace('fieldContent', {
-        });
+        CKEDITOR.replace('fieldContent', {});
 
         CKEDITOR.config.basicEntities = false;
         CKEDITOR.config.entities_greek = false;
@@ -21,7 +19,6 @@ class WbAdminBlog {
     }
 
     update() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.isEdit = false;
         this.editId = 0;
         this.$page = document.querySelector('#pageAdminBlog');
@@ -46,7 +43,6 @@ class WbAdminBlog {
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
 
         this.$btRegister.onclick = function () {
@@ -63,7 +59,6 @@ class WbAdminBlog {
     }
 
     buildMenuThumbnail() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const $target = this.$contentEditThumbnail.querySelectorAll('.table');
 
         Array.prototype.forEach.call($target, function (table) {
@@ -71,14 +66,16 @@ class WbAdminBlog {
 
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
-                    objWfModal.buildModal('ajax', objWbUrl.getController({ 'folder': 'admin', 'file': 'BlogThumbnail' }), 'eb');
+                    objWfModal.buildModal('ajax', objWbUrl.getController({
+                        'folder': 'admin',
+                        'file': 'BlogThumbnail'
+                    }), 'eb');
                 }
             });
         });
     }
 
     buildMenuTable() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
         const $table = this.$contentList.querySelectorAll('.table');
         const $tableActive = this.$contentList.querySelectorAll('[data-id="tableActive"]');
@@ -126,10 +123,12 @@ class WbAdminBlog {
     }
 
     editSave() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'BlogAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
         let parameter =
             '&action=doUpdate' +
             '&id=' + self.editId +
@@ -149,10 +148,12 @@ class WbAdminBlog {
     }
 
     editLoadData(id) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'BlogAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
         let parameter =
             '&action=' + 'editLoadData' +
             '&id=' + id +
@@ -176,7 +177,6 @@ class WbAdminBlog {
     }
 
     editFillField(obj) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const datePost = obj['date_post_' + globalLanguage];
         const dateEdit = obj['date_edit_' + globalLanguage];
 
@@ -194,9 +194,11 @@ class WbAdminBlog {
     }
 
     modify(id, status) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'BlogAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
         let parameter =
             '&action=doModify' +
             '&status=' + status +
@@ -215,9 +217,11 @@ class WbAdminBlog {
     }
 
     delete(id) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'BlogAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
         let parameter =
             '&action=doDelete' +
             '&id=' + id +
@@ -235,7 +239,6 @@ class WbAdminBlog {
     }
 
     validateForm() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let arrField = [
             this.$formFieldTitle,
             this.$formFieldUrl
@@ -245,7 +248,6 @@ class WbAdminBlog {
     }
 
     buildParameter() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const thumbnail = this.thumbnail === this.thumbnailDefault ? '' : this.thumbnail;
 
         return '' +
@@ -260,9 +262,11 @@ class WbAdminBlog {
     }
 
     saveContent() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'BlogAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
         let parameter =
             '&action=doSave' +
             this.buildParameter() +
@@ -280,7 +284,6 @@ class WbAdminBlog {
     }
 
     selectImage(target) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let $card = target.parentNode.parentNode;
         let imageName = $card.querySelector('[data-id="imageName"]').innerText;
 
@@ -290,7 +293,6 @@ class WbAdminBlog {
     }
 
     modifyThumbnail() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let $image = this.$thumbnailWrapper.querySelector('table').querySelector('[data-id="thumbnail"]');
         let $name = this.$thumbnailWrapper.querySelector('table').querySelector('[data-id="name"]');
 
@@ -305,3 +307,5 @@ class WbAdminBlog {
         $name.innerHTML = this.thumbnail;
     }
 }
+
+const objWbAdminBlog = new WbAdminBlog();

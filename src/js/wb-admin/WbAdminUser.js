@@ -1,7 +1,6 @@
 class WbAdminUser {
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('admin/user')) {
+        if (!window.helper.getUrlWord('admin/user')) {
             return;
         }
 
@@ -11,7 +10,6 @@ class WbAdminUser {
     }
 
     updateVariable() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.isEdit = false;
         this.editId = 0;
         this.$page = document.querySelector('#pageAdminUser');
@@ -24,7 +22,6 @@ class WbAdminUser {
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
 
         this.$formSend.onclick = function () {
@@ -41,7 +38,6 @@ class WbAdminUser {
     }
 
     buildMenuTable() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let $table = this.$page.querySelectorAll('.table');
         let $tableActive = this.$page.querySelectorAll('[data-id="tableActive"]');
@@ -89,9 +85,11 @@ class WbAdminUser {
     }
 
     modify(id, status) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'UserAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
         let parameter =
             '&action=doModify' +
             '&status=' + status +
@@ -110,9 +108,11 @@ class WbAdminUser {
     }
 
     delete(id) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'UserAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
         let parameter =
             '&action=doDelete' +
             '&id=' + id +
@@ -130,10 +130,12 @@ class WbAdminUser {
     }
 
     editLoadData(id) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'UserAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
         let parameter =
             '&action=' + 'editLoadData' +
             '&id=' + id +
@@ -153,7 +155,6 @@ class WbAdminUser {
     }
 
     editFillField(obj) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.isEdit = true;
         this.$formFieldName.value = obj['name'];
         this.$formFieldEmail.value = obj['email'];
@@ -163,10 +164,12 @@ class WbAdminUser {
     }
 
     editSave() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'UserAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
         let parameter =
             '&action=doUpdate' +
             '&id=' + self.editId +
@@ -186,9 +189,11 @@ class WbAdminUser {
     }
 
     saveContent() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'UserAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
         let parameter =
             '&action=doSave' +
             this.buildParameter() +
@@ -206,7 +211,6 @@ class WbAdminUser {
     }
 
     validateForm() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let arrField = [
             this.$formFieldEmail,
             this.$formFieldPassword
@@ -216,7 +220,6 @@ class WbAdminUser {
     }
 
     buildParameter() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         return '' +
             '&name=' + this.$formFieldName.value +
             '&email=' + this.$formFieldEmail.value +
@@ -224,3 +227,5 @@ class WbAdminUser {
             '&password=' + this.$formFieldPassword.value;
     }
 }
+
+const objWbAdminUser = new WbAdminUser();

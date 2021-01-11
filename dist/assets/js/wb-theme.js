@@ -1,12 +1,10 @@
 class WbBlog {
     constructor() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, 'constructor'); /*endRemoveIf(production)*/
         this.classlaodMore = 'loadMore';
     }
-    
+
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('blog')) {
+        if (!window.helper.getUrlWord('blog')) {
             return;
         }
 
@@ -15,14 +13,12 @@ class WbBlog {
     }
 
     update() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.page = 'pageBlog';
         this.$lastPost = document.querySelector('#' + this.page + 'LastPost');
         this.$mostViewed = document.querySelector('#' + this.page + 'MostViewed');
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
 
         if (!this.$lastPost) {
@@ -43,12 +39,14 @@ class WbBlog {
     }
 
     loadMore(target) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let parentId = target.parentNode.parentNode.parentNode.getAttribute('id');
         let parentIdString = parentId.substring(this.page.length);
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'blog', 'file': 'LoadMore' });
+        let url = objWbUrl.getController({
+            'folder': 'blog',
+            'file': 'LoadMore'
+        });
         let parameter =
             '&target=' + parentIdString;
 
@@ -65,7 +63,6 @@ class WbBlog {
     }
 
     loadMoreSuccess(parentId, value) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let json = JSON.parse(value);
         let $section = document.querySelector('#' + parentId);
         let $sectionList = $section.querySelector('.blog-list');
@@ -80,10 +77,11 @@ class WbBlog {
         window.scrollTo(0, document.documentElement.scrollTop - 1);
     }
 }
+
+const objWbBlog = new WbBlog();
 class WbForm {
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('form')) {
+        if (!window.helper.getUrlWord('form')) {
             return;
         }
 
@@ -92,7 +90,6 @@ class WbForm {
     }
 
     update() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.$page = document.querySelector('#pageForm');
         this.$form = this.$page.querySelector('.form');
         this.$formFieldEmail = this.$form.querySelector('[data-id="email"]');
@@ -101,7 +98,6 @@ class WbForm {
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
 
         this.$btSend.addEventListener('click', function (event) {
@@ -112,10 +108,12 @@ class WbForm {
     }
 
     send() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
         const ajax = new XMLHttpRequest();
-        const url = objWbUrl.getController({ 'folder': 'form', 'file': 'FormAjax' });
+        const url = objWbUrl.getController({
+            'folder': 'form',
+            'file': 'FormAjax'
+        });
         let parameter =
             '&method=sendForm' +
             '&data=' + JSON.stringify(self.getData()) +
@@ -126,7 +124,7 @@ class WbForm {
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 self.$btSend.removeAttribute('disabled');
                 self.response(ajax.responseText);
             }
@@ -136,7 +134,6 @@ class WbForm {
     }
 
     getData() {
-         /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let arr = [];
 
         arr.push(this.$form.querySelector('[data-id="email"]').value);
@@ -146,7 +143,6 @@ class WbForm {
     }
 
     response(data) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let response = '';
         let color = '';
 
@@ -164,30 +160,17 @@ class WbForm {
         objWfNotification.add(response, color, this.$form);
     }
 }
-class WbManagement {
-    verifyLoad() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        window.addEventListener('load', this.applyClass(), { once: true });
-    }
 
-    applyClass() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        objWbTranslation.build();
-        objWbBlog.build();
-        objWbForm.build();
-    }
-}
+const objWbForm  = new WbForm();
 class WbTranslation {
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.update();
         this.defineActive();
         this.buildMenu();
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        this.$select.addEventListener('change', function () {
+        this.$select.addEventListener('change', () => {
             let selected = this.selectedIndex;
             let value = this.options[selected].getAttribute('data-url');
 
@@ -196,42 +179,38 @@ class WbTranslation {
     }
 
     defineActive() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.$select.value = globalLanguage;
     }
 
     update() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.$select = document.querySelector('#translationSelect');
     }
 }
+
+const objWbTranslation = new WbTranslation();
 class WbUrl {
     buildSEO(url) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        return url.toString()               // Convert to string
-            .normalize('NFD')               // Change diacritics
+        return url.toString() // Convert to string
+            .normalize('NFD') // Change diacritics
             .replace(/[\u0300-\u036f]/g, '') // Remove illegal characters
-            .replace(/\s+/g, '-')            // Change whitespace to dashes
-            .toLowerCase()                  // Change to lowercase
-            .replace(/&/g, '-and-')          // Replace ampersand
-            .replace(/[^a-z0-9\-]/g, '')     // Remove anything that is not a letter, number or dash
-            .replace(/-+/g, '-')             // Remove duplicate dashes
-            .replace(/^-*/, '')              // Remove starting dashes
-            .replace(/-*$/, '');             // Remove trailing dashes
+            .replace(/\s+/g, '-') // Change whitespace to dashes
+            .toLowerCase() // Change to lowercase
+            .replace(/&/g, '-and-') // Replace ampersand
+            .replace(/[^a-z0-9\-]/g, '') // Remove anything that is not a letter, number or dash
+            .replace(/-+/g, '-') // Remove duplicate dashes
+            .replace(/^-*/, '') // Remove starting dashes
+            .replace(/-*$/, ''); // Remove trailing dashes
     }
 
     build(target) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         window.location = globalUrl + globalLanguage + '/' + target + '/';
     }
 
     getController(obj) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         return './application/controller/' + obj['folder'] + '/' + obj['file'] + '.php';
     }
 
     watch(fieldWatch, fieldReturn) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
 
         fieldWatch.addEventListener('focusout', function () {
@@ -239,14 +218,22 @@ class WbUrl {
         });
     }
 }
-/*removeIf(production)*/
-var objWbDebug = new WbDebug();
-/*endRemoveIf(production)*/
 
-var objWbBlog = new WbBlog();
-var objWbForm  = new WbForm();
-var objWbManagement = new WbManagement();
-var objWbTranslation = new WbTranslation();
-var objWbUrl = new WbUrl();
+const objWbUrl = new WbUrl();
+class WbManagement {
+    verifyLoad() {
+        window.addEventListener('load', this.applyClass(), {
+            once: true
+        });
+    }
+
+    applyClass() {
+        objWbTranslation.build();
+        objWbBlog.build();
+        objWbForm.build();
+    }
+}
+
+const objWbManagement = new WbManagement();
 
 objWbManagement.verifyLoad();

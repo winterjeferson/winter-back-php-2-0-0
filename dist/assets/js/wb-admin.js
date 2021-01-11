@@ -1,12 +1,10 @@
 class WbAdmin {
     constructor() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, 'constructor'); /*endRemoveIf(production)*/
         this.pageCurrent = '';
     }
 
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('admin')) {
+        if (!window.helper.getUrlWord('admin')) {
             return;
         }
 
@@ -16,7 +14,6 @@ class WbAdmin {
     }
 
     updateVariable() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.$page = document.querySelector('#mainContent');
 
         if (!document.contains(this.$page)) {
@@ -29,7 +26,6 @@ class WbAdmin {
     }
 
     buildMenuDifeneActive() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let classActive = 'menu-tab-active';
         let href = window.location.href;
         let split = href.split('/');
@@ -46,7 +42,6 @@ class WbAdmin {
     }
 
     builTableTdWrapper() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let td = document.querySelectorAll('.td-wrapper');
         let currentClass = 'td-wrapper-auto';
 
@@ -62,7 +57,6 @@ class WbAdmin {
     }
 
     showResponse(data) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName(), data); /*endRemoveIf(production)*/
         let color = '';
         let response = '';
 
@@ -82,15 +76,15 @@ class WbAdmin {
         objWfNotification.add(response, color);
     }
 }
+
+const objWbAdmin = new WbAdmin();
 class WbAdminBlog {
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('admin/blog')) {
+        if (!window.helper.getUrlWord('admin/blog')) {
             return;
         }
 
-        CKEDITOR.replace('fieldContent', {
-        });
+        CKEDITOR.replace('fieldContent', {});
 
         CKEDITOR.config.basicEntities = false;
         CKEDITOR.config.entities_greek = false;
@@ -105,7 +99,6 @@ class WbAdminBlog {
     }
 
     update() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.isEdit = false;
         this.editId = 0;
         this.$page = document.querySelector('#pageAdminBlog');
@@ -130,7 +123,6 @@ class WbAdminBlog {
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
 
         this.$btRegister.onclick = function () {
@@ -147,7 +139,6 @@ class WbAdminBlog {
     }
 
     buildMenuThumbnail() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const $target = this.$contentEditThumbnail.querySelectorAll('.table');
 
         Array.prototype.forEach.call($target, function (table) {
@@ -155,14 +146,16 @@ class WbAdminBlog {
 
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
-                    objWfModal.buildModal('ajax', objWbUrl.getController({ 'folder': 'admin', 'file': 'BlogThumbnail' }), 'eb');
+                    objWfModal.buildModal('ajax', objWbUrl.getController({
+                        'folder': 'admin',
+                        'file': 'BlogThumbnail'
+                    }), 'eb');
                 }
             });
         });
     }
 
     buildMenuTable() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
         const $table = this.$contentList.querySelectorAll('.table');
         const $tableActive = this.$contentList.querySelectorAll('[data-id="tableActive"]');
@@ -210,10 +203,12 @@ class WbAdminBlog {
     }
 
     editSave() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'BlogAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
         let parameter =
             '&action=doUpdate' +
             '&id=' + self.editId +
@@ -233,10 +228,12 @@ class WbAdminBlog {
     }
 
     editLoadData(id) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'BlogAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
         let parameter =
             '&action=' + 'editLoadData' +
             '&id=' + id +
@@ -260,7 +257,6 @@ class WbAdminBlog {
     }
 
     editFillField(obj) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const datePost = obj['date_post_' + globalLanguage];
         const dateEdit = obj['date_edit_' + globalLanguage];
 
@@ -278,9 +274,11 @@ class WbAdminBlog {
     }
 
     modify(id, status) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'BlogAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
         let parameter =
             '&action=doModify' +
             '&status=' + status +
@@ -299,9 +297,11 @@ class WbAdminBlog {
     }
 
     delete(id) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'BlogAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
         let parameter =
             '&action=doDelete' +
             '&id=' + id +
@@ -319,7 +319,6 @@ class WbAdminBlog {
     }
 
     validateForm() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let arrField = [
             this.$formFieldTitle,
             this.$formFieldUrl
@@ -329,7 +328,6 @@ class WbAdminBlog {
     }
 
     buildParameter() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const thumbnail = this.thumbnail === this.thumbnailDefault ? '' : this.thumbnail;
 
         return '' +
@@ -344,9 +342,11 @@ class WbAdminBlog {
     }
 
     saveContent() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'BlogAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
         let parameter =
             '&action=doSave' +
             this.buildParameter() +
@@ -364,7 +364,6 @@ class WbAdminBlog {
     }
 
     selectImage(target) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let $card = target.parentNode.parentNode;
         let imageName = $card.querySelector('[data-id="imageName"]').innerText;
 
@@ -374,7 +373,6 @@ class WbAdminBlog {
     }
 
     modifyThumbnail() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let $image = this.$thumbnailWrapper.querySelector('table').querySelector('[data-id="thumbnail"]');
         let $name = this.$thumbnailWrapper.querySelector('table').querySelector('[data-id="name"]');
 
@@ -389,19 +387,19 @@ class WbAdminBlog {
         $name.innerHTML = this.thumbnail;
     }
 }
+
+const objWbAdminBlog = new WbAdminBlog();
 class WbAdminPage {
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('admin/page')) {
+        if (!window.helper.getUrlWord('admin/page')) {
             return;
         }
 
-        CKEDITOR.replace('fieldContent', {
-        });
+        CKEDITOR.replace('fieldContent', {});
 
         CKEDITOR.config.basicEntities = false;
-        CKEDITOR.config.entities_greek = false; 
-        CKEDITOR.config.entities_latin = false; 
+        CKEDITOR.config.entities_greek = false;
+        CKEDITOR.config.entities_latin = false;
         CKEDITOR.config.entities_additional = '';
 
         this.update();
@@ -411,7 +409,6 @@ class WbAdminPage {
     }
 
     update() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.isEdit = false;
         this.editId = 0;
         this.$page = document.querySelector('#pageAdminPageEdit');
@@ -424,7 +421,6 @@ class WbAdminPage {
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
 
         this.$btRegister.onclick = function () {
@@ -441,7 +437,6 @@ class WbAdminPage {
     }
 
     buildMenuTable() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
         const $table = this.$contentList.querySelectorAll('.table');
         const $tableActive = this.$contentList.querySelectorAll('[data-id="tableActive"]');
@@ -489,7 +484,6 @@ class WbAdminPage {
     }
 
     validateForm() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let arrField = [
             this.$formFieldMenu,
             this.$formFieldTitle
@@ -499,9 +493,11 @@ class WbAdminPage {
     }
 
     saveContent() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'PageAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'PageAjax'
+        });
         let parameter =
             '&action=doSave' +
             this.buildParameter() +
@@ -519,10 +515,12 @@ class WbAdminPage {
     }
 
     editSave() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'PageAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'PageAjax'
+        });
         let parameter =
             '&action=doUpdate' +
             '&id=' + self.editId +
@@ -542,10 +540,12 @@ class WbAdminPage {
     }
 
     editLoadData(id) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'PageAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'PageAjax'
+        });
         let parameter =
             '&action=' + 'editLoadData' +
             '&id=' + id +
@@ -567,7 +567,6 @@ class WbAdminPage {
     }
 
     editFillField(obj) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.$formFieldTitle.value = obj['title_' + globalLanguage];
         this.$formFieldUrl.value = obj['url_' + globalLanguage];
         this.$formFieldMenu.value = obj['menu_' + globalLanguage];
@@ -579,7 +578,6 @@ class WbAdminPage {
     }
 
     buildParameter() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         return '' +
             '&title=' + this.$formFieldTitle.value +
             '&url=' + this.$formFieldUrl.value +
@@ -588,9 +586,11 @@ class WbAdminPage {
     }
 
     modify(id, status) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'PageAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'PageAjax'
+        });
         let parameter =
             '&action=doModify' +
             '&status=' + status +
@@ -609,9 +609,11 @@ class WbAdminPage {
     }
 
     delete(id) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'PageAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'PageAjax'
+        });
         let parameter =
             '&action=doDelete' +
             '&id=' + id +
@@ -628,15 +630,15 @@ class WbAdminPage {
         ajax.send(parameter);
     }
 }
+
+const objWbAdminPage = new WbAdminPage();
 class WbAdminUploadImage {
     constructor() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, 'constructor'); /*endRemoveIf(production)*/
         this.deleteElement = '';
     }
 
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('admin/image')) {
+        if (!window.helper.getUrlWord('admin/image')) {
             return;
         }
 
@@ -645,13 +647,11 @@ class WbAdminUploadImage {
     }
 
     updateVariable() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.$btUploadThumbnail = document.querySelector('[data-id="btUploadThumbnail"]');
         this.$btUploadBanner = document.querySelector('[data-id="btUploadBanner"]');
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
         let $buttonDelete = document.querySelectorAll('[data-action="delete"]');
 
@@ -671,7 +671,6 @@ class WbAdminUploadImage {
     }
 
     deleteImage(button) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.deleteElement = button;
 
         objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
@@ -679,7 +678,6 @@ class WbAdminUploadImage {
     }
 
     deleteImageAjax() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
         const data = new FormData();
         const ajax = new XMLHttpRequest();
@@ -690,38 +688,43 @@ class WbAdminUploadImage {
         data.append('f', file);
         data.append('p', path);
         data.append('token', globalToken);
-        
-        ajax.open('POST', objWbUrl.getController({ 'folder': 'admin', 'file': 'ImageDelete' }));
-        
+
+        ajax.open('POST', objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'ImageDelete'
+        }));
+
         ajax.onreadystatechange = function () {
             if (ajax.readyState == 4 && ajax.status == 200) {
                 self.buildResponse(ajax.responseText, $return);
                 objWfModal.closeModal();
             }
         }
-        
+
         ajax.send(data);
     }
 
     upload(target, path) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
         const $form = target.parentNode.parentNode.parentNode.parentNode.parentNode;
         const $file = $form.querySelector('[type=file]');
         const data = new FormData();
         const ajax = new XMLHttpRequest();
         const file = $file.files[0];
-        const url = objWbUrl.getController({ 'folder': 'admin', 'file': 'ImageUpload' });
-        
+        const url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'ImageUpload'
+        });
+
         if ($file.files.length === 0) {
             $file.click();
             return;
         }
-        
+
         data.append('p', path);
         data.append('f', file);
         data.append('token', globalToken);
-        
+
         this.$btUploadThumbnail.setAttribute('disabled', 'disabled');
         ajax.open('POST', url);
 
@@ -736,7 +739,6 @@ class WbAdminUploadImage {
     }
 
     buildResponse(response, $target) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         switch (response) {
             case 'fileDeleted':
             case 'uploadDone':
@@ -749,10 +751,11 @@ class WbAdminUploadImage {
         }
     }
 }
+
+const objWbAdminUploadImage = new WbAdminUploadImage();
 class WbAdminUser {
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('admin/user')) {
+        if (!window.helper.getUrlWord('admin/user')) {
             return;
         }
 
@@ -762,7 +765,6 @@ class WbAdminUser {
     }
 
     updateVariable() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.isEdit = false;
         this.editId = 0;
         this.$page = document.querySelector('#pageAdminUser');
@@ -775,7 +777,6 @@ class WbAdminUser {
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
 
         this.$formSend.onclick = function () {
@@ -792,7 +793,6 @@ class WbAdminUser {
     }
 
     buildMenuTable() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let $table = this.$page.querySelectorAll('.table');
         let $tableActive = this.$page.querySelectorAll('[data-id="tableActive"]');
@@ -840,9 +840,11 @@ class WbAdminUser {
     }
 
     modify(id, status) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'UserAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
         let parameter =
             '&action=doModify' +
             '&status=' + status +
@@ -861,9 +863,11 @@ class WbAdminUser {
     }
 
     delete(id) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'UserAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
         let parameter =
             '&action=doDelete' +
             '&id=' + id +
@@ -881,10 +885,12 @@ class WbAdminUser {
     }
 
     editLoadData(id) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'UserAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
         let parameter =
             '&action=' + 'editLoadData' +
             '&id=' + id +
@@ -904,7 +910,6 @@ class WbAdminUser {
     }
 
     editFillField(obj) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.isEdit = true;
         this.$formFieldName.value = obj['name'];
         this.$formFieldEmail.value = obj['email'];
@@ -914,10 +919,12 @@ class WbAdminUser {
     }
 
     editSave() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'UserAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
         let parameter =
             '&action=doUpdate' +
             '&id=' + self.editId +
@@ -937,9 +944,11 @@ class WbAdminUser {
     }
 
     saveContent() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'UserAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
         let parameter =
             '&action=doSave' +
             this.buildParameter() +
@@ -957,7 +966,6 @@ class WbAdminUser {
     }
 
     validateForm() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let arrField = [
             this.$formFieldEmail,
             this.$formFieldPassword
@@ -967,7 +975,6 @@ class WbAdminUser {
     }
 
     buildParameter() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         return '' +
             '&name=' + this.$formFieldName.value +
             '&email=' + this.$formFieldEmail.value +
@@ -975,10 +982,11 @@ class WbAdminUser {
             '&password=' + this.$formFieldPassword.value;
     }
 }
+
+const objWbAdminUser = new WbAdminUser();
 class WbLogin {
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('login')) {
+        if (!window.helper.getUrlWord('login')) {
             return;
         }
 
@@ -987,7 +995,6 @@ class WbLogin {
     }
 
     update() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.isSignUp = false;
 
         this.$page = document.querySelector('#pageAdminLogin');
@@ -997,7 +1004,6 @@ class WbLogin {
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
 
         this.$buttonLogin.addEventListener('click', function (event) {
@@ -1006,7 +1012,6 @@ class WbLogin {
     }
 
     validate() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         if (this.$fielEmail.value === '') {
             this.$fielEmail.focus();
             this.buildLoginResponse('empty_email');
@@ -1023,10 +1028,12 @@ class WbLogin {
     }
 
     buildLogin() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'LoginAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'LoginAjax'
+        });
         let parameter =
             '&email=' + this.$fielEmail.value +
             '&password=' + this.$fieldPassword.value +
@@ -1050,7 +1057,6 @@ class WbLogin {
     }
 
     buildLoginResponse(data) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let response = '';
         let $responseElement = this.$page.querySelector('.form');
 
@@ -1078,14 +1084,16 @@ class WbLogin {
         objWfNotification.add(response, 'red', $responseElement);
     }
 }
+
+const objWbLogin = new WbLogin();
 class WbManagementAdmin {
     verifyLoad() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        window.addEventListener('load', this.applyClass(), { once: true });
+        window.addEventListener('load', this.applyClass(), {
+            once: true
+        });
     }
 
     applyClass() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         objWbLogin.build();
         objWbAdmin.build();
         objWbAdminBlog.build();
@@ -1094,16 +1102,7 @@ class WbManagementAdmin {
         objWbAdminPage.build();
     }
 }
-/*removeIf(production)*/
-var objWbDebug = new WbDebug();
-/*endRemoveIf(production)*/
 
-var objWbAdmin = new WbAdmin();
-var objWbAdminBlog = new WbAdminBlog();
-var objWbAdminUploadImage = new WbAdminUploadImage();
-var objWbAdminUser = new WbAdminUser();
-var objWbLogin = new WbLogin();
-var objWbManagementAdmin = new WbManagementAdmin();
-var objWbAdminPage = new WbAdminPage();
+const objWbManagementAdmin = new WbManagementAdmin();
 
 objWbManagementAdmin.verifyLoad();

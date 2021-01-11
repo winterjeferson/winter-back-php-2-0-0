@@ -1,12 +1,10 @@
 class WbBlog {
     constructor() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, 'constructor'); /*endRemoveIf(production)*/
         this.classlaodMore = 'loadMore';
     }
-    
+
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('blog')) {
+        if (!window.helper.getUrlWord('blog')) {
             return;
         }
 
@@ -15,14 +13,12 @@ class WbBlog {
     }
 
     update() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.page = 'pageBlog';
         this.$lastPost = document.querySelector('#' + this.page + 'LastPost');
         this.$mostViewed = document.querySelector('#' + this.page + 'MostViewed');
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
 
         if (!this.$lastPost) {
@@ -43,12 +39,14 @@ class WbBlog {
     }
 
     loadMore(target) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let parentId = target.parentNode.parentNode.parentNode.getAttribute('id');
         let parentIdString = parentId.substring(this.page.length);
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'blog', 'file': 'LoadMore' });
+        let url = objWbUrl.getController({
+            'folder': 'blog',
+            'file': 'LoadMore'
+        });
         let parameter =
             '&target=' + parentIdString;
 
@@ -65,7 +63,6 @@ class WbBlog {
     }
 
     loadMoreSuccess(parentId, value) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let json = JSON.parse(value);
         let $section = document.querySelector('#' + parentId);
         let $sectionList = $section.querySelector('.blog-list');
@@ -80,3 +77,5 @@ class WbBlog {
         window.scrollTo(0, document.documentElement.scrollTop - 1);
     }
 }
+
+const objWbBlog = new WbBlog();

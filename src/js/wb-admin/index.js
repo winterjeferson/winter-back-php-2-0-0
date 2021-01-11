@@ -1,13 +1,20 @@
-/*removeIf(production)*/
-var objWbDebug = new WbDebug();
-/*endRemoveIf(production)*/
+class WbManagementAdmin {
+    verifyLoad() {
+        window.addEventListener('load', this.applyClass(), {
+            once: true
+        });
+    }
 
-var objWbAdmin = new WbAdmin();
-var objWbAdminBlog = new WbAdminBlog();
-var objWbAdminUploadImage = new WbAdminUploadImage();
-var objWbAdminUser = new WbAdminUser();
-var objWbLogin = new WbLogin();
-var objWbManagementAdmin = new WbManagementAdmin();
-var objWbAdminPage = new WbAdminPage();
+    applyClass() {
+        objWbLogin.build();
+        objWbAdmin.build();
+        objWbAdminBlog.build();
+        objWbAdminUploadImage.build();
+        objWbAdminUser.build();
+        objWbAdminPage.build();
+    }
+}
+
+const objWbManagementAdmin = new WbManagementAdmin();
 
 objWbManagementAdmin.verifyLoad();

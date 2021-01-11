@@ -95,7 +95,7 @@ function getTimezoneBr()
 
 function getUrlFrontEnd()
 {
-    return 'https://winterjeferson.github.io/winter-front/production/';
+    return 'https://winterjeferson.github.io/winter-front-2-0-0/dist/';
 }
 
 function getUrlBackEnd()
@@ -124,7 +124,7 @@ function replaceTag($data)
     $arrReplace = [
         '"/>',
         '',
-        '<img alt="October 31" src="' . $pathBanner,
+        '<img alt="Image" src="' . $pathBanner,
         $pathBanner,
     ];
 

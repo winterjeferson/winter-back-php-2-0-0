@@ -1,12 +1,10 @@
 class WbAdmin {
     constructor() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, 'constructor'); /*endRemoveIf(production)*/
         this.pageCurrent = '';
     }
 
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('admin')) {
+        if (!window.helper.getUrlWord('admin')) {
             return;
         }
 
@@ -16,7 +14,6 @@ class WbAdmin {
     }
 
     updateVariable() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.$page = document.querySelector('#mainContent');
 
         if (!document.contains(this.$page)) {
@@ -29,7 +26,6 @@ class WbAdmin {
     }
 
     buildMenuDifeneActive() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let classActive = 'menu-tab-active';
         let href = window.location.href;
         let split = href.split('/');
@@ -46,7 +42,6 @@ class WbAdmin {
     }
 
     builTableTdWrapper() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let td = document.querySelectorAll('.td-wrapper');
         let currentClass = 'td-wrapper-auto';
 
@@ -62,7 +57,6 @@ class WbAdmin {
     }
 
     showResponse(data) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName(), data); /*endRemoveIf(production)*/
         let color = '';
         let response = '';
 
@@ -82,3 +76,5 @@ class WbAdmin {
         objWfNotification.add(response, color);
     }
 }
+
+const objWbAdmin = new WbAdmin();

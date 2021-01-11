@@ -14,10 +14,6 @@ const fileApplication = [
     folderApplication + configuration.allFolderFile,
     `!${folderApplication + configuration.index}.${extension}`,
 ];
-const fileApplicationWatch = [
-    folderApplication + configuration.allFolderFile,
-    folderApplication + `${configuration.index}.${extension}`,
-];
 
 
 gulp.task('buildApplicationClean', (done) => {
@@ -50,7 +46,7 @@ gulp.task('buildApplicationMinify', (done) => {
 });
 
 gulp.task('buildApplication', gulp.series(
-    'buildApplicationClean',
+    // 'buildApplicationClean',
     'buildApplicationMove',
     'buildApplicationMove2',
 ));
@@ -60,6 +56,5 @@ gulp.task('buildApplication', gulp.series(
 
 
 module.exports = {
-    fileApplication: fileApplication,
-    fileAll: fileApplicationWatch,
+    fileAll: fileApplication,
 };

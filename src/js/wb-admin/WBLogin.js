@@ -1,7 +1,6 @@
 class WbLogin {
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('login')) {
+        if (!window.helper.getUrlWord('login')) {
             return;
         }
 
@@ -10,7 +9,6 @@ class WbLogin {
     }
 
     update() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.isSignUp = false;
 
         this.$page = document.querySelector('#pageAdminLogin');
@@ -20,7 +18,6 @@ class WbLogin {
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
 
         this.$buttonLogin.addEventListener('click', function (event) {
@@ -29,7 +26,6 @@ class WbLogin {
     }
 
     validate() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         if (this.$fielEmail.value === '') {
             this.$fielEmail.focus();
             this.buildLoginResponse('empty_email');
@@ -46,10 +42,12 @@ class WbLogin {
     }
 
     buildLogin() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({ 'folder': 'admin', 'file': 'LoginAjax' });
+        let url = objWbUrl.getController({
+            'folder': 'admin',
+            'file': 'LoginAjax'
+        });
         let parameter =
             '&email=' + this.$fielEmail.value +
             '&password=' + this.$fieldPassword.value +
@@ -73,7 +71,6 @@ class WbLogin {
     }
 
     buildLoginResponse(data) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let response = '';
         let $responseElement = this.$page.querySelector('.form');
 
@@ -101,3 +98,5 @@ class WbLogin {
         objWfNotification.add(response, 'red', $responseElement);
     }
 }
+
+const objWbLogin = new WbLogin();

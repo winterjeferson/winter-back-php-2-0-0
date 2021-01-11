@@ -1,7 +1,6 @@
 class WbForm {
     build() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
-        if (!getUrlWord('form')) {
+        if (!window.helper.getUrlWord('form')) {
             return;
         }
 
@@ -10,7 +9,6 @@ class WbForm {
     }
 
     update() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         this.$page = document.querySelector('#pageForm');
         this.$form = this.$page.querySelector('.form');
         this.$formFieldEmail = this.$form.querySelector('[data-id="email"]');
@@ -19,7 +17,6 @@ class WbForm {
     }
 
     buildMenu() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
 
         this.$btSend.addEventListener('click', function (event) {
@@ -30,10 +27,12 @@ class WbForm {
     }
 
     send() {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         const self = this;
         const ajax = new XMLHttpRequest();
-        const url = objWbUrl.getController({ 'folder': 'form', 'file': 'FormAjax' });
+        const url = objWbUrl.getController({
+            'folder': 'form',
+            'file': 'FormAjax'
+        });
         let parameter =
             '&method=sendForm' +
             '&data=' + JSON.stringify(self.getData()) +
@@ -44,7 +43,7 @@ class WbForm {
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 self.$btSend.removeAttribute('disabled');
                 self.response(ajax.responseText);
             }
@@ -54,7 +53,6 @@ class WbForm {
     }
 
     getData() {
-         /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let arr = [];
 
         arr.push(this.$form.querySelector('[data-id="email"]').value);
@@ -64,7 +62,6 @@ class WbForm {
     }
 
     response(data) {
-        /*removeIf(production)*/ objWbDebug.debugMethod(this, objWbDebug.getMethodName()); /*endRemoveIf(production)*/
         let response = '';
         let color = '';
 
@@ -82,3 +79,5 @@ class WbForm {
         objWfNotification.add(response, color, this.$form);
     }
 }
+
+const objWbForm  = new WbForm();
