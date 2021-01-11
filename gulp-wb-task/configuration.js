@@ -1,6 +1,9 @@
+const allFile = '*.*';
+
 module.exports = {
-    development: '../../development/',
-    homologation: '../../homologation/',
-    production: '../../production/',
+    src: `src/`,
+    dist: `dist/`,
     assets: 'assets/',
+    allFile: allFile,
+    allFolderFile: `**/${allFile}`,
 }

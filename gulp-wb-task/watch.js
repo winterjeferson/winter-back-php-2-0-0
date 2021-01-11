@@ -1,55 +1,47 @@
-var gulp = require('gulp');
-var wb_application = require('./wb-application.js');
-var wb_css = require('./wb-css.js');
-var wb_js = require('./wb-js.js');
-var wb_other = require('./wb-other.js');
-var wb_image = require('./wb-image.js');
+const gulp = require('gulp');
+const application = require('./application.js');
+const css = require('./css.js');
+const js = require('./js.js');
+const other = require('./other.js');
+const image = require('./image.js');
 
 
 
-gulp.task('default', function () {
-
-    gulp.watch(wb_application.fileApplicationWatch, gulp.series('wb_application'))
-        .on('change', function (evt) {
-            console.log(evt);
+gulp.task('watch', (callback) => {
+    gulp.watch(application.fileApplicationWatch, gulp.series('application'))
+        .on('change', (event) => {
+            console.log(event);
         });
 
-    gulp.watch(wb_css.cssAdminConcat, gulp.series('wb_css_admin'))
-        .on('change', function (evt) {
-            console.log(evt);
+    gulp.watch(css.cssAdminConcat, gulp.series('css_admin'))
+        .on('change', (event) => {
+            console.log(event);
         });
 
-
-    gulp.watch(wb_css.cssThemeConcat, gulp.series('wb_css_theme'))
-        .on('change', function (evt) {
-            console.log(evt);
+    gulp.watch(css.cssThemeConcat, gulp.series('css_theme'))
+        .on('change', (event) => {
+            console.log(event);
         });
 
-
-
-    gulp.watch(wb_js.fileJs_wb_, gulp.series('wb_js_default'))
-        .on('change', function (evt) {
-            console.log(evt);
+    gulp.watch(js.fileJs_, gulp.series('js_default'))
+        .on('change', (event) => {
+            console.log(event);
         });
 
-
-
-    gulp.watch(wb_js.fileJs_wb_admin_, gulp.series('wb_js_admin_default'))
-        .on('change', function (evt) {
-            console.log(evt);
+    gulp.watch(js.fileJs_admin_, gulp.series('js_admin_default'))
+        .on('change', (event) => {
+            console.log(event);
         });
 
-
-
-    gulp.watch(wb_other.fileOther, gulp.series('wb_other'))
-        .on('change', function (evt) {
-            console.log(evt);
+    gulp.watch(other.fileOther, gulp.series('other'))
+        .on('change', (event) => {
+            console.log(event);
         });
 
-
-    gulp.watch(wb_image.fileImg, gulp.series('wb_image'))
-        .on('change', function (evt) {
-            console.log(evt);
+    gulp.watch(image.fileImg, gulp.series('image'))
+        .on('change', (event) => {
+            console.log(event);
         });
 
+    callback();
 });
