@@ -23,4 +23,4 @@ class WbTranslation {
     }
 }
 
-const objWbTranslation = new WbTranslation();
+window.objWbTranslation = new WbTranslation();

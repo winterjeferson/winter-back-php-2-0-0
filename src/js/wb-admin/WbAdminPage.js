@@ -42,7 +42,7 @@ class WbAdminPage {
             } else {
                 self.saveContent();
             }
-        }
+        };
     }
 
     buildMenuTable() {
@@ -58,7 +58,7 @@ class WbAdminPage {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationInactivate);
                     objWfModal.buildContentConfirmationAction('objWbAdminPage.modify(' + item.getAttribute('data-id') + ', "inactivate")');
-                }
+                };
             });
         });
 
@@ -68,7 +68,7 @@ class WbAdminPage {
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
                     self.modify(item.getAttribute('data-id'), 'activate');
-                }
+                };
             });
         });
 
@@ -80,14 +80,14 @@ class WbAdminPage {
                 item.onclick = function () {
                     self.editId = item.getAttribute('data-id');
                     self.editLoadData(self.editId);
-                }
+                };
             });
 
             Array.prototype.forEach.call($buttonDelete, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
                     objWfModal.buildContentConfirmationAction('objWbAdminPage.delete(' + item.getAttribute('data-id') + ')');
-                }
+                };
             });
         });
     }
@@ -115,10 +115,10 @@ class WbAdminPage {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -140,10 +140,10 @@ class WbAdminPage {
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -163,14 +163,14 @@ class WbAdminPage {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 let obj = JSON.parse(ajax.responseText);
 
                 document.documentElement.scrollTop = 0;
                 self.isEdit = true;
                 self.editFillField(obj);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -191,7 +191,7 @@ class WbAdminPage {
             '&title=' + this.$formFieldTitle.value +
             '&url=' + this.$formFieldUrl.value +
             '&menu=' + this.$formFieldMenu.value +
-            '&content=' + this.$ckEditor.getData()
+            '&content=' + this.$ckEditor.getData();
     }
 
     modify(id, status) {
@@ -209,10 +209,10 @@ class WbAdminPage {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -231,13 +231,13 @@ class WbAdminPage {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
 }
 
-const objWbAdminPage = new WbAdminPage();
+window.objWbAdminPage = new WbAdminPage();

@@ -20,7 +20,7 @@ class WbLogin {
     buildMenu() {
         let self = this;
 
-        this.$buttonLogin.addEventListener('click', function (event) {
+        this.$buttonLogin.addEventListener('click', () => {
             self.buildLogin();
         });
     }
@@ -61,11 +61,11 @@ class WbLogin {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 self.$buttonLogin.removeAttribute('disabled');
                 self.buildLoginResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -99,4 +99,4 @@ class WbLogin {
     }
 }
 
-const objWbLogin = new WbLogin();
+window.objWbLogin = new WbLogin();

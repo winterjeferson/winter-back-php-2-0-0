@@ -19,7 +19,7 @@ class WbForm {
     buildMenu() {
         const self = this;
 
-        this.$btSend.addEventListener('click', function (event) {
+        this.$btSend.addEventListener('click', () => {
             if (objWfForm.validateEmpty([self.$formFieldEmail, self.$formFieldMessage])) {
                 self.send();
             }
@@ -47,7 +47,7 @@ class WbForm {
                 self.$btSend.removeAttribute('disabled');
                 self.response(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -80,4 +80,4 @@ class WbForm {
     }
 }
 
-const objWbForm  = new WbForm();
+window.objWbForm = new WbForm();

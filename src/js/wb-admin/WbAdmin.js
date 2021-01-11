@@ -52,7 +52,7 @@ class WbAdmin {
                 } else {
                     item.classList.add(currentClass);
                 }
-            }
+            };
         });
     }
 
@@ -77,4 +77,4 @@ class WbAdmin {
     }
 }
 
-const objWbAdmin = new WbAdmin();
+window.objWbAdmin = new WbAdmin();

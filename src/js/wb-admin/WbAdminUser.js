@@ -24,7 +24,7 @@ class WbAdminUser {
     buildMenu() {
         const self = this;
 
-        this.$formSend.onclick = function () {
+        this.$formSend.onclick = () => {
             if (!self.validateForm()) {
                 return;
             }
@@ -34,7 +34,7 @@ class WbAdminUser {
             } else {
                 self.saveContent();
             }
-        }
+        };
     }
 
     buildMenuTable() {
@@ -50,7 +50,7 @@ class WbAdminUser {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationInactivate);
                     objWfModal.buildContentConfirmationAction('objWbAdminUser.modify(' + item.getAttribute('data-id') + ', "inactivate")');
-                }
+                };
             });
         });
 
@@ -60,7 +60,7 @@ class WbAdminUser {
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
                     self.modify(item.getAttribute('data-id'), 'activate');
-                }
+                };
             });
         });
 
@@ -72,14 +72,14 @@ class WbAdminUser {
                 item.onclick = function () {
                     self.editId = item.getAttribute('data-id');
                     self.editLoadData(self.editId);
-                }
+                };
             });
 
             Array.prototype.forEach.call($buttonDelete, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
                     objWfModal.buildContentConfirmationAction('objWbAdminUser.delete(' + item.getAttribute('data-id') + ')');
-                }
+                };
             });
         });
     }
@@ -99,10 +99,10 @@ class WbAdminUser {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -121,10 +121,10 @@ class WbAdminUser {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -144,12 +144,12 @@ class WbAdminUser {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 let obj = JSON.parse(ajax.responseText);
                 document.documentElement.scrollTop = 0;
                 self.editFillField(obj);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -180,10 +180,10 @@ class WbAdminUser {
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -202,10 +202,10 @@ class WbAdminUser {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -228,4 +228,4 @@ class WbAdminUser {
     }
 }
 
-const objWbAdminUser = new WbAdminUser();
+window.objWbAdminUser = new WbAdminUser();

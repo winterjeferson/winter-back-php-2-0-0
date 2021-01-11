@@ -29,4 +29,4 @@ class WbUrl {
     }
 }
 
-const objWbUrl = new WbUrl();
+window.objWbUrl = new WbUrl();

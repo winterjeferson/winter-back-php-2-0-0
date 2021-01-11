@@ -26,13 +26,13 @@ class WbBlog {
         }
 
         if (document.contains(this.$lastPost.querySelector('[data-id="' + this.classlaodMore + '"]'))) {
-            this.$lastPost.querySelector('[data-id="' + this.classlaodMore + '"]').addEventListener('click', function (event) {
+            this.$lastPost.querySelector('[data-id="' + this.classlaodMore + '"]').addEventListener('click', () => {
                 self.loadMore(this);
             });
         }
 
         if (document.contains(this.$mostViewed.querySelector('[data-id="' + this.classlaodMore + '"]'))) {
-            this.$mostViewed.querySelector('[data-id="' + this.classlaodMore + '"]').addEventListener('click', function (event) {
+            this.$mostViewed.querySelector('[data-id="' + this.classlaodMore + '"]').addEventListener('click', () => {
                 self.loadMore(this);
             });
         }
@@ -54,11 +54,12 @@ class WbBlog {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 target.classList.remove('disabled');
                 self.loadMoreSuccess(parentId, ajax.responseText);
             }
-        }
+        };
+
         ajax.send(parameter);
     }
 
@@ -78,4 +79,4 @@ class WbBlog {
     }
 }
 
-const objWbBlog = new WbBlog();
+window.objWbBlog = new WbBlog();

@@ -52,7 +52,7 @@ class WbAdmin {
                 } else {
                     item.classList.add(currentClass);
                 }
-            }
+            };
         });
     }
 
@@ -77,7 +77,7 @@ class WbAdmin {
     }
 }
 
-const objWbAdmin = new WbAdmin();
+window.objWbAdmin = new WbAdmin();
 class WbAdminBlog {
     build() {
         if (!window.helper.getUrlWord('admin/blog')) {
@@ -135,7 +135,7 @@ class WbAdminBlog {
             } else {
                 self.saveContent();
             }
-        }
+        };
     }
 
     buildMenuThumbnail() {
@@ -150,7 +150,7 @@ class WbAdminBlog {
                         'folder': 'admin',
                         'file': 'BlogThumbnail'
                     }), 'eb');
-                }
+                };
             });
         });
     }
@@ -168,7 +168,7 @@ class WbAdminBlog {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationInactivate);
                     objWfModal.buildContentConfirmationAction('objWbAdminBlog.modify(' + item.getAttribute('data-id') + ', "inactivate")');
-                }
+                };
             });
         });
 
@@ -178,7 +178,7 @@ class WbAdminBlog {
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
                     self.modify(item.getAttribute('data-id'), 'activate');
-                }
+                };
             });
         });
 
@@ -190,14 +190,14 @@ class WbAdminBlog {
                 item.onclick = function () {
                     self.editId = item.getAttribute('data-id');
                     self.editLoadData(self.editId);
-                }
+                };
             });
 
             Array.prototype.forEach.call($buttonDelete, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
                     objWfModal.buildContentConfirmationAction('objWbAdminBlog.delete(' + item.getAttribute('data-id') + ')');
-                }
+                };
             });
         });
     }
@@ -219,10 +219,10 @@ class WbAdminBlog {
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -242,7 +242,7 @@ class WbAdminBlog {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 let obj = JSON.parse(ajax.responseText);
 
                 document.documentElement.scrollTop = 0;
@@ -251,7 +251,7 @@ class WbAdminBlog {
                 self.thumbnail = obj['thumbnail'].trim();
                 self.modifyThumbnail();
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -288,10 +288,10 @@ class WbAdminBlog {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -310,10 +310,10 @@ class WbAdminBlog {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -355,10 +355,10 @@ class WbAdminBlog {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -388,7 +388,7 @@ class WbAdminBlog {
     }
 }
 
-const objWbAdminBlog = new WbAdminBlog();
+window.objWbAdminBlog = new WbAdminBlog();
 class WbAdminPage {
     build() {
         if (!window.helper.getUrlWord('admin/page')) {
@@ -433,7 +433,7 @@ class WbAdminPage {
             } else {
                 self.saveContent();
             }
-        }
+        };
     }
 
     buildMenuTable() {
@@ -449,7 +449,7 @@ class WbAdminPage {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationInactivate);
                     objWfModal.buildContentConfirmationAction('objWbAdminPage.modify(' + item.getAttribute('data-id') + ', "inactivate")');
-                }
+                };
             });
         });
 
@@ -459,7 +459,7 @@ class WbAdminPage {
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
                     self.modify(item.getAttribute('data-id'), 'activate');
-                }
+                };
             });
         });
 
@@ -471,14 +471,14 @@ class WbAdminPage {
                 item.onclick = function () {
                     self.editId = item.getAttribute('data-id');
                     self.editLoadData(self.editId);
-                }
+                };
             });
 
             Array.prototype.forEach.call($buttonDelete, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
                     objWfModal.buildContentConfirmationAction('objWbAdminPage.delete(' + item.getAttribute('data-id') + ')');
-                }
+                };
             });
         });
     }
@@ -506,10 +506,10 @@ class WbAdminPage {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -531,10 +531,10 @@ class WbAdminPage {
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -554,14 +554,14 @@ class WbAdminPage {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 let obj = JSON.parse(ajax.responseText);
 
                 document.documentElement.scrollTop = 0;
                 self.isEdit = true;
                 self.editFillField(obj);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -582,7 +582,7 @@ class WbAdminPage {
             '&title=' + this.$formFieldTitle.value +
             '&url=' + this.$formFieldUrl.value +
             '&menu=' + this.$formFieldMenu.value +
-            '&content=' + this.$ckEditor.getData()
+            '&content=' + this.$ckEditor.getData();
     }
 
     modify(id, status) {
@@ -600,10 +600,10 @@ class WbAdminPage {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -622,16 +622,16 @@ class WbAdminPage {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
 }
 
-const objWbAdminPage = new WbAdminPage();
+window.objWbAdminPage = new WbAdminPage();
 class WbAdminUploadImage {
     constructor() {
         this.deleteElement = '';
@@ -655,18 +655,18 @@ class WbAdminUploadImage {
         const self = this;
         let $buttonDelete = document.querySelectorAll('[data-action="delete"]');
 
-        this.$btUploadThumbnail.addEventListener('click', function (event) {
+        this.$btUploadThumbnail.addEventListener('click', () => {
             self.upload(this, 'blog/thumbnail/');
         });
 
-        this.$btUploadBanner.addEventListener('click', function (event) {
+        this.$btUploadBanner.addEventListener('click', () => {
             self.upload(this, 'blog/banner/');
         });
 
         Array.prototype.forEach.call($buttonDelete, function (item) {
             item.onclick = function () {
                 self.deleteImage(item);
-            }
+            };
         });
     }
 
@@ -695,11 +695,11 @@ class WbAdminUploadImage {
         }));
 
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 self.buildResponse(ajax.responseText, $return);
                 objWfModal.closeModal();
             }
-        }
+        };
 
         ajax.send(data);
     }
@@ -729,11 +729,11 @@ class WbAdminUploadImage {
         ajax.open('POST', url);
 
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 self.$btUploadThumbnail.removeAttribute('disabled');
                 self.buildResponse(ajax.responseText, $form);
             }
-        }
+        };
 
         ajax.send(data);
     }
@@ -752,7 +752,7 @@ class WbAdminUploadImage {
     }
 }
 
-const objWbAdminUploadImage = new WbAdminUploadImage();
+window.objWbAdminUploadImage = new WbAdminUploadImage();
 class WbAdminUser {
     build() {
         if (!window.helper.getUrlWord('admin/user')) {
@@ -779,7 +779,7 @@ class WbAdminUser {
     buildMenu() {
         const self = this;
 
-        this.$formSend.onclick = function () {
+        this.$formSend.onclick = () => {
             if (!self.validateForm()) {
                 return;
             }
@@ -789,7 +789,7 @@ class WbAdminUser {
             } else {
                 self.saveContent();
             }
-        }
+        };
     }
 
     buildMenuTable() {
@@ -805,7 +805,7 @@ class WbAdminUser {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationInactivate);
                     objWfModal.buildContentConfirmationAction('objWbAdminUser.modify(' + item.getAttribute('data-id') + ', "inactivate")');
-                }
+                };
             });
         });
 
@@ -815,7 +815,7 @@ class WbAdminUser {
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
                     self.modify(item.getAttribute('data-id'), 'activate');
-                }
+                };
             });
         });
 
@@ -827,14 +827,14 @@ class WbAdminUser {
                 item.onclick = function () {
                     self.editId = item.getAttribute('data-id');
                     self.editLoadData(self.editId);
-                }
+                };
             });
 
             Array.prototype.forEach.call($buttonDelete, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
                     objWfModal.buildContentConfirmationAction('objWbAdminUser.delete(' + item.getAttribute('data-id') + ')');
-                }
+                };
             });
         });
     }
@@ -854,10 +854,10 @@ class WbAdminUser {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -876,10 +876,10 @@ class WbAdminUser {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -899,12 +899,12 @@ class WbAdminUser {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 let obj = JSON.parse(ajax.responseText);
                 document.documentElement.scrollTop = 0;
                 self.editFillField(obj);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -935,10 +935,10 @@ class WbAdminUser {
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -957,10 +957,10 @@ class WbAdminUser {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 objWbAdmin.showResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -983,7 +983,7 @@ class WbAdminUser {
     }
 }
 
-const objWbAdminUser = new WbAdminUser();
+window.objWbAdminUser = new WbAdminUser();
 class WbLogin {
     build() {
         if (!window.helper.getUrlWord('login')) {
@@ -1006,7 +1006,7 @@ class WbLogin {
     buildMenu() {
         let self = this;
 
-        this.$buttonLogin.addEventListener('click', function (event) {
+        this.$buttonLogin.addEventListener('click', () => {
             self.buildLogin();
         });
     }
@@ -1047,11 +1047,11 @@ class WbLogin {
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 self.$buttonLogin.removeAttribute('disabled');
                 self.buildLoginResponse(ajax.responseText);
             }
-        }
+        };
 
         ajax.send(parameter);
     }
@@ -1085,24 +1085,13 @@ class WbLogin {
     }
 }
 
-const objWbLogin = new WbLogin();
-class WbManagementAdmin {
-    verifyLoad() {
-        window.addEventListener('load', this.applyClass(), {
-            once: true
-        });
-    }
-
-    applyClass() {
-        objWbLogin.build();
-        objWbAdmin.build();
-        objWbAdminBlog.build();
-        objWbAdminUploadImage.build();
-        objWbAdminUser.build();
-        objWbAdminPage.build();
-    }
-}
-
-const objWbManagementAdmin = new WbManagementAdmin();
-
-objWbManagementAdmin.verifyLoad();
+window.objWbLogin = new WbLogin();
+window.addEventListener('load',
+    objWbLogin.build(),
+    objWbAdmin.build(),
+    objWbAdminBlog.build(),
+    objWbAdminUploadImage.build(),
+    objWbAdminUser.build(),
+    objWbAdminPage.build(), {
+        once: true
+    });

@@ -21,18 +21,18 @@ class WbAdminUploadImage {
         const self = this;
         let $buttonDelete = document.querySelectorAll('[data-action="delete"]');
 
-        this.$btUploadThumbnail.addEventListener('click', function (event) {
+        this.$btUploadThumbnail.addEventListener('click', () => {
             self.upload(this, 'blog/thumbnail/');
         });
 
-        this.$btUploadBanner.addEventListener('click', function (event) {
+        this.$btUploadBanner.addEventListener('click', () => {
             self.upload(this, 'blog/banner/');
         });
 
         Array.prototype.forEach.call($buttonDelete, function (item) {
             item.onclick = function () {
                 self.deleteImage(item);
-            }
+            };
         });
     }
 
@@ -61,11 +61,11 @@ class WbAdminUploadImage {
         }));
 
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 self.buildResponse(ajax.responseText, $return);
                 objWfModal.closeModal();
             }
-        }
+        };
 
         ajax.send(data);
     }
@@ -95,11 +95,11 @@ class WbAdminUploadImage {
         ajax.open('POST', url);
 
         ajax.onreadystatechange = function () {
-            if (ajax.readyState == 4 && ajax.status == 200) {
+            if (ajax.readyState === 4 && ajax.status === 200) {
                 self.$btUploadThumbnail.removeAttribute('disabled');
                 self.buildResponse(ajax.responseText, $form);
             }
-        }
+        };
 
         ajax.send(data);
     }
@@ -118,4 +118,4 @@ class WbAdminUploadImage {
     }
 }
 
-const objWbAdminUploadImage = new WbAdminUploadImage();
+window.objWbAdminUploadImage = new WbAdminUploadImage();
