@@ -1,4 +1,4 @@
-class WbAdminBlog {
+class AdminBlog {
     build() {
         if (!window.helper.getUrlWord('admin/blog')) {
             return;
@@ -15,7 +15,7 @@ class WbAdminBlog {
         this.buildMenu();
         this.buildMenuTable();
         this.buildMenuThumbnail();
-        objWbUrl.watch(this.$formFieldTitle, this.$formFieldUrl);
+        window.url.watch(this.$formFieldTitle, this.$formFieldUrl);
     }
 
     update() {
@@ -66,7 +66,7 @@ class WbAdminBlog {
 
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
-                    objWfModal.buildModal('ajax', objWbUrl.getController({
+                    objWfModal.buildModal('ajax', window.url.getController({
                         'folder': 'admin',
                         'file': 'BlogThumbnail'
                     }), 'eb');
@@ -87,7 +87,7 @@ class WbAdminBlog {
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationInactivate);
-                    objWfModal.buildContentConfirmationAction('objWbAdminBlog.modify(' + item.getAttribute('data-id') + ', "inactivate")');
+                    objWfModal.buildContentConfirmationAction('window.adminBlog.modify(' + item.getAttribute('data-id') + ', "inactivate")');
                 };
             });
         });
@@ -116,7 +116,7 @@ class WbAdminBlog {
             Array.prototype.forEach.call($buttonDelete, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
-                    objWfModal.buildContentConfirmationAction('objWbAdminBlog.delete(' + item.getAttribute('data-id') + ')');
+                    objWfModal.buildContentConfirmationAction('window.adminBlog.delete(' + item.getAttribute('data-id') + ')');
                 };
             });
         });
@@ -125,7 +125,7 @@ class WbAdminBlog {
     editSave() {
         const self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
+        let url = window.url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
@@ -140,7 +140,7 @@ class WbAdminBlog {
 
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                objWbAdmin.showResponse(ajax.responseText);
+                window.admin.showResponse(ajax.responseText);
             }
         };
 
@@ -150,7 +150,7 @@ class WbAdminBlog {
     editLoadData(id) {
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
+        let url = window.url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
@@ -195,7 +195,7 @@ class WbAdminBlog {
 
     modify(id, status) {
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
+        let url = window.url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
@@ -209,7 +209,7 @@ class WbAdminBlog {
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                objWbAdmin.showResponse(ajax.responseText);
+                window.admin.showResponse(ajax.responseText);
             }
         };
 
@@ -218,7 +218,7 @@ class WbAdminBlog {
 
     delete(id) {
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
+        let url = window.url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
@@ -231,7 +231,7 @@ class WbAdminBlog {
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                objWbAdmin.showResponse(ajax.responseText);
+                window.admin.showResponse(ajax.responseText);
             }
         };
 
@@ -263,7 +263,7 @@ class WbAdminBlog {
 
     saveContent() {
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
+        let url = window.url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
@@ -276,7 +276,7 @@ class WbAdminBlog {
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                objWbAdmin.showResponse(ajax.responseText);
+                window.admin.showResponse(ajax.responseText);
             }
         };
 
@@ -308,4 +308,4 @@ class WbAdminBlog {
     }
 }
 
-window.objWbAdminBlog = new WbAdminBlog();
+window.adminBlog = new AdminBlog();

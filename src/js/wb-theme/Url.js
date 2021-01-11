@@ -1,4 +1,4 @@
-class WbUrl {
+class Url {
     buildSEO(url) {
         return url.toString() // Convert to string
             .normalize('NFD') // Change diacritics
@@ -29,4 +29,4 @@ class WbUrl {
     }
 }
 
-window.objWbUrl = new WbUrl();
+window.url = new Url();

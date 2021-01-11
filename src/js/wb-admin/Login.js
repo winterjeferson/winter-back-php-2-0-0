@@ -1,4 +1,4 @@
-class WbLogin {
+class Login {
     build() {
         if (!window.helper.getUrlWord('login')) {
             return;
@@ -44,7 +44,7 @@ class WbLogin {
     buildLogin() {
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
+        let url = window.url.getController({
             'folder': 'admin',
             'file': 'LoginAjax'
         });
@@ -91,7 +91,7 @@ class WbLogin {
                 this.$fieldPassword.focus();
                 break;
             default:
-                objWbUrl.build('admin');
+                window.url.build('admin');
                 break;
         }
 
@@ -99,4 +99,4 @@ class WbLogin {
     }
 }
 
-window.objWbLogin = new WbLogin();
+window.login = new Login();

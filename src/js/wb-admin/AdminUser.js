@@ -1,38 +1,30 @@
-class WbAdminPage {
+class AdminUser {
     build() {
-        if (!window.helper.getUrlWord('admin/page')) {
+        if (!window.helper.getUrlWord('admin/user')) {
             return;
         }
 
-        CKEDITOR.replace('fieldContent', {});
-
-        CKEDITOR.config.basicEntities = false;
-        CKEDITOR.config.entities_greek = false;
-        CKEDITOR.config.entities_latin = false;
-        CKEDITOR.config.entities_additional = '';
-
-        this.update();
+        this.updateVariable();
         this.buildMenu();
         this.buildMenuTable();
-        objWbUrl.watch(this.$formFieldTitle, this.$formFieldUrl);
     }
 
-    update() {
+    updateVariable() {
         this.isEdit = false;
         this.editId = 0;
-        this.$page = document.querySelector('#pageAdminPageEdit');
-        this.$ckEditor = CKEDITOR.instances.fieldContent;
-        this.$contentList = document.querySelector('#pageAdminPageList');
-        this.$formFieldMenu = this.$page.querySelector('[data-id="formFieldMenu"]');
-        this.$formFieldTitle = this.$page.querySelector('[data-id="formFieldTitle"]');
-        this.$formFieldUrl = this.$page.querySelector('[data-id="formFieldUrl"]');
-        this.$btRegister = this.$page.querySelector('[data-id="btRegister"]');
+        this.$page = document.querySelector('#pageAdminUser');
+        this.$formRegister = this.$page.querySelector('[data-id="formRegister"]');
+        this.$formFieldName = this.$formRegister.querySelector('[data-id="name"]');
+        this.$formFieldEmail = this.$formRegister.querySelector('[data-id="email"]');
+        this.$formFieldPassword = this.$formRegister.querySelector('[data-id="password"]');
+        this.$formFieldPermission = this.$formRegister.querySelector('[data-id="permission"]');
+        this.$formSend = this.$formRegister.querySelector('[data-id="send"]');
     }
 
     buildMenu() {
         const self = this;
 
-        this.$btRegister.onclick = function () {
+        this.$formSend.onclick = () => {
             if (!self.validateForm()) {
                 return;
             }
@@ -46,10 +38,10 @@ class WbAdminPage {
     }
 
     buildMenuTable() {
-        const self = this;
-        const $table = this.$contentList.querySelectorAll('.table');
-        const $tableActive = this.$contentList.querySelectorAll('[data-id="tableActive"]');
-        const $tableInactive = this.$contentList.querySelectorAll('[data-id="tableInactive"]');
+        let self = this;
+        let $table = this.$page.querySelectorAll('.table');
+        let $tableActive = this.$page.querySelectorAll('[data-id="tableActive"]');
+        let $tableInactive = this.$page.querySelectorAll('[data-id="tableInactive"]');
 
         Array.prototype.forEach.call($tableActive, function (table) {
             let $button = table.querySelectorAll('[data-action="inactivate"]');
@@ -57,7 +49,7 @@ class WbAdminPage {
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationInactivate);
-                    objWfModal.buildContentConfirmationAction('objWbAdminPage.modify(' + item.getAttribute('data-id') + ', "inactivate")');
+                    objWfModal.buildContentConfirmationAction('window.adminUser.modify(' + item.getAttribute('data-id') + ', "inactivate")');
                 };
             });
         });
@@ -86,49 +78,97 @@ class WbAdminPage {
             Array.prototype.forEach.call($buttonDelete, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
-                    objWfModal.buildContentConfirmationAction('objWbAdminPage.delete(' + item.getAttribute('data-id') + ')');
+                    objWfModal.buildContentConfirmationAction('window.adminUser.delete(' + item.getAttribute('data-id') + ')');
                 };
             });
         });
     }
 
-    validateForm() {
-        let arrField = [
-            this.$formFieldMenu,
-            this.$formFieldTitle
-        ];
-
-        return objWfForm.validateEmpty(arrField);
-    }
-
-    saveContent() {
+    modify(id, status) {
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
+        let url = window.url.getController({
             'folder': 'admin',
-            'file': 'PageAjax'
+            'file': 'UserAjax'
         });
         let parameter =
-            '&action=doSave' +
-            this.buildParameter() +
+            '&action=doModify' +
+            '&status=' + status +
+            '&id=' + id +
             '&token=' + globalToken;
 
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                objWbAdmin.showResponse(ajax.responseText);
+                window.admin.showResponse(ajax.responseText);
             }
         };
 
         ajax.send(parameter);
     }
 
-    editSave() {
-        const self = this;
+    delete(id) {
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
+        let url = window.url.getController({
             'folder': 'admin',
-            'file': 'PageAjax'
+            'file': 'UserAjax'
+        });
+        let parameter =
+            '&action=doDelete' +
+            '&id=' + id +
+            '&token=' + globalToken;
+
+        ajax.open('POST', url, true);
+        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState === 4 && ajax.status === 200) {
+                window.admin.showResponse(ajax.responseText);
+            }
+        };
+
+        ajax.send(parameter);
+    }
+
+    editLoadData(id) {
+        let self = this;
+        let ajax = new XMLHttpRequest();
+        let url = window.url.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
+        let parameter =
+            '&action=' + 'editLoadData' +
+            '&id=' + id +
+            '&token=' + globalToken;
+
+        ajax.open('POST', url, true);
+        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState === 4 && ajax.status === 200) {
+                let obj = JSON.parse(ajax.responseText);
+                document.documentElement.scrollTop = 0;
+                self.editFillField(obj);
+            }
+        };
+
+        ajax.send(parameter);
+    }
+
+    editFillField(obj) {
+        this.isEdit = true;
+        this.$formFieldName.value = obj['name'];
+        this.$formFieldEmail.value = obj['email'];
+        this.$formFieldPassword.value = '';
+        this.editId = obj['id'];
+        this.$formFieldPermission.value = obj['permission'];
+    }
+
+    editSave() {
+        let self = this;
+        let ajax = new XMLHttpRequest();
+        let url = window.url.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
         });
         let parameter =
             '&action=doUpdate' +
@@ -141,103 +181,51 @@ class WbAdminPage {
 
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                objWbAdmin.showResponse(ajax.responseText);
+                window.admin.showResponse(ajax.responseText);
             }
         };
 
         ajax.send(parameter);
     }
 
-    editLoadData(id) {
-        let self = this;
+    saveContent() {
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
+        let url = Url.getController({
             'folder': 'admin',
-            'file': 'PageAjax'
+            'file': 'UserAjax'
         });
         let parameter =
-            '&action=' + 'editLoadData' +
-            '&id=' + id +
+            '&action=doSave' +
+            this.buildParameter() +
             '&token=' + globalToken;
 
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                let obj = JSON.parse(ajax.responseText);
-
-                document.documentElement.scrollTop = 0;
-                self.isEdit = true;
-                self.editFillField(obj);
+                window.admin.showResponse(ajax.responseText);
             }
         };
 
         ajax.send(parameter);
     }
 
-    editFillField(obj) {
-        this.$formFieldTitle.value = obj['title_' + globalLanguage];
-        this.$formFieldUrl.value = obj['url_' + globalLanguage];
-        this.$formFieldMenu.value = obj['menu_' + globalLanguage];
-        this.editId = obj['id'];
+    validateForm() {
+        let arrField = [
+            this.$formFieldEmail,
+            this.$formFieldPassword
+        ];
 
-        this.$ckEditor.setData(obj['content_' + globalLanguage], function () {
-            this.checkDirty();
-        });
+        return objWfForm.validateEmpty(arrField);
     }
 
     buildParameter() {
         return '' +
-            '&title=' + this.$formFieldTitle.value +
-            '&url=' + this.$formFieldUrl.value +
-            '&menu=' + this.$formFieldMenu.value +
-            '&content=' + this.$ckEditor.getData();
-    }
-
-    modify(id, status) {
-        let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
-            'folder': 'admin',
-            'file': 'PageAjax'
-        });
-        let parameter =
-            '&action=doModify' +
-            '&status=' + status +
-            '&id=' + id +
-            '&token=' + globalToken;
-
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = function () {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                objWbAdmin.showResponse(ajax.responseText);
-            }
-        };
-
-        ajax.send(parameter);
-    }
-
-    delete(id) {
-        let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
-            'folder': 'admin',
-            'file': 'PageAjax'
-        });
-        let parameter =
-            '&action=doDelete' +
-            '&id=' + id +
-            '&token=' + globalToken;
-
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = function () {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                objWbAdmin.showResponse(ajax.responseText);
-            }
-        };
-
-        ajax.send(parameter);
+            '&name=' + this.$formFieldName.value +
+            '&email=' + this.$formFieldEmail.value +
+            '&permission=' + this.$formFieldPermission.value +
+            '&password=' + this.$formFieldPassword.value;
     }
 }
 
-window.objWbAdminPage = new WbAdminPage();
+window.adminUser = new AdminUser();

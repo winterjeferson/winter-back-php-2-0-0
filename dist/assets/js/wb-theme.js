@@ -1,4 +1,4 @@
-class WbBlog {
+class Blog {
     constructor() {
         this.classlaodMore = 'loadMore';
     }
@@ -43,7 +43,7 @@ class WbBlog {
         let parentId = target.parentNode.parentNode.parentNode.getAttribute('id');
         let parentIdString = parentId.substring(this.page.length);
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
+        let url = window.url.getController({
             'folder': 'blog',
             'file': 'LoadMore'
         });
@@ -79,8 +79,8 @@ class WbBlog {
     }
 }
 
-window.objWbBlog = new WbBlog();
-class WbForm {
+window.blog = new Blog();
+class WBForm {
     build() {
         if (!window.helper.getUrlWord('form')) {
             return;
@@ -111,7 +111,7 @@ class WbForm {
     send() {
         const self = this;
         const ajax = new XMLHttpRequest();
-        const url = objWbUrl.getController({
+        const url = window.url.getController({
             'folder': 'form',
             'file': 'FormAjax'
         });
@@ -162,8 +162,8 @@ class WbForm {
     }
 }
 
-window.objWbForm = new WbForm();
-class WbTranslation {
+window.wbForm = new WBForm();
+class WBTranslation {
     build() {
         this.update();
         this.defineActive();
@@ -188,8 +188,8 @@ class WbTranslation {
     }
 }
 
-window.objWbTranslation = new WbTranslation();
-class WbUrl {
+window.wbTranslation = new WBTranslation();
+class Url {
     buildSEO(url) {
         return url.toString() // Convert to string
             .normalize('NFD') // Change diacritics
@@ -220,10 +220,10 @@ class WbUrl {
     }
 }
 
-window.objWbUrl = new WbUrl();
+window.url = new Url();
 window.addEventListener('load',
-    objWbTranslation.build(),
-    objWbBlog.build(),
-    objWbForm.build(), {
+    window.wbTranslation.build(),
+    window.blog.build(),
+    window.wbForm.build(), {
         once: true
     });

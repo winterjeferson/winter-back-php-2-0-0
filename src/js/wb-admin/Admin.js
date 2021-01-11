@@ -1,4 +1,4 @@
-class WbAdmin {
+class Admin {
     constructor() {
         this.pageCurrent = '';
     }
@@ -77,4 +77,4 @@ class WbAdmin {
     }
 }
 
-window.objWbAdmin = new WbAdmin();
+window.admin = new Admin();

@@ -1,4 +1,4 @@
-class WbForm {
+class WBForm {
     build() {
         if (!window.helper.getUrlWord('form')) {
             return;
@@ -29,7 +29,7 @@ class WbForm {
     send() {
         const self = this;
         const ajax = new XMLHttpRequest();
-        const url = objWbUrl.getController({
+        const url = window.url.getController({
             'folder': 'form',
             'file': 'FormAjax'
         });
@@ -80,4 +80,4 @@ class WbForm {
     }
 }
 
-window.objWbForm = new WbForm();
+window.wbForm = new WBForm();

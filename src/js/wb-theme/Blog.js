@@ -1,4 +1,4 @@
-class WbBlog {
+class Blog {
     constructor() {
         this.classlaodMore = 'loadMore';
     }
@@ -43,7 +43,7 @@ class WbBlog {
         let parentId = target.parentNode.parentNode.parentNode.getAttribute('id');
         let parentIdString = parentId.substring(this.page.length);
         let ajax = new XMLHttpRequest();
-        let url = objWbUrl.getController({
+        let url = window.url.getController({
             'folder': 'blog',
             'file': 'LoadMore'
         });
@@ -79,4 +79,4 @@ class WbBlog {
     }
 }
 
-window.objWbBlog = new WbBlog();
+window.blog = new Blog();

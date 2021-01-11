@@ -1,4 +1,4 @@
-class WbAdminUploadImage {
+class AdminUploadImage {
     constructor() {
         this.deleteElement = '';
     }
@@ -40,7 +40,7 @@ class WbAdminUploadImage {
         this.deleteElement = button;
 
         objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
-        objWfModal.buildContentConfirmationAction('objWbAdminUploadImage.deleteImageAjax()');
+        objWfModal.buildContentConfirmationAction('window.adminUploadImage.deleteImageAjax()');
     }
 
     deleteImageAjax() {
@@ -55,7 +55,7 @@ class WbAdminUploadImage {
         data.append('p', path);
         data.append('token', globalToken);
 
-        ajax.open('POST', objWbUrl.getController({
+        ajax.open('POST', window.url.getController({
             'folder': 'admin',
             'file': 'ImageDelete'
         }));
@@ -77,7 +77,7 @@ class WbAdminUploadImage {
         const data = new FormData();
         const ajax = new XMLHttpRequest();
         const file = $file.files[0];
-        const url = objWbUrl.getController({
+        const url = window.url.getController({
             'folder': 'admin',
             'file': 'ImageUpload'
         });
@@ -118,4 +118,4 @@ class WbAdminUploadImage {
     }
 }
 
-window.objWbAdminUploadImage = new WbAdminUploadImage();
+window.adminUploadImage = new AdminUploadImage();

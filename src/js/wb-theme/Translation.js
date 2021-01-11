@@ -1,4 +1,4 @@
-class WbTranslation {
+class WBTranslation {
     build() {
         this.update();
         this.defineActive();
@@ -23,4 +23,4 @@ class WbTranslation {
     }
 }
 
-window.objWbTranslation = new WbTranslation();
+window.wbTranslation = new WBTranslation();
