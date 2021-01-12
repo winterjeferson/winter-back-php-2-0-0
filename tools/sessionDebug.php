@@ -1,7 +1,6 @@
 <?php
 include 'displayError.php';
 
-
 function var_dump2($data, $label = '', $return = false)
 {
 

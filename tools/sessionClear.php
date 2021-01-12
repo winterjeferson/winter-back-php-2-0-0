@@ -1,5 +1,4 @@
 <?php
-
 include 'displayError.php';
 
 session_start();
