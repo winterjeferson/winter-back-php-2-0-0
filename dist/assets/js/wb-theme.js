@@ -171,20 +171,21 @@ class WBTranslation {
     }
 
     buildMenu() {
-        this.$select.addEventListener('change', () => {
-            let selected = this.selectedIndex;
-            let value = this.options[selected].getAttribute('data-url');
+        this.elSelect.addEventListener('change', (item) => {
+            const selected = item.target.options.selectedIndex;
+            const elOption = item.target.options[selected];
+            const value = elOption.getAttribute('data-url');
 
             window.location.replace(value);
         });
     }
 
     defineActive() {
-        this.$select.value = globalLanguage;
+        this.elSelect.value = globalLanguage;
     }
 
     update() {
-        this.$select = document.querySelector('#translationSelect');
+        this.elSelect = document.querySelector('#translationSelect');
     }
 }
 
