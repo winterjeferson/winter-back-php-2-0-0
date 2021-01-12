@@ -6,18 +6,16 @@ include __DIR__ . '/../shared/loading.php';
     <?php
     include __DIR__ . '/../shared/header.php';
     ?>
-    <section id="mainMenu" class="grid-menu">
+    <section id="mainMenu" class="grid__menu">
         <?php
         include __DIR__ . '/../shared/menu.php';
         ?>
     </section>
-    <section id="mainContent" class="grid-content">
-        <div id="<?php echo $arrDefinedVars['data']['content']['id'] ?>" class="row">
-            <div class="col-es-12">
-                <?php
-                include  __DIR__ . '/../' . $arrDefinedVars['data']['content']['folder'] . '/' . $arrDefinedVars['data']['content']['file'] . '.php';
-                ?>
-            </div>
+    <section id="mainContent" class="grid__content page">
+        <div id="<?php echo $arrDefinedVars['data']['content']['id'] ?>" class="row page">
+            <?php
+            include  __DIR__ . '/../' . $arrDefinedVars['data']['content']['folder'] . '/' . $arrDefinedVars['data']['content']['file'] . '.php';
+            ?>
         </div>
     </section>
     <?php

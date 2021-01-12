@@ -1,3 +1,4 @@
+/* ------------------------------------------------------------------ SOCIAL */
 .page-blog .col-first {
   padding-right: 0; }
   @media (min-width: 992px) {
@@ -53,3 +54,49 @@
   font-size: 1rem;
   font-style: italic;
   padding-left: 1rem; }
+
+* {
+  opacity: 0.8; }
+
+.background--cyan {
+  background-color: #23c4af; }
+
+.background--orange {
+  background-color: #e77e22; }
+
+.background--red {
+  background-color: #e14b4a; }
+
+.page {
+  height: 100%; }
+
+.carousel__item {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%; }
+
+.carousel__list {
+  height: 100%; }
+
+.carousel__content {
+  color: white;
+  font-size: 24px;
+  width: calc(100% - 50px); }
+  @media (min-width: 1024px) {
+    .carousel__content {
+      font-size: 48px; } }
+
+.carousel .navigation-change .icon {
+  fill: white; }
+
+.theme-header .text {
+  margin: 0 10px; }
+
+.theme-header .form__field {
+  margin-bottom: 0; }
+
+.theme-version {
+  white-space: nowrap; }
+  .theme-version .button {
+    margin-left: 0; }

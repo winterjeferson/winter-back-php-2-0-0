@@ -100,7 +100,7 @@ function getUrlFrontEnd()
 
 function getUrlBackEnd()
 {
-    return 'https://github.com/winterjeferson/winter-back-php/';
+    return 'https://github.com/winterjeferson/winter-back-php-2-0-0/';
 }
 
 function getUrArrLanguage()
