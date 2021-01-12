@@ -1,4 +1,5 @@
-<form class="form login-wrapper">
+<form class="form black">
+    <h1 class="page__title"><?php echo $arrContent['head']['translation']['login'] ?></h1>
     <div class="row form__field">
         <label class="form__label" for="pageAdminLoginUser"><?php echo $arrContent['head']['translation']['email']; ?></label>
         <input class="form__fill" id="pageAdminLoginUser" type="email" maxlength="40" placeholder="<?php echo $arrContent['head']['translation']['email']; ?>" value="email@email.com">

@@ -11,13 +11,11 @@ include __DIR__ . '/../shared/loading.php';
         include __DIR__ . '/../shared/menu.php';
         ?>
     </section>
-    <section id="mainContent" class="grid__content page">
-        <div id="<?php echo $arrDefinedVars['data']['content']['id'] ?>" class="row page">
-            <?php
-            include  __DIR__ . '/../' . $arrDefinedVars['data']['content']['folder'] . '/' . $arrDefinedVars['data']['content']['file'] . '.php';
-            ?>
-        </div>
-    </section>
+    <article id="<?php echo $arrDefinedVars['data']['content']['id'] ?>" class="grid__content page">
+        <?php
+        include  __DIR__ . '/../' . $arrDefinedVars['data']['content']['folder'] . '/' . $arrDefinedVars['data']['content']['file'] . '.php';
+        ?>
+    </article>
     <?php
     include __DIR__ . '/../shared/signature.php';
     ?>
