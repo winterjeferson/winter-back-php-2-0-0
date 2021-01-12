@@ -11,29 +11,27 @@ class Login {
     update() {
         this.isSignUp = false;
 
-        this.$page = document.querySelector('#pageAdminLogin');
-        this.$buttonLogin = document.querySelector('#pageAdminLoginBt');
-        this.$fielEmail = document.querySelector('#pageAdminLoginUser');
-        this.$fieldPassword = document.querySelector('#pageAdminLoginPassword');
+        this.elPage = document.querySelector('#pageAdminLogin');
+        this.elButtonLogin = document.querySelector('#pageAdminLoginBt');
+        this.elFieldLogin = document.querySelector('#pageAdminLoginUser');
+        this.elFieldPassword = document.querySelector('#pageAdminLoginPassword');
     }
 
     buildMenu() {
-        let self = this;
-
-        this.$buttonLogin.addEventListener('click', () => {
-            self.buildLogin();
+        this.elButtonLogin.addEventListener('click', () => {
+            this.buildLogin();
         });
     }
 
     validate() {
-        if (this.$fielEmail.value === '') {
-            this.$fielEmail.focus();
+        if (this.elFieldLogin.value === '') {
+            this.elFieldLogin.focus();
             this.buildLoginResponse('empty_email');
             return;
         }
 
-        if (this.$fieldPassword.value === '') {
-            this.$fieldPassword.focus();
+        if (this.elFieldPassword.value === '') {
+            this.elFieldPassword.focus();
             this.buildLoginResponse('empty_password');
             return;
         }
@@ -49,20 +47,20 @@ class Login {
             'file': 'LoginAjax'
         });
         let parameter =
-            '&email=' + this.$fielEmail.value +
-            '&password=' + this.$fieldPassword.value +
+            '&email=' + this.elFieldLogin.value +
+            '&password=' + this.elFieldPassword.value +
             '&token=' + globalToken;
 
         if (!this.validate()) {
             return;
         }
 
-        this.$buttonLogin.setAttribute('disabled', 'disabled');
+        this.elButtonLogin.setAttribute('disabled', 'disabled');
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                self.$buttonLogin.removeAttribute('disabled');
+                self.elButtonLogin.removeAttribute('disabled');
                 self.buildLoginResponse(ajax.responseText);
             }
         };
@@ -72,7 +70,6 @@ class Login {
 
     buildLoginResponse(data) {
         let response = '';
-        let $responseElement = this.$page.querySelector('.form');
 
         switch (data) {
             case 'inactive':
@@ -80,22 +77,25 @@ class Login {
                 break;
             case 'problem':
                 response = globalTranslation.loginFail;
-                this.$fielEmail.focus();
+                this.elFieldLogin.focus();
                 break;
             case 'empty_email':
                 response = globalTranslation.emptyField;
-                this.$fielEmail.focus();
+                this.elFieldLogin.focus();
                 break;
             case 'empty_password':
                 response = globalTranslation.emptyField;
-                this.$fieldPassword.focus();
+                this.elFieldPassword.focus();
                 break;
             default:
                 window.url.build('admin');
                 break;
         }
 
-        objWfNotification.add(response, 'red', $responseElement);
+        window.notification.add({
+            'text': response,
+            'color': 'red'
+        });
     }
 }
 

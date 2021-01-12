@@ -209,7 +209,7 @@ class Url {
     }
 
     getController(obj) {
-        return './application/controller/' + obj['folder'] + '/' + obj['file'] + '.php';
+        return `./app/controller/${obj['folder']}/${obj['file']}.php`;
     }
 
     watch(fieldWatch, fieldReturn) {

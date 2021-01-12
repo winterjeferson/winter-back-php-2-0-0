@@ -4,24 +4,6 @@
      }
  }
 
- .page-admin-login {
-     align-items: center;
-     background-color: $color-grey;
-     display: flex;
-     height: 100%;
-     justify-content: center;
-
-     .login-wrapper {
-         background-color: white;
-         border: 1px solid $color-grey;
-         border-radius: $re;
-         height: auto;
-         margin: auto;
-         max-width: 500px;
-         padding: $bi;
-     }
- }
-
  .table-wrapper {
      max-height: 300px;
      overflow-y: auto;
@@ -46,3 +28,10 @@
      padding: $re;
      text-align: right;
  }
+
+ .login-wrapper {
+    height: auto;
+    margin: auto;
+    max-width: 500px;
+    padding: $bi;
+}
