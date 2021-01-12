@@ -1,0 +1,34 @@
+.table .menu {
+  white-space: nowrap; }
+
+.page-admin-login {
+  align-items: center;
+  background-color: grey;
+  display: flex;
+  height: 100%;
+  justify-content: center; }
+  .page-admin-login .login-wrapper {
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 4px;
+    height: auto;
+    margin: auto;
+    max-width: 500px;
+    padding: 8px; }
+
+.table-wrapper {
+  max-height: 300px;
+  overflow-y: auto; }
+
+.thumbnail-table {
+  text-align: left; }
+
+.modal-content .table img,
+.page-admin-image .table img,
+.page-admin-blog .table img {
+  height: 50px;
+  width: auto; }
+
+.user {
+  padding: 4px;
+  text-align: right; }
