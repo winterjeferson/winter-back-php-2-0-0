@@ -5,7 +5,6 @@ class AdminPage {
         }
 
         CKEDITOR.replace('fieldContent', {});
-
         CKEDITOR.config.basicEntities = false;
         CKEDITOR.config.entities_greek = false;
         CKEDITOR.config.entities_latin = false;
@@ -14,25 +13,26 @@ class AdminPage {
         this.update();
         this.buildMenu();
         this.buildMenuTable();
-        window.url.watch(this.$formFieldTitle, this.$formFieldUrl);
+        window.url.watch(this.elFormFieldTitle, this.elFormFieldUrl);
     }
 
     update() {
+        this.elPage = document.querySelector('#pageAdminPageEdit');
+        this.elCkEditor = CKEDITOR.instances.fieldContent;
+        this.elContentList = document.querySelector('#pageAdminPageList');
+        this.elFormFieldMenu = this.elPage.querySelector('[data-id="formFieldMenu"]');
+        this.elFormFieldTitle = this.elPage.querySelector('[data-id="formFieldTitle"]');
+        this.elFormFieldUrl = this.elPage.querySelector('[data-id="formFieldUrl"]');
+        this.elButtonRegister = this.elPage.querySelector('[data-id="btRegister"]');
+
         this.isEdit = false;
         this.editId = 0;
-        this.$page = document.querySelector('#pageAdminPageEdit');
-        this.$ckEditor = CKEDITOR.instances.fieldContent;
-        this.$contentList = document.querySelector('#pageAdminPageList');
-        this.$formFieldMenu = this.$page.querySelector('[data-id="formFieldMenu"]');
-        this.$formFieldTitle = this.$page.querySelector('[data-id="formFieldTitle"]');
-        this.$formFieldUrl = this.$page.querySelector('[data-id="formFieldUrl"]');
-        this.$btRegister = this.$page.querySelector('[data-id="btRegister"]');
     }
 
     buildMenu() {
         const self = this;
 
-        this.$btRegister.onclick = function () {
+        this.elButtonRegister.onclick = function () {
             if (!self.validateForm()) {
                 return;
             }
@@ -47,11 +47,11 @@ class AdminPage {
 
     buildMenuTable() {
         const self = this;
-        const $table = this.$contentList.querySelectorAll('.table');
-        const $tableActive = this.$contentList.querySelectorAll('[data-id="tableActive"]');
-        const $tableInactive = this.$contentList.querySelectorAll('[data-id="tableInactive"]');
+        const elTable = this.elContentList.querySelectorAll('.table');
+        const elTableActive = this.elContentList.querySelectorAll('[data-id="tableActive"]');
+        const elTableInactive = this.elContentList.querySelectorAll('[data-id="tableInactive"]');
 
-        Array.prototype.forEach.call($tableActive, function (table) {
+        Array.prototype.forEach.call(elTableActive, function (table) {
             let $button = table.querySelectorAll('[data-action="inactivate"]');
 
             Array.prototype.forEach.call($button, function (item) {
@@ -62,7 +62,7 @@ class AdminPage {
             });
         });
 
-        Array.prototype.forEach.call($tableInactive, function (table) {
+        Array.prototype.forEach.call(elTableInactive, function (table) {
             let $button = table.querySelectorAll('[data-action="activate"]');
 
             Array.prototype.forEach.call($button, function (item) {
@@ -72,18 +72,18 @@ class AdminPage {
             });
         });
 
-        Array.prototype.forEach.call($table, function (table) {
-            let $buttonEdit = table.querySelectorAll('[data-action="edit"]');
-            let $buttonDelete = table.querySelectorAll('[data-action="delete"]');
+        Array.prototype.forEach.call(elTable, function (table) {
+            let elButtonEdit = table.querySelectorAll('[data-action="edit"]');
+            let elButtonDelete = table.querySelectorAll('[data-action="delete"]');
 
-            Array.prototype.forEach.call($buttonEdit, function (item) {
+            Array.prototype.forEach.call(elButtonEdit, function (item) {
                 item.onclick = function () {
                     self.editId = item.getAttribute('data-id');
                     self.editLoadData(self.editId);
                 };
             });
 
-            Array.prototype.forEach.call($buttonDelete, function (item) {
+            Array.prototype.forEach.call(elButtonDelete, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
                     objWfModal.buildContentConfirmationAction('window.adminPage.delete(' + item.getAttribute('data-id') + ')');
@@ -94,8 +94,8 @@ class AdminPage {
 
     validateForm() {
         let arrField = [
-            this.$formFieldMenu,
-            this.$formFieldTitle
+            this.elFormFieldMenu,
+            this.elFormFieldTitle
         ];
 
         return objWfForm.validateEmpty(arrField);
@@ -176,22 +176,22 @@ class AdminPage {
     }
 
     editFillField(obj) {
-        this.$formFieldTitle.value = obj['title_' + globalLanguage];
-        this.$formFieldUrl.value = obj['url_' + globalLanguage];
-        this.$formFieldMenu.value = obj['menu_' + globalLanguage];
+        this.elFormFieldTitle.value = obj['title_' + globalLanguage];
+        this.elFormFieldUrl.value = obj['url_' + globalLanguage];
+        this.elFormFieldMenu.value = obj['menu_' + globalLanguage];
         this.editId = obj['id'];
 
-        this.$ckEditor.setData(obj['content_' + globalLanguage], function () {
+        this.elCkEditor.setData(obj['content_' + globalLanguage], function () {
             this.checkDirty();
         });
     }
 
     buildParameter() {
         return '' +
-            '&title=' + this.$formFieldTitle.value +
-            '&url=' + this.$formFieldUrl.value +
-            '&menu=' + this.$formFieldMenu.value +
-            '&content=' + this.$ckEditor.getData();
+            '&title=' + this.elFormFieldTitle.value +
+            '&url=' + this.elFormFieldUrl.value +
+            '&menu=' + this.elFormFieldMenu.value +
+            '&content=' + this.elCkEditor.getData();
     }
 
     modify(id, status) {

@@ -14,15 +14,13 @@ class Admin {
     }
 
     updateVariable() {
-        this.$page = document.querySelector('#mainContent');
+        this.elPage = document.querySelector('#mainContent');
 
-        if (!document.contains(this.$page)) {
-            return;
-        }
+        if (!document.contains(this.elPage)) return;
 
-        this.$btBlog = this.$page.querySelector('[data-id="btAdminBlog"]');
-        this.$btUpload = this.$page.querySelector('[data-id="btAdminImage"]');
-        this.$btLogout = this.$page.querySelector('[data-id="btAdminLogout"]');
+        this.$btBlog = this.elPage.querySelector('[data-id="btAdminBlog"]');
+        this.$btUpload = this.elPage.querySelector('[data-id="btAdminImage"]');
+        this.$btLogout = this.elPage.querySelector('[data-id="btAdminLogout"]');
     }
 
     buildMenuDifeneActive() {

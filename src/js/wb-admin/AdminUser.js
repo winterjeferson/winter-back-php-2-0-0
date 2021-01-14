@@ -12,19 +12,19 @@ class AdminUser {
     updateVariable() {
         this.isEdit = false;
         this.editId = 0;
-        this.$page = document.querySelector('#pageAdminUser');
-        this.$formRegister = this.$page.querySelector('[data-id="formRegister"]');
-        this.$formFieldName = this.$formRegister.querySelector('[data-id="name"]');
-        this.$formFieldEmail = this.$formRegister.querySelector('[data-id="email"]');
-        this.$formFieldPassword = this.$formRegister.querySelector('[data-id="password"]');
-        this.$formFieldPermission = this.$formRegister.querySelector('[data-id="permission"]');
-        this.$formSend = this.$formRegister.querySelector('[data-id="send"]');
+        this.elPage = document.querySelector('#pageAdminUser');
+        this.elFormRegister = this.elPage.querySelector('[data-id="formRegister"]');
+        this.elFormFieldName = this.elFormRegister.querySelector('[data-id="name"]');
+        this.elFormFieldEmail = this.elFormRegister.querySelector('[data-id="email"]');
+        this.elFormFieldPassword = this.elFormRegister.querySelector('[data-id="password"]');
+        this.elFormFieldPermission = this.elFormRegister.querySelector('[data-id="permission"]');
+        this.elFormSend = this.elFormRegister.querySelector('[data-id="send"]');
     }
 
     buildMenu() {
         const self = this;
 
-        this.$formSend.onclick = () => {
+        this.elFormSend.onclick = () => {
             if (!self.validateForm()) {
                 return;
             }
@@ -39,14 +39,14 @@ class AdminUser {
 
     buildMenuTable() {
         let self = this;
-        let $table = this.$page.querySelectorAll('.table');
-        let $tableActive = this.$page.querySelectorAll('[data-id="tableActive"]');
-        let $tableInactive = this.$page.querySelectorAll('[data-id="tableInactive"]');
+        let elTable = this.elPage.querySelectorAll('.table');
+        let elTableActive = this.elPage.querySelectorAll('[data-id="tableActive"]');
+        let elTableInactive = this.elPage.querySelectorAll('[data-id="tableInactive"]');
 
-        Array.prototype.forEach.call($tableActive, function (table) {
-            let $button = table.querySelectorAll('[data-action="inactivate"]');
+        Array.prototype.forEach.call(elTableActive, function (table) {
+            let elButton = table.querySelectorAll('[data-action="inactivate"]');
 
-            Array.prototype.forEach.call($button, function (item) {
+            Array.prototype.forEach.call(elButton, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationInactivate);
                     objWfModal.buildContentConfirmationAction('window.adminUser.modify(' + item.getAttribute('data-id') + ', "inactivate")');
@@ -54,28 +54,28 @@ class AdminUser {
             });
         });
 
-        Array.prototype.forEach.call($tableInactive, function (table) {
-            let $button = table.querySelectorAll('[data-action="activate"]');
+        Array.prototype.forEach.call(elTableInactive, function (table) {
+            let elButton = table.querySelectorAll('[data-action="activate"]');
 
-            Array.prototype.forEach.call($button, function (item) {
+            Array.prototype.forEach.call(elButton, function (item) {
                 item.onclick = function () {
                     self.modify(item.getAttribute('data-id'), 'activate');
                 };
             });
         });
 
-        Array.prototype.forEach.call($table, function (table) {
-            let $buttonEdit = table.querySelectorAll('[data-action="edit"]');
-            let $buttonDelete = table.querySelectorAll('[data-action="delete"]');
+        Array.prototype.forEach.call(elTable, function (table) {
+            let elButtonEdit = table.querySelectorAll('[data-action="edit"]');
+            let elButtonDelete = table.querySelectorAll('[data-action="delete"]');
 
-            Array.prototype.forEach.call($buttonEdit, function (item) {
+            Array.prototype.forEach.call(elButtonEdit, function (item) {
                 item.onclick = function () {
                     self.editId = item.getAttribute('data-id');
                     self.editLoadData(self.editId);
                 };
             });
 
-            Array.prototype.forEach.call($buttonDelete, function (item) {
+            Array.prototype.forEach.call(elButtonDelete, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
                     objWfModal.buildContentConfirmationAction('window.adminUser.delete(' + item.getAttribute('data-id') + ')');
@@ -156,11 +156,11 @@ class AdminUser {
 
     editFillField(obj) {
         this.isEdit = true;
-        this.$formFieldName.value = obj['name'];
-        this.$formFieldEmail.value = obj['email'];
-        this.$formFieldPassword.value = '';
+        this.elFormFieldName.value = obj['name'];
+        this.elFormFieldEmail.value = obj['email'];
+        this.elFormFieldPassword.value = '';
         this.editId = obj['id'];
-        this.$formFieldPermission.value = obj['permission'];
+        this.elFormFieldPermission.value = obj['permission'];
     }
 
     editSave() {
@@ -212,8 +212,8 @@ class AdminUser {
 
     validateForm() {
         let arrField = [
-            this.$formFieldEmail,
-            this.$formFieldPassword
+            this.elFormFieldEmail,
+            this.elFormFieldPassword
         ];
 
         return objWfForm.validateEmpty(arrField);
@@ -221,10 +221,10 @@ class AdminUser {
 
     buildParameter() {
         return '' +
-            '&name=' + this.$formFieldName.value +
-            '&email=' + this.$formFieldEmail.value +
-            '&permission=' + this.$formFieldPermission.value +
-            '&password=' + this.$formFieldPassword.value;
+            '&name=' + this.elFormFieldName.value +
+            '&email=' + this.elFormFieldEmail.value +
+            '&permission=' + this.elFormFieldPermission.value +
+            '&password=' + this.elFormFieldPassword.value;
     }
 }
 

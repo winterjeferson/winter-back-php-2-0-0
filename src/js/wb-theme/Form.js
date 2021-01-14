@@ -1,26 +1,24 @@
 class WBForm {
     build() {
-        if (!window.helper.getUrlWord('form')) {
-            return;
-        }
+        if (!window.helper.getUrlWord('form')) return;
 
         this.update();
         this.buildMenu();
     }
 
     update() {
-        this.$page = document.querySelector('#pageForm');
-        this.$form = this.$page.querySelector('.form');
-        this.$formFieldEmail = this.$form.querySelector('[data-id="email"]');
-        this.$formFieldMessage = this.$form.querySelector('[data-id="message"]');
-        this.$btSend = this.$page.querySelector('#pageFormBtSend');
+        this.elPage = document.querySelector('#pageForm');
+        this.elForm = this.elPage.querySelector('.form');
+        this.elFormFieldEmail = this.elForm.querySelector('[data-id="email"]');
+        this.elFormFieldMessage = this.elForm.querySelector('[data-id="message"]');
+        this.elButtonSend = this.elPage.querySelector('#pageFormBtSend');
     }
 
     buildMenu() {
         const self = this;
 
-        this.$btSend.addEventListener('click', () => {
-            if (objWfForm.validateEmpty([self.$formFieldEmail, self.$formFieldMessage])) {
+        this.elButtonSend.addEventListener('click', () => {
+            if (objWfForm.validateEmpty([self.elFormFieldEmail, self.elFormFieldMessage])) {
                 self.send();
             }
         });
@@ -38,13 +36,13 @@ class WBForm {
             '&data=' + JSON.stringify(self.getData()) +
             '&token=' + globalToken;
 
-        this.$btSend.setAttribute('disabled', 'disabled');
+        this.elButtonSend.setAttribute('disabled', 'disabled');
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                self.$btSend.removeAttribute('disabled');
+                self.elButtonSend.removeAttribute('disabled');
                 self.response(ajax.responseText);
             }
         };
@@ -55,8 +53,8 @@ class WBForm {
     getData() {
         let arr = [];
 
-        arr.push(this.$form.querySelector('[data-id="email"]').value);
-        arr.push(this.$form.querySelector('[data-id="message"]').value);
+        arr.push(this.elForm.querySelector('[data-id="email"]').value);
+        arr.push(this.elForm.querySelector('[data-id="message"]').value);
 
         return arr;
     }
@@ -76,7 +74,7 @@ class WBForm {
                 break;
         }
 
-        objWfNotification.add(response, color, this.$form);
+        objWfNotification.add(response, color, this.elForm);
     }
 }
 

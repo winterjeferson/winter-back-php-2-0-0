@@ -37,7 +37,7 @@ class Blog
         $listDecodeMostViewed = json_decode($listMostViewed, true);
 
         $arr = [
-            'listLasPost' => $listDecodeLastPost['html'],
+            'listLastPost' => $listDecodeLastPost['html'],
             'listMostViewed' => $listDecodeMostViewed['html'],
             'listTag' => $this->objTag->getList(),
             'btLoadMore' => $this->buildLoadMoreButton('LastPost'),
@@ -49,7 +49,8 @@ class Blog
 
     function getList($target)
     {
-        $queryAdd = $this->{'getListQuery' . $target}();
+        $list = 'getListQuery' . $target;
+        $queryAdd = $this->$list();
         $query = $this->getListQueryDefault($queryAdd);
         $this->buildLoadMore($target, $query);
         $html = $this->buildHtml($query);
@@ -192,7 +193,7 @@ class Blog
     {
         if ($this->objSession->get($this->prefixLoadMore . $target)) {
             $string = '
-                <button type="button" class="bt bt-fu bt-blue" data-id="loadMore">
+                <button type="button" class="button button-load-more button--regular button--blue" data-id="loadMore">
                     ' . $this->objSession->getArray('translation', 'loadMore') . '
                 </button>
             ';

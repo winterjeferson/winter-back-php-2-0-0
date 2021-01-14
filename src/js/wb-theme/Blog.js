@@ -1,6 +1,6 @@
 class Blog {
     constructor() {
-        this.classlaodMore = 'loadMore';
+        this.cssLoadMore = 'loadMore';
     }
 
     build() {
@@ -14,41 +14,44 @@ class Blog {
 
     update() {
         this.page = 'pageBlog';
-        this.$lastPost = document.querySelector('#' + this.page + 'LastPost');
-        this.$mostViewed = document.querySelector('#' + this.page + 'MostViewed');
+        this.elLastPost = document.querySelector(`#${this.page}LastPost`);
+        this.elMostViewed = document.querySelector(`#${this.page}MostViewed`);
     }
 
     buildMenu() {
-        let self = this;
+        const el = `[data-id="${this.cssLoadMore}"]`;
 
-        if (!this.$lastPost) {
-            return;
-        }
+        if (el) return;
 
-        if (document.contains(this.$lastPost.querySelector('[data-id="' + this.classlaodMore + '"]'))) {
-            this.$lastPost.querySelector('[data-id="' + this.classlaodMore + '"]').addEventListener('click', () => {
-                self.loadMore(this);
+        const elButtonLastPost = this.elLastPost.querySelector(el);
+        const elButtonMostViewed = this.elMostViewed.querySelector(el);
+
+        if (!this.elLastPost) return;
+
+        if (document.contains(elButtonLastPost)) {
+            elButtonLastPost.addEventListener('click', () => {
+                this.loadMore(elButtonLastPost);
             });
         }
 
-        if (document.contains(this.$mostViewed.querySelector('[data-id="' + this.classlaodMore + '"]'))) {
-            this.$mostViewed.querySelector('[data-id="' + this.classlaodMore + '"]').addEventListener('click', () => {
-                self.loadMore(this);
+        if (document.contains(elButtonMostViewed)) {
+            elButtonMostViewed.addEventListener('click', () => {
+                this.loadMore(elButtonMostViewed);
             });
         }
     }
 
     loadMore(target) {
         let self = this;
-        let parentId = target.parentNode.parentNode.parentNode.getAttribute('id');
-        let parentIdString = parentId.substring(this.page.length);
+        let id = target.parentNode.parentNode.getAttribute('id');
+        let idString = id.substring(this.page.length);
         let ajax = new XMLHttpRequest();
         let url = window.url.getController({
             'folder': 'blog',
             'file': 'LoadMore'
         });
         let parameter =
-            '&target=' + parentIdString;
+            '&target=' + idString;
 
         target.classList.add('disabled');
         ajax.open('POST', url, true);
@@ -56,24 +59,24 @@ class Blog {
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
                 target.classList.remove('disabled');
-                self.loadMoreSuccess(parentId, ajax.responseText);
+                self.loadMoreSuccess(id, ajax.responseText);
             }
         };
 
         ajax.send(parameter);
     }
 
-    loadMoreSuccess(parentId, value) {
+    loadMoreSuccess(id, value) {
         let json = JSON.parse(value);
-        let $section = document.querySelector('#' + parentId);
-        let $sectionList = $section.querySelector('.blog-list');
-        let $bt = $section.querySelector('[data-id="' + this.classlaodMore + '"]');
+        let elSection = document.querySelector('#' + id);
+        let elSectionList = elSection.querySelector('.blog-list');
+        let elButton = elSection.querySelector('[data-id="' + this.cssLoadMore + '"]');
 
-        if (!json[this.classlaodMore]) {
-            $bt.classList.add('disabled');
+        if (!json[this.cssLoadMore]) {
+            elButton.classList.add('disabled');
         }
 
-        $sectionList.insertAdjacentHTML('beforeend', json['html']);
+        elSectionList.insertAdjacentHTML('beforeend', json['html']);
         window.scrollTo(0, document.documentElement.scrollTop + 1);
         window.scrollTo(0, document.documentElement.scrollTop - 1);
     }

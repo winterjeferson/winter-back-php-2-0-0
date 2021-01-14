@@ -14,15 +14,13 @@ class Admin {
     }
 
     updateVariable() {
-        this.$page = document.querySelector('#mainContent');
+        this.elPage = document.querySelector('#mainContent');
 
-        if (!document.contains(this.$page)) {
-            return;
-        }
+        if (!document.contains(this.elPage)) return;
 
-        this.$btBlog = this.$page.querySelector('[data-id="btAdminBlog"]');
-        this.$btUpload = this.$page.querySelector('[data-id="btAdminImage"]');
-        this.$btLogout = this.$page.querySelector('[data-id="btAdminLogout"]');
+        this.$btBlog = this.elPage.querySelector('[data-id="btAdminBlog"]');
+        this.$btUpload = this.elPage.querySelector('[data-id="btAdminImage"]');
+        this.$btLogout = this.elPage.querySelector('[data-id="btAdminLogout"]');
     }
 
     buildMenuDifeneActive() {
@@ -85,7 +83,6 @@ class AdminBlog {
         }
 
         CKEDITOR.replace('fieldContent', {});
-
         CKEDITOR.config.basicEntities = false;
         CKEDITOR.config.entities_greek = false;
         CKEDITOR.config.entities_latin = false;
@@ -95,37 +92,38 @@ class AdminBlog {
         this.buildMenu();
         this.buildMenuTable();
         this.buildMenuThumbnail();
-        window.url.watch(this.$formFieldTitle, this.$formFieldUrl);
+        window.url.watch(this.elFormFieldTitle, this.elFormFieldUrl);
     }
 
     update() {
+        this.elPage = document.querySelector('#pageAdminBlog');
+        this.elContentEdit = document.querySelector('#pageAdminBlogEdit');
+        this.elContentEditThumbnail = this.elContentEdit.querySelector('[data-id="thumbnailWrapper"]');
+        this.elContentList = document.querySelector('#pageAdminBlogList');
+        this.elFormRegister = this.elContentEdit.querySelector('[data-id="formRegister"]');
+        this.elFormFieldTitle = this.elContentEdit.querySelector('[data-id="fieldTitle"]');
+        this.elFormFieldUrl = this.elContentEdit.querySelector('[data-id="fieldUrl"]');
+        this.elFormFieldContent = this.elContentEdit.querySelector('[data-id="fieldContent"]');
+        this.elFormFieldTag = this.elContentEdit.querySelector('[data-id="fieldTag"]');
+        this.elFormFieldDatePost = this.elContentEdit.querySelector('[data-id="fieldDatePost"]');
+        this.elFormFieldDateEdit = this.elContentEdit.querySelector('[data-id="fieldDateEdit"]');
+        this.elThumbnailWrapper = this.elContentEdit.querySelector('[data-id="thumbnailWrapper"]');
+        this.elFormFieldAuthor = document.querySelector('[data-id="author"]');
+        this.elCkEditor = CKEDITOR.instances.fieldContent;
+        this.elButtonRegister = this.elPage.querySelector('[data-id="btRegister"]');
+
         this.isEdit = false;
         this.editId = 0;
-        this.$page = document.querySelector('#pageAdminBlog');
-        this.$contentEdit = document.querySelector('#pageAdminBlogEdit');
-        this.$contentEditThumbnail = this.$contentEdit.querySelector('[data-id="thumbnailWrapper"]');
-        this.$contentList = document.querySelector('#pageAdminBlogList');
-        this.$formRegister = this.$contentEdit.querySelector('[data-id="formRegister"]');
-        this.$formFieldTitle = this.$contentEdit.querySelector('[data-id="fieldTitle"]');
-        this.$formFieldUrl = this.$contentEdit.querySelector('[data-id="fieldUrl"]');
-        this.$formFieldContent = this.$contentEdit.querySelector('[data-id="fieldContent"]');
-        this.$formFieldTag = this.$contentEdit.querySelector('[data-id="fieldTag"]');
-        this.$formFieldDatePost = this.$contentEdit.querySelector('[data-id="fieldDatePost"]');
-        this.$formFieldDateEdit = this.$contentEdit.querySelector('[data-id="fieldDateEdit"]');
-        this.$thumbnailWrapper = this.$contentEdit.querySelector('[data-id="thumbnailWrapper"]');
-        this.$formFieldAuthor = document.querySelector('[data-id="author"]');
         this.thumbnail = '';
         this.thumbnailDefault = 'blog-thumbnail.jpg';
         this.pathImage = '';
         this.pathThumbnail = 'dynamic/blog/thumbnail/';
-        this.$ckEditor = CKEDITOR.instances.fieldContent;
-        this.$btRegister = this.$page.querySelector('[data-id="btRegister"]');
     }
 
     buildMenu() {
         const self = this;
 
-        this.$btRegister.onclick = function () {
+        this.elButtonRegister.onclick = () => {
             if (!self.validateForm()) {
                 return;
             }
@@ -139,7 +137,7 @@ class AdminBlog {
     }
 
     buildMenuThumbnail() {
-        const $target = this.$contentEditThumbnail.querySelectorAll('.table');
+        const $target = this.elContentEditThumbnail.querySelectorAll('.table');
 
         Array.prototype.forEach.call($target, function (table) {
             let $button = table.querySelectorAll('[data-action="edit"]');
@@ -157,9 +155,9 @@ class AdminBlog {
 
     buildMenuTable() {
         const self = this;
-        const $table = this.$contentList.querySelectorAll('.table');
-        const $tableActive = this.$contentList.querySelectorAll('[data-id="tableActive"]');
-        const $tableInactive = this.$contentList.querySelectorAll('[data-id="tableInactive"]');
+        const $table = this.elContentList.querySelectorAll('.table');
+        const $tableActive = this.elContentList.querySelectorAll('[data-id="tableActive"]');
+        const $tableInactive = this.elContentList.querySelectorAll('[data-id="tableInactive"]');
 
         Array.prototype.forEach.call($tableActive, function (table) {
             let $button = table.querySelectorAll('[data-action="inactivate"]');
@@ -260,15 +258,15 @@ class AdminBlog {
         const datePost = obj['date_post_' + globalLanguage];
         const dateEdit = obj['date_edit_' + globalLanguage];
 
-        this.$formFieldTitle.value = obj['title_' + globalLanguage];
-        this.$formFieldUrl.value = obj['url_' + globalLanguage];
-        this.$formFieldTag.value = obj['tag_' + globalLanguage];
-        this.$formFieldDatePost.value = datePost !== null ? datePost.substring(0, 10) : datePost;
-        this.$formFieldDateEdit.value = dateEdit !== null ? dateEdit.substring(0, 10) : dateEdit;
+        this.elFormFieldTitle.value = obj['title_' + globalLanguage];
+        this.elFormFieldUrl.value = obj['url_' + globalLanguage];
+        this.elFormFieldTag.value = obj['tag_' + globalLanguage];
+        this.elFormFieldDatePost.value = datePost !== null ? datePost.substring(0, 10) : datePost;
+        this.elFormFieldDateEdit.value = dateEdit !== null ? dateEdit.substring(0, 10) : dateEdit;
         this.editId = obj['id'];
-        this.$formFieldAuthor.value = obj['author_id'];
+        this.elFormFieldAuthor.value = obj['author_id'];
 
-        this.$ckEditor.setData(obj['content_' + globalLanguage], function () {
+        this.elCkEditor.setData(obj['content_' + globalLanguage], function () {
             this.checkDirty();
         });
     }
@@ -320,8 +318,8 @@ class AdminBlog {
 
     validateForm() {
         let arrField = [
-            this.$formFieldTitle,
-            this.$formFieldUrl
+            this.elFormFieldTitle,
+            this.elFormFieldUrl
         ];
 
         return objWfForm.validateEmpty(arrField);
@@ -331,14 +329,14 @@ class AdminBlog {
         const thumbnail = this.thumbnail === this.thumbnailDefault ? '' : this.thumbnail;
 
         return '' +
-            '&title=' + this.$formFieldTitle.value +
-            '&url=' + this.$formFieldUrl.value +
-            '&content=' + this.$ckEditor.getData() +
-            '&datePost=' + this.$formFieldDatePost.value +
-            '&dateEdit=' + this.$formFieldDateEdit.value +
-            '&authorId=' + this.$formFieldAuthor.value +
+            '&title=' + this.elFormFieldTitle.value +
+            '&url=' + this.elFormFieldUrl.value +
+            '&content=' + this.elCkEditor.getData() +
+            '&datePost=' + this.elFormFieldDatePost.value +
+            '&dateEdit=' + this.elFormFieldDateEdit.value +
+            '&authorId=' + this.elFormFieldAuthor.value +
             '&thumbnail=' + thumbnail +
-            '&tag=' + this.$formFieldTag.value;
+            '&tag=' + this.elFormFieldTag.value;
     }
 
     saveContent() {
@@ -364,8 +362,8 @@ class AdminBlog {
     }
 
     selectImage(target) {
-        let $card = target.parentNode.parentNode;
-        let imageName = $card.querySelector('[data-id="imageName"]').innerText;
+        let elCard = target.parentNode.parentNode;
+        let imageName = elCard.querySelector('[data-id="imageName"]').innerText;
 
         this.thumbnail = imageName;
         objWfModal.closeModal();
@@ -373,8 +371,8 @@ class AdminBlog {
     }
 
     modifyThumbnail() {
-        let $image = this.$thumbnailWrapper.querySelector('table').querySelector('[data-id="thumbnail"]');
-        let $name = this.$thumbnailWrapper.querySelector('table').querySelector('[data-id="name"]');
+        let elImage = this.elThumbnailWrapper.querySelector('table').querySelector('[data-id="thumbnail"]');
+        let elName = this.elThumbnailWrapper.querySelector('table').querySelector('[data-id="name"]');
 
         if (this.thumbnail === '' || this.thumbnail === null) {
             this.thumbnail = this.thumbnailDefault;
@@ -383,8 +381,8 @@ class AdminBlog {
             this.pathImage = this.pathThumbnail;
         }
 
-        $image.setAttribute('src', 'assets/img/' + this.pathImage + this.thumbnail);
-        $name.innerHTML = this.thumbnail;
+        elImage.setAttribute('src', 'assets/img/' + this.pathImage + this.thumbnail);
+        elName.innerHTML = this.thumbnail;
     }
 }
 
@@ -396,7 +394,6 @@ class AdminPage {
         }
 
         CKEDITOR.replace('fieldContent', {});
-
         CKEDITOR.config.basicEntities = false;
         CKEDITOR.config.entities_greek = false;
         CKEDITOR.config.entities_latin = false;
@@ -405,25 +402,26 @@ class AdminPage {
         this.update();
         this.buildMenu();
         this.buildMenuTable();
-        window.url.watch(this.$formFieldTitle, this.$formFieldUrl);
+        window.url.watch(this.elFormFieldTitle, this.elFormFieldUrl);
     }
 
     update() {
+        this.elPage = document.querySelector('#pageAdminPageEdit');
+        this.elCkEditor = CKEDITOR.instances.fieldContent;
+        this.elContentList = document.querySelector('#pageAdminPageList');
+        this.elFormFieldMenu = this.elPage.querySelector('[data-id="formFieldMenu"]');
+        this.elFormFieldTitle = this.elPage.querySelector('[data-id="formFieldTitle"]');
+        this.elFormFieldUrl = this.elPage.querySelector('[data-id="formFieldUrl"]');
+        this.elButtonRegister = this.elPage.querySelector('[data-id="btRegister"]');
+
         this.isEdit = false;
         this.editId = 0;
-        this.$page = document.querySelector('#pageAdminPageEdit');
-        this.$ckEditor = CKEDITOR.instances.fieldContent;
-        this.$contentList = document.querySelector('#pageAdminPageList');
-        this.$formFieldMenu = this.$page.querySelector('[data-id="formFieldMenu"]');
-        this.$formFieldTitle = this.$page.querySelector('[data-id="formFieldTitle"]');
-        this.$formFieldUrl = this.$page.querySelector('[data-id="formFieldUrl"]');
-        this.$btRegister = this.$page.querySelector('[data-id="btRegister"]');
     }
 
     buildMenu() {
         const self = this;
 
-        this.$btRegister.onclick = function () {
+        this.elButtonRegister.onclick = function () {
             if (!self.validateForm()) {
                 return;
             }
@@ -438,11 +436,11 @@ class AdminPage {
 
     buildMenuTable() {
         const self = this;
-        const $table = this.$contentList.querySelectorAll('.table');
-        const $tableActive = this.$contentList.querySelectorAll('[data-id="tableActive"]');
-        const $tableInactive = this.$contentList.querySelectorAll('[data-id="tableInactive"]');
+        const elTable = this.elContentList.querySelectorAll('.table');
+        const elTableActive = this.elContentList.querySelectorAll('[data-id="tableActive"]');
+        const elTableInactive = this.elContentList.querySelectorAll('[data-id="tableInactive"]');
 
-        Array.prototype.forEach.call($tableActive, function (table) {
+        Array.prototype.forEach.call(elTableActive, function (table) {
             let $button = table.querySelectorAll('[data-action="inactivate"]');
 
             Array.prototype.forEach.call($button, function (item) {
@@ -453,7 +451,7 @@ class AdminPage {
             });
         });
 
-        Array.prototype.forEach.call($tableInactive, function (table) {
+        Array.prototype.forEach.call(elTableInactive, function (table) {
             let $button = table.querySelectorAll('[data-action="activate"]');
 
             Array.prototype.forEach.call($button, function (item) {
@@ -463,18 +461,18 @@ class AdminPage {
             });
         });
 
-        Array.prototype.forEach.call($table, function (table) {
-            let $buttonEdit = table.querySelectorAll('[data-action="edit"]');
-            let $buttonDelete = table.querySelectorAll('[data-action="delete"]');
+        Array.prototype.forEach.call(elTable, function (table) {
+            let elButtonEdit = table.querySelectorAll('[data-action="edit"]');
+            let elButtonDelete = table.querySelectorAll('[data-action="delete"]');
 
-            Array.prototype.forEach.call($buttonEdit, function (item) {
+            Array.prototype.forEach.call(elButtonEdit, function (item) {
                 item.onclick = function () {
                     self.editId = item.getAttribute('data-id');
                     self.editLoadData(self.editId);
                 };
             });
 
-            Array.prototype.forEach.call($buttonDelete, function (item) {
+            Array.prototype.forEach.call(elButtonDelete, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
                     objWfModal.buildContentConfirmationAction('window.adminPage.delete(' + item.getAttribute('data-id') + ')');
@@ -485,8 +483,8 @@ class AdminPage {
 
     validateForm() {
         let arrField = [
-            this.$formFieldMenu,
-            this.$formFieldTitle
+            this.elFormFieldMenu,
+            this.elFormFieldTitle
         ];
 
         return objWfForm.validateEmpty(arrField);
@@ -567,22 +565,22 @@ class AdminPage {
     }
 
     editFillField(obj) {
-        this.$formFieldTitle.value = obj['title_' + globalLanguage];
-        this.$formFieldUrl.value = obj['url_' + globalLanguage];
-        this.$formFieldMenu.value = obj['menu_' + globalLanguage];
+        this.elFormFieldTitle.value = obj['title_' + globalLanguage];
+        this.elFormFieldUrl.value = obj['url_' + globalLanguage];
+        this.elFormFieldMenu.value = obj['menu_' + globalLanguage];
         this.editId = obj['id'];
 
-        this.$ckEditor.setData(obj['content_' + globalLanguage], function () {
+        this.elCkEditor.setData(obj['content_' + globalLanguage], function () {
             this.checkDirty();
         });
     }
 
     buildParameter() {
         return '' +
-            '&title=' + this.$formFieldTitle.value +
-            '&url=' + this.$formFieldUrl.value +
-            '&menu=' + this.$formFieldMenu.value +
-            '&content=' + this.$ckEditor.getData();
+            '&title=' + this.elFormFieldTitle.value +
+            '&url=' + this.elFormFieldUrl.value +
+            '&menu=' + this.elFormFieldMenu.value +
+            '&content=' + this.elCkEditor.getData();
     }
 
     modify(id, status) {
@@ -647,23 +645,23 @@ class AdminUploadImage {
     }
 
     updateVariable() {
-        this.$btUploadThumbnail = document.querySelector('[data-id="btUploadThumbnail"]');
-        this.$btUploadBanner = document.querySelector('[data-id="btUploadBanner"]');
+        this.elButtonUploadThumbnail = document.querySelector('[data-id="btUploadThumbnail"]');
+        this.elButtonUploadBanner = document.querySelector('[data-id="btUploadBanner"]');
     }
 
     buildMenu() {
         const self = this;
-        let $buttonDelete = document.querySelectorAll('[data-action="delete"]');
+        let elButtonDelete = document.querySelectorAll('[data-action="delete"]');
 
-        this.$btUploadThumbnail.addEventListener('click', () => {
+        this.elButtonUploadThumbnail.addEventListener('click', () => {
             self.upload(this, 'blog/thumbnail/');
         });
 
-        this.$btUploadBanner.addEventListener('click', () => {
+        this.elButtonUploadBanner.addEventListener('click', () => {
             self.upload(this, 'blog/banner/');
         });
 
-        Array.prototype.forEach.call($buttonDelete, function (item) {
+        Array.prototype.forEach.call(elButtonDelete, function (item) {
             item.onclick = function () {
                 self.deleteImage(item);
             };
@@ -706,18 +704,18 @@ class AdminUploadImage {
 
     upload(target, path) {
         const self = this;
-        const $form = target.parentNode.parentNode.parentNode.parentNode.parentNode;
-        const $file = $form.querySelector('[type=file]');
+        const elForm = target.parentNode.parentNode.parentNode.parentNode.parentNode;
+        const elFile = elForm.querySelector('[type=file]');
         const data = new FormData();
         const ajax = new XMLHttpRequest();
-        const file = $file.files[0];
+        const file = elFile.files[0];
         const url = window.url.getController({
             'folder': 'admin',
             'file': 'ImageUpload'
         });
 
-        if ($file.files.length === 0) {
-            $file.click();
+        if (elFile.files.length === 0) {
+            elFile.click();
             return;
         }
 
@@ -725,13 +723,13 @@ class AdminUploadImage {
         data.append('f', file);
         data.append('token', globalToken);
 
-        this.$btUploadThumbnail.setAttribute('disabled', 'disabled');
+        this.elButtonUploadThumbnail.setAttribute('disabled', 'disabled');
         ajax.open('POST', url);
 
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                self.$btUploadThumbnail.removeAttribute('disabled');
-                self.buildResponse(ajax.responseText, $form);
+                self.elButtonUploadThumbnail.removeAttribute('disabled');
+                self.buildResponse(ajax.responseText, elForm);
             }
         };
 
@@ -767,19 +765,19 @@ class AdminUser {
     updateVariable() {
         this.isEdit = false;
         this.editId = 0;
-        this.$page = document.querySelector('#pageAdminUser');
-        this.$formRegister = this.$page.querySelector('[data-id="formRegister"]');
-        this.$formFieldName = this.$formRegister.querySelector('[data-id="name"]');
-        this.$formFieldEmail = this.$formRegister.querySelector('[data-id="email"]');
-        this.$formFieldPassword = this.$formRegister.querySelector('[data-id="password"]');
-        this.$formFieldPermission = this.$formRegister.querySelector('[data-id="permission"]');
-        this.$formSend = this.$formRegister.querySelector('[data-id="send"]');
+        this.elPage = document.querySelector('#pageAdminUser');
+        this.elFormRegister = this.elPage.querySelector('[data-id="formRegister"]');
+        this.elFormFieldName = this.elFormRegister.querySelector('[data-id="name"]');
+        this.elFormFieldEmail = this.elFormRegister.querySelector('[data-id="email"]');
+        this.elFormFieldPassword = this.elFormRegister.querySelector('[data-id="password"]');
+        this.elFormFieldPermission = this.elFormRegister.querySelector('[data-id="permission"]');
+        this.elFormSend = this.elFormRegister.querySelector('[data-id="send"]');
     }
 
     buildMenu() {
         const self = this;
 
-        this.$formSend.onclick = () => {
+        this.elFormSend.onclick = () => {
             if (!self.validateForm()) {
                 return;
             }
@@ -794,14 +792,14 @@ class AdminUser {
 
     buildMenuTable() {
         let self = this;
-        let $table = this.$page.querySelectorAll('.table');
-        let $tableActive = this.$page.querySelectorAll('[data-id="tableActive"]');
-        let $tableInactive = this.$page.querySelectorAll('[data-id="tableInactive"]');
+        let elTable = this.elPage.querySelectorAll('.table');
+        let elTableActive = this.elPage.querySelectorAll('[data-id="tableActive"]');
+        let elTableInactive = this.elPage.querySelectorAll('[data-id="tableInactive"]');
 
-        Array.prototype.forEach.call($tableActive, function (table) {
-            let $button = table.querySelectorAll('[data-action="inactivate"]');
+        Array.prototype.forEach.call(elTableActive, function (table) {
+            let elButton = table.querySelectorAll('[data-action="inactivate"]');
 
-            Array.prototype.forEach.call($button, function (item) {
+            Array.prototype.forEach.call(elButton, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationInactivate);
                     objWfModal.buildContentConfirmationAction('window.adminUser.modify(' + item.getAttribute('data-id') + ', "inactivate")');
@@ -809,28 +807,28 @@ class AdminUser {
             });
         });
 
-        Array.prototype.forEach.call($tableInactive, function (table) {
-            let $button = table.querySelectorAll('[data-action="activate"]');
+        Array.prototype.forEach.call(elTableInactive, function (table) {
+            let elButton = table.querySelectorAll('[data-action="activate"]');
 
-            Array.prototype.forEach.call($button, function (item) {
+            Array.prototype.forEach.call(elButton, function (item) {
                 item.onclick = function () {
                     self.modify(item.getAttribute('data-id'), 'activate');
                 };
             });
         });
 
-        Array.prototype.forEach.call($table, function (table) {
-            let $buttonEdit = table.querySelectorAll('[data-action="edit"]');
-            let $buttonDelete = table.querySelectorAll('[data-action="delete"]');
+        Array.prototype.forEach.call(elTable, function (table) {
+            let elButtonEdit = table.querySelectorAll('[data-action="edit"]');
+            let elButtonDelete = table.querySelectorAll('[data-action="delete"]');
 
-            Array.prototype.forEach.call($buttonEdit, function (item) {
+            Array.prototype.forEach.call(elButtonEdit, function (item) {
                 item.onclick = function () {
                     self.editId = item.getAttribute('data-id');
                     self.editLoadData(self.editId);
                 };
             });
 
-            Array.prototype.forEach.call($buttonDelete, function (item) {
+            Array.prototype.forEach.call(elButtonDelete, function (item) {
                 item.onclick = function () {
                     objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
                     objWfModal.buildContentConfirmationAction('window.adminUser.delete(' + item.getAttribute('data-id') + ')');
@@ -911,11 +909,11 @@ class AdminUser {
 
     editFillField(obj) {
         this.isEdit = true;
-        this.$formFieldName.value = obj['name'];
-        this.$formFieldEmail.value = obj['email'];
-        this.$formFieldPassword.value = '';
+        this.elFormFieldName.value = obj['name'];
+        this.elFormFieldEmail.value = obj['email'];
+        this.elFormFieldPassword.value = '';
         this.editId = obj['id'];
-        this.$formFieldPermission.value = obj['permission'];
+        this.elFormFieldPermission.value = obj['permission'];
     }
 
     editSave() {
@@ -967,8 +965,8 @@ class AdminUser {
 
     validateForm() {
         let arrField = [
-            this.$formFieldEmail,
-            this.$formFieldPassword
+            this.elFormFieldEmail,
+            this.elFormFieldPassword
         ];
 
         return objWfForm.validateEmpty(arrField);
@@ -976,10 +974,10 @@ class AdminUser {
 
     buildParameter() {
         return '' +
-            '&name=' + this.$formFieldName.value +
-            '&email=' + this.$formFieldEmail.value +
-            '&permission=' + this.$formFieldPermission.value +
-            '&password=' + this.$formFieldPassword.value;
+            '&name=' + this.elFormFieldName.value +
+            '&email=' + this.elFormFieldEmail.value +
+            '&permission=' + this.elFormFieldPermission.value +
+            '&password=' + this.elFormFieldPassword.value;
     }
 }
 

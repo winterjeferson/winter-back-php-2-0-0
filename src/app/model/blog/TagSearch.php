@@ -19,7 +19,7 @@ class TagSearch
         $listDecodeMostViewed = json_decode($listMostViewed, true);
 
         $arr = [
-            'listLasPost' => $listDecodeLastPost['html'],
+            'listLastPost' => $listDecodeLastPost['html'],
             'listMostViewed' => $listDecodeMostViewed['html'],
             'listTag' => $this->objBlog->objTag->getList(),
             'btLoadMore' => $this->objBlog->buildLoadMoreButton('Tag'),

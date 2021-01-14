@@ -5,7 +5,6 @@ class AdminBlog {
         }
 
         CKEDITOR.replace('fieldContent', {});
-
         CKEDITOR.config.basicEntities = false;
         CKEDITOR.config.entities_greek = false;
         CKEDITOR.config.entities_latin = false;
@@ -15,37 +14,38 @@ class AdminBlog {
         this.buildMenu();
         this.buildMenuTable();
         this.buildMenuThumbnail();
-        window.url.watch(this.$formFieldTitle, this.$formFieldUrl);
+        window.url.watch(this.elFormFieldTitle, this.elFormFieldUrl);
     }
 
     update() {
+        this.elPage = document.querySelector('#pageAdminBlog');
+        this.elContentEdit = document.querySelector('#pageAdminBlogEdit');
+        this.elContentEditThumbnail = this.elContentEdit.querySelector('[data-id="thumbnailWrapper"]');
+        this.elContentList = document.querySelector('#pageAdminBlogList');
+        this.elFormRegister = this.elContentEdit.querySelector('[data-id="formRegister"]');
+        this.elFormFieldTitle = this.elContentEdit.querySelector('[data-id="fieldTitle"]');
+        this.elFormFieldUrl = this.elContentEdit.querySelector('[data-id="fieldUrl"]');
+        this.elFormFieldContent = this.elContentEdit.querySelector('[data-id="fieldContent"]');
+        this.elFormFieldTag = this.elContentEdit.querySelector('[data-id="fieldTag"]');
+        this.elFormFieldDatePost = this.elContentEdit.querySelector('[data-id="fieldDatePost"]');
+        this.elFormFieldDateEdit = this.elContentEdit.querySelector('[data-id="fieldDateEdit"]');
+        this.elThumbnailWrapper = this.elContentEdit.querySelector('[data-id="thumbnailWrapper"]');
+        this.elFormFieldAuthor = document.querySelector('[data-id="author"]');
+        this.elCkEditor = CKEDITOR.instances.fieldContent;
+        this.elButtonRegister = this.elPage.querySelector('[data-id="btRegister"]');
+
         this.isEdit = false;
         this.editId = 0;
-        this.$page = document.querySelector('#pageAdminBlog');
-        this.$contentEdit = document.querySelector('#pageAdminBlogEdit');
-        this.$contentEditThumbnail = this.$contentEdit.querySelector('[data-id="thumbnailWrapper"]');
-        this.$contentList = document.querySelector('#pageAdminBlogList');
-        this.$formRegister = this.$contentEdit.querySelector('[data-id="formRegister"]');
-        this.$formFieldTitle = this.$contentEdit.querySelector('[data-id="fieldTitle"]');
-        this.$formFieldUrl = this.$contentEdit.querySelector('[data-id="fieldUrl"]');
-        this.$formFieldContent = this.$contentEdit.querySelector('[data-id="fieldContent"]');
-        this.$formFieldTag = this.$contentEdit.querySelector('[data-id="fieldTag"]');
-        this.$formFieldDatePost = this.$contentEdit.querySelector('[data-id="fieldDatePost"]');
-        this.$formFieldDateEdit = this.$contentEdit.querySelector('[data-id="fieldDateEdit"]');
-        this.$thumbnailWrapper = this.$contentEdit.querySelector('[data-id="thumbnailWrapper"]');
-        this.$formFieldAuthor = document.querySelector('[data-id="author"]');
         this.thumbnail = '';
         this.thumbnailDefault = 'blog-thumbnail.jpg';
         this.pathImage = '';
         this.pathThumbnail = 'dynamic/blog/thumbnail/';
-        this.$ckEditor = CKEDITOR.instances.fieldContent;
-        this.$btRegister = this.$page.querySelector('[data-id="btRegister"]');
     }
 
     buildMenu() {
         const self = this;
 
-        this.$btRegister.onclick = function () {
+        this.elButtonRegister.onclick = () => {
             if (!self.validateForm()) {
                 return;
             }
@@ -59,7 +59,7 @@ class AdminBlog {
     }
 
     buildMenuThumbnail() {
-        const $target = this.$contentEditThumbnail.querySelectorAll('.table');
+        const $target = this.elContentEditThumbnail.querySelectorAll('.table');
 
         Array.prototype.forEach.call($target, function (table) {
             let $button = table.querySelectorAll('[data-action="edit"]');
@@ -77,9 +77,9 @@ class AdminBlog {
 
     buildMenuTable() {
         const self = this;
-        const $table = this.$contentList.querySelectorAll('.table');
-        const $tableActive = this.$contentList.querySelectorAll('[data-id="tableActive"]');
-        const $tableInactive = this.$contentList.querySelectorAll('[data-id="tableInactive"]');
+        const $table = this.elContentList.querySelectorAll('.table');
+        const $tableActive = this.elContentList.querySelectorAll('[data-id="tableActive"]');
+        const $tableInactive = this.elContentList.querySelectorAll('[data-id="tableInactive"]');
 
         Array.prototype.forEach.call($tableActive, function (table) {
             let $button = table.querySelectorAll('[data-action="inactivate"]');
@@ -180,15 +180,15 @@ class AdminBlog {
         const datePost = obj['date_post_' + globalLanguage];
         const dateEdit = obj['date_edit_' + globalLanguage];
 
-        this.$formFieldTitle.value = obj['title_' + globalLanguage];
-        this.$formFieldUrl.value = obj['url_' + globalLanguage];
-        this.$formFieldTag.value = obj['tag_' + globalLanguage];
-        this.$formFieldDatePost.value = datePost !== null ? datePost.substring(0, 10) : datePost;
-        this.$formFieldDateEdit.value = dateEdit !== null ? dateEdit.substring(0, 10) : dateEdit;
+        this.elFormFieldTitle.value = obj['title_' + globalLanguage];
+        this.elFormFieldUrl.value = obj['url_' + globalLanguage];
+        this.elFormFieldTag.value = obj['tag_' + globalLanguage];
+        this.elFormFieldDatePost.value = datePost !== null ? datePost.substring(0, 10) : datePost;
+        this.elFormFieldDateEdit.value = dateEdit !== null ? dateEdit.substring(0, 10) : dateEdit;
         this.editId = obj['id'];
-        this.$formFieldAuthor.value = obj['author_id'];
+        this.elFormFieldAuthor.value = obj['author_id'];
 
-        this.$ckEditor.setData(obj['content_' + globalLanguage], function () {
+        this.elCkEditor.setData(obj['content_' + globalLanguage], function () {
             this.checkDirty();
         });
     }
@@ -240,8 +240,8 @@ class AdminBlog {
 
     validateForm() {
         let arrField = [
-            this.$formFieldTitle,
-            this.$formFieldUrl
+            this.elFormFieldTitle,
+            this.elFormFieldUrl
         ];
 
         return objWfForm.validateEmpty(arrField);
@@ -251,14 +251,14 @@ class AdminBlog {
         const thumbnail = this.thumbnail === this.thumbnailDefault ? '' : this.thumbnail;
 
         return '' +
-            '&title=' + this.$formFieldTitle.value +
-            '&url=' + this.$formFieldUrl.value +
-            '&content=' + this.$ckEditor.getData() +
-            '&datePost=' + this.$formFieldDatePost.value +
-            '&dateEdit=' + this.$formFieldDateEdit.value +
-            '&authorId=' + this.$formFieldAuthor.value +
+            '&title=' + this.elFormFieldTitle.value +
+            '&url=' + this.elFormFieldUrl.value +
+            '&content=' + this.elCkEditor.getData() +
+            '&datePost=' + this.elFormFieldDatePost.value +
+            '&dateEdit=' + this.elFormFieldDateEdit.value +
+            '&authorId=' + this.elFormFieldAuthor.value +
             '&thumbnail=' + thumbnail +
-            '&tag=' + this.$formFieldTag.value;
+            '&tag=' + this.elFormFieldTag.value;
     }
 
     saveContent() {
@@ -284,8 +284,8 @@ class AdminBlog {
     }
 
     selectImage(target) {
-        let $card = target.parentNode.parentNode;
-        let imageName = $card.querySelector('[data-id="imageName"]').innerText;
+        let elCard = target.parentNode.parentNode;
+        let imageName = elCard.querySelector('[data-id="imageName"]').innerText;
 
         this.thumbnail = imageName;
         objWfModal.closeModal();
@@ -293,8 +293,8 @@ class AdminBlog {
     }
 
     modifyThumbnail() {
-        let $image = this.$thumbnailWrapper.querySelector('table').querySelector('[data-id="thumbnail"]');
-        let $name = this.$thumbnailWrapper.querySelector('table').querySelector('[data-id="name"]');
+        let elImage = this.elThumbnailWrapper.querySelector('table').querySelector('[data-id="thumbnail"]');
+        let elName = this.elThumbnailWrapper.querySelector('table').querySelector('[data-id="name"]');
 
         if (this.thumbnail === '' || this.thumbnail === null) {
             this.thumbnail = this.thumbnailDefault;
@@ -303,8 +303,8 @@ class AdminBlog {
             this.pathImage = this.pathThumbnail;
         }
 
-        $image.setAttribute('src', 'assets/img/' + this.pathImage + this.thumbnail);
-        $name.innerHTML = this.thumbnail;
+        elImage.setAttribute('src', 'assets/img/' + this.pathImage + this.thumbnail);
+        elName.innerHTML = this.thumbnail;
     }
 }
 

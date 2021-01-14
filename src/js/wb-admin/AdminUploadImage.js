@@ -13,23 +13,23 @@ class AdminUploadImage {
     }
 
     updateVariable() {
-        this.$btUploadThumbnail = document.querySelector('[data-id="btUploadThumbnail"]');
-        this.$btUploadBanner = document.querySelector('[data-id="btUploadBanner"]');
+        this.elButtonUploadThumbnail = document.querySelector('[data-id="btUploadThumbnail"]');
+        this.elButtonUploadBanner = document.querySelector('[data-id="btUploadBanner"]');
     }
 
     buildMenu() {
         const self = this;
-        let $buttonDelete = document.querySelectorAll('[data-action="delete"]');
+        let elButtonDelete = document.querySelectorAll('[data-action="delete"]');
 
-        this.$btUploadThumbnail.addEventListener('click', () => {
+        this.elButtonUploadThumbnail.addEventListener('click', () => {
             self.upload(this, 'blog/thumbnail/');
         });
 
-        this.$btUploadBanner.addEventListener('click', () => {
+        this.elButtonUploadBanner.addEventListener('click', () => {
             self.upload(this, 'blog/banner/');
         });
 
-        Array.prototype.forEach.call($buttonDelete, function (item) {
+        Array.prototype.forEach.call(elButtonDelete, function (item) {
             item.onclick = function () {
                 self.deleteImage(item);
             };
@@ -72,18 +72,18 @@ class AdminUploadImage {
 
     upload(target, path) {
         const self = this;
-        const $form = target.parentNode.parentNode.parentNode.parentNode.parentNode;
-        const $file = $form.querySelector('[type=file]');
+        const elForm = target.parentNode.parentNode.parentNode.parentNode.parentNode;
+        const elFile = elForm.querySelector('[type=file]');
         const data = new FormData();
         const ajax = new XMLHttpRequest();
-        const file = $file.files[0];
+        const file = elFile.files[0];
         const url = window.url.getController({
             'folder': 'admin',
             'file': 'ImageUpload'
         });
 
-        if ($file.files.length === 0) {
-            $file.click();
+        if (elFile.files.length === 0) {
+            elFile.click();
             return;
         }
 
@@ -91,13 +91,13 @@ class AdminUploadImage {
         data.append('f', file);
         data.append('token', globalToken);
 
-        this.$btUploadThumbnail.setAttribute('disabled', 'disabled');
+        this.elButtonUploadThumbnail.setAttribute('disabled', 'disabled');
         ajax.open('POST', url);
 
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                self.$btUploadThumbnail.removeAttribute('disabled');
-                self.buildResponse(ajax.responseText, $form);
+                self.elButtonUploadThumbnail.removeAttribute('disabled');
+                self.buildResponse(ajax.responseText, elForm);
             }
         };
 

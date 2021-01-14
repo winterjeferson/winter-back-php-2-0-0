@@ -1,41 +1,41 @@
-<div class="container">
-    <div class="row">
-        <section class="col-es-12 col-bi-7 col-first" id="pageBlogLastPost">
-            <h1 class="page-title">
+<div class="blog">
+    <section id="pageBlogLastPost" class="blog__last-post">
+        <div class="row">
+            <h1 class="page__title">
                 <?php echo $arrContent['head']['translation']['lastPost']; ?>
             </h1>
-            <div class="row blog-list">
+            <div class="blog-list">
                 <?php
-                echo $arrContent['blog']['listLasPost'];
+                if ($arrContent['blog']['listLastPost'] === '') {
+                    echo '<p class="empty__list">' . $arrContent['head']['translation']['emptyList'] . '</p>';
+                } else {
+                    echo $arrContent['blog']['listLastPost'];
+                }
                 ?>
             </div>
-            <div class="row">
-                <div class="col-es-12">
-                    <?php
-                    echo $arrContent['blog']['btLoadMore'];
-                    ?>
-                </div>
-            </div>
-        </section>
-        <section class="col-es-12 col-bi-5" id="pageBlogMostViewed">
-            <div id="pageBlogMostViewed">
-                <h1 class="page-title">
-                    <?php echo $arrContent['head']['translation']['mostViewed']; ?>
-                </h1>
-                <div class="row blog-list">
-                    <?php
+            <?php
+            echo $arrContent['blog']['btLoadMore'];
+            ?>
+        </div>
+    </section>
+    <section id="pageBlogMostViewed" class="blog__most-viwed">
+        <div class="row">
+            <h1 class="page__title">
+                <?php echo $arrContent['head']['translation']['mostViewed']; ?>
+            </h1>
+            <div class="blog-list">
+                <?php
+                if ($arrContent['blog']['listMostViewed'] === '') {
+                    echo '<p class="empty__list">' . $arrContent['head']['translation']['emptyList'] . '</p>';
+                } else {
                     echo $arrContent['blog']['listMostViewed'];
-                    ?>
-                </div>
-                <div class="row">
-                    <div class="col-es-12">
-                        <?php
-                        echo $arrContent['blog']['btMostViewed'];
-                        ?>
-                    </div>
-                </div>
+                }
+                ?>
             </div>
-            <?php include __DIR__ . '/tag-list.php'; ?>
-        </section>
-    </div>
+            <?php
+            echo $arrContent['blog']['btMostViewed'];
+            include __DIR__ . '/tag-list.php';
+            ?>
+        </div>
+    </section>
 </div>

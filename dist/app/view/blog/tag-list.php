@@ -2,26 +2,27 @@
 $classDisplay = count($arrContent['blog']['listTag']) === 0 ? 'display-none' : '';
 ?>
 <div id="pageBlogTag" class="<?php echo $classDisplay; ?>">
-    <h1 class="page-title">
+    <h1 class="page__title">
         <?php echo $arrContent['head']['translation']['tags']; ?>
     </h1>
-    <ul class="tag-list">
+    <div class="row tag-wrapper">
         <?php
         $string = '';
 
         foreach ($arrContent['blog']['listTag'] as $value => $key) {
             $string .= '
-                <li>
-                    <div class="tag-item tag-grey">
-                        <a href="' . $arrContent['head']['urlMain'] . $arrContent['head']['lang'] . '/blog/tag/' . $value . '" class="link link-grey">
-                            <span class="text">' . $value . '</span>
-                        </a>
-                    </div>
-                </li>
+                <div class="tag tag--black tag--small">
+                    <a href="' . $arrContent['head']['urlMain'] . $arrContent['head']['lang'] . '/blog/tag/' . $value . '" class="link link-grey">
+                        <span class="text">' . $value . '</span>
+                    </a>
+                    <button type="button" class="button button--small button--small--proportional button--transparent button__close" aria-label="close">
+                        <svg class="icon icon--small rotate-45"><use xlink:href="./assets/img/icon.svg#plus"></use></svg>
+                    </button>
+                </div>
             ';
         }
 
         echo removeLineBreak($string);
         ?>
-    </ul>
+    </div>
 </div>
