@@ -1,5 +1,5 @@
 <div class="container">
-    <form class="form black">
+    <form class="form form--black">
         <h1 class="page__title"><?php echo $arrContent['head']['translation']['login'] ?></h1>
         <div class="row form__field">
             <label class="form__label" for="pageAdminLoginUser"><?php echo $arrContent['head']['translation']['email']; ?></label>

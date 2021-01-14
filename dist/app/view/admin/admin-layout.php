@@ -26,11 +26,11 @@ function buildHTMLBt($status, $id)
 
 function buildBt($arr, $id)
 {
-    $concat = '';
-
-    $concat .= '<button type="button" class="bt bt-sm bt-' . $arr['color'] . '" title="' . $arr['title'] . '" data-action="' . $arr['action'] . '" data-id="' . $id . '">';
-    $concat .= '    <span class="fa ' . $arr['icon'] . '" aria-hidden="true"></span>';
-    $concat .= '</button>';
+    $concat = '
+        <button type="button" class="button button--small button--' . $arr['color'] . '" title="' . $arr['title'] . '" data-action="' . $arr['action'] . '" data-id="' . $id . '">
+            <span class="fa ' . $arr['icon'] . '" aria-hidden="true"></span>
+        </button>
+    ';
 
     return $concat;
 }

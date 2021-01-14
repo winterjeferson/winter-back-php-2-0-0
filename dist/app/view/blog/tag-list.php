@@ -2,9 +2,7 @@
 $classDisplay = count($arrContent['blog']['listTag']) === 0 ? 'display-none' : '';
 ?>
 <div id="pageBlogTag" class="<?php echo $classDisplay; ?>">
-    <h1 class="page__title">
-        <?php echo $arrContent['head']['translation']['tags']; ?>
-    </h1>
+    <h1 class="page__title"><?php echo $arrContent['head']['translation']['tags']; ?></h1>
     <div class="row tag-wrapper">
         <?php
         $string = '';

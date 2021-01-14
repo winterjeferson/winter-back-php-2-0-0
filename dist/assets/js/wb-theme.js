@@ -1,6 +1,7 @@
 class Blog {
     constructor() {
         this.cssLoadMore = 'loadMore';
+        this.cssLoadMoreSelector = `[data-id="${this.cssLoadMore}"]`;
     }
 
     build() {
@@ -19,14 +20,10 @@ class Blog {
     }
 
     buildMenu() {
-        const el = `[data-id="${this.cssLoadMore}"]`;
+        if (!this.elLastPost || !this.elMostViewed) return;
 
-        if (el) return;
-
-        const elButtonLastPost = this.elLastPost.querySelector(el);
-        const elButtonMostViewed = this.elMostViewed.querySelector(el);
-
-        if (!this.elLastPost) return;
+        const elButtonLastPost = this.elLastPost.querySelector(this.cssLoadMoreSelector);
+        const elButtonMostViewed = this.elMostViewed.querySelector(this.cssLoadMoreSelector);
 
         if (document.contains(elButtonLastPost)) {
             elButtonLastPost.addEventListener('click', () => {

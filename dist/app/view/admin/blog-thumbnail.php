@@ -1,14 +1,8 @@
 <div class="row">
-    <div class="col-es-12">
-        <h1 class="text-center">
-            <?php
-            echo $arrContent['head']['translation']['thumbnail']
-            ?>
-        </h1>
-    </div>
+    <h1 class="page__title"><?php echo $arrContent['head']['translation']['thumbnail']; ?></h1>
 </div>
 <div class="row">
-    <table class="table table-grey thumbnail-table">
+    <table class="table table--grey thumbnail-table">
         <thead>
             <tr>
                 <th><?php echo $arrContent['head']['translation']['image']; ?></th>
@@ -34,7 +28,7 @@
                     $string .= '
                             <tr>
                                 <td class="minimum">
-                                    <button type="button" onclick="objWbAdminBlog.selectImage(this)" >   
+                                    <button type="button" onclick="objWbAdminBlog.selectImage(this)" >
                                         <img data-src="assets/img/dynamic/blog/' . $value[0] . '/' . $value[1] . '" data-lazy-load="true">
                                     </button>
                                 </td>

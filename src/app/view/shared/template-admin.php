@@ -12,9 +12,9 @@ include __DIR__ . '/../admin/admin-layout.php';
         include __DIR__ . '/../shared/menu.php';
         ?>
     </section>
-    <section id="mainContent" class="grid-content">
+    <section id="mainContent" class="grid-content page">
         <div id="<?php echo $arrDefinedVars['data']['content']['id'] ?>" class="row">
-            <div class="col-es-12 user">
+            <div class="user">
                 <?php
                 $wellcome = $arrContent['head']['translation']['wellcome'];
                 $name = $arrContent['head']['user']['name'];
@@ -22,34 +22,27 @@ include __DIR__ . '/../admin/admin-layout.php';
                 echo  $wellcome . ' <strong>' . $name . '</strong>'
                 ?>!
             </div>
-            <div class="col-es-12">
-                <div class="padding-re">
-                    <nav class="menu-tab menu-tab-orange text-center menu menu-horizontal menu-drop-down" id="pageAdminMenu">
-                        <ul>
-                            <?php
-                            $string = '';
+        </div>
+        <div class="button-wrapper row center tab tab--blue" id="pageAdminMenu">
+            <?php
+            $string = '';
 
-                            foreach ($arrContent['admin']['menu'] as $key => &$value) {
-                                $string .= '
-                                    <li>
-                                        <a href="' . $arrContent['head']['urlMain'] . $arrContent['head']['lang'] . '/' . 'admin/' . $value['id'] . '/" data-id="btAdmin' . ucfirst($value['id']) . '" class="menu-tab-bt bt-re bt">
-                                            ' . $arrContent['head']['translation'][$value['translation']] . '
-                                        </a>
-                                    </li>
-                                ';
-                            }
+            foreach ($arrContent['admin']['menu'] as $key => &$value) {
+                $string .= '
+                        <a href="' . $arrContent['head']['urlMain'] . $arrContent['head']['lang'] . '/' . 'admin/' . $value['id'] . '/" data-id="btAdmin' . ucfirst($value['id']) . '" class="button button--regular button--blue">
+                            ' . $arrContent['head']['translation'][$value['translation']] . '
+                        </a>
+                    ';
+            }
 
-                            echo removeLineBreak($string);
-                            ?>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <div class="col-es-12">
-                <?php
-                include  __DIR__ . '/../' . $arrDefinedVars['data']['content']['folder'] . '/' . $arrDefinedVars['data']['content']['file'] . '.php';
-                ?>
-            </div>
+            echo removeLineBreak($string);
+            ?>
+        </div>
+        <div class="row">
+            <?php
+            include  __DIR__ . '/../' . $arrDefinedVars['data']['content']['folder'] . '/' . $arrDefinedVars['data']['content']['file'] . '.php';
+            ?>
+        </div>
         </div>
     </section>
     <?php

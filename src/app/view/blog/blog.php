@@ -1,9 +1,7 @@
 <div class="blog">
     <section id="pageBlogLastPost" class="blog__last-post">
         <div class="row">
-            <h1 class="page__title">
-                <?php echo $arrContent['head']['translation']['lastPost']; ?>
-            </h1>
+            <h1 class="page__title"><?php echo $arrContent['head']['translation']['lastPost']; ?></h1>
             <div class="blog-list">
                 <?php
                 if ($arrContent['blog']['listLastPost'] === '') {
@@ -20,9 +18,7 @@
     </section>
     <section id="pageBlogMostViewed" class="blog__most-viwed">
         <div class="row">
-            <h1 class="page__title">
-                <?php echo $arrContent['head']['translation']['mostViewed']; ?>
-            </h1>
+            <h1 class="page__title"><?php echo $arrContent['head']['translation']['mostViewed']; ?></h1>
             <div class="blog-list">
                 <?php
                 if ($arrContent['blog']['listMostViewed'] === '') {

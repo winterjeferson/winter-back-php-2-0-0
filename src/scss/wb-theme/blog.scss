@@ -18,29 +18,6 @@
         }
     }
 
-    // &__last-post {
-    //     width: 70%;
-    //     // padding-right: 0;
-
-    //     // @include tablet-landscape {
-    //     //     margin: auto;
-    //     //     max-width: 300px;
-
-    //     // }
-
-    //     // @media (min-width: $break-point-bi) {
-    //     //     padding-right: $eb;
-    //     // }
-    // }
-
-    // &__most-viwed {
-    //     // padding-right: 0;
-
-    //     // @media (min-width: $break-point-bi) {
-    //     //     padding-right: $eb;
-    //     // }
-    // }
-
     .empty__list {
         text-align: center;
         width: 100%;
@@ -84,15 +61,15 @@
             }
         }
 
-        .blog-list-image {
+        &-image {
             grid-area: blog-list-image;
         }
 
-        .blog-list-title {
+        &-title {
             font-size: 1.6rem;
         }
 
-        .blog-list-text {
+        &-text {
             grid-area: blog-list-text;
             padding: $bi $eb;
 
@@ -107,7 +84,7 @@
             }
 
             .date {
-                color: grey;
+                color: $color-grey;
             }
         }
     }
@@ -121,5 +98,6 @@
 .author {
     font-size: 1rem;
     font-style: italic;
+    margin: initial;
     padding-left: 1rem;
 }

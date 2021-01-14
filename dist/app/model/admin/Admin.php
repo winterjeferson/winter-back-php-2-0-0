@@ -35,7 +35,7 @@ class Admin
     function buildMenu()
     {
         $arrReturn = [];
-        $prmissionCurrent = (int)$this->objSession->getArray('user', 'permission');
+        $prmissionCurrent = (int) $this->objSession->getArray('user', 'permission');
 
         if ($prmissionCurrent <= 1) {
             array_push($arrReturn, ['id' => 'user', 'translation' => 'users']);

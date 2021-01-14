@@ -6,30 +6,27 @@ $classDisplay = $listSize === 0 ? 'display-none' : '';
 ?>
 <section class="content-padding <?php echo $classDisplay ?>">
     <div class="row">
-        <div class="col-es-12">
-            <h2 class="page-title">
-                <?php echo $arrContent['head']['translation']['users']; ?> (<?php echo $arrContent['head']['translation'][$action . 's']; ?>)
-            </h2>
-        </div>
+        <h2 class="page__title">
+            <?php echo $arrContent['head']['translation']['users']; ?> (<?php echo $arrContent['head']['translation'][$action . 's']; ?>)
+        </h2>
     </div>
     <div class="row">
-        <div class="col-es-12">
-            <table class="table table-grey" data-id="<?php echo $table; ?>">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th><?php echo $arrContent['head']['translation']['name']; ?></th>
-                        <th><?php echo $arrContent['head']['translation']['email']; ?></th>
-                        <th><?php echo $arrContent['head']['translation']['permission']; ?></th>
-                        <th><?php echo $arrContent['head']['translation']['actions']; ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $string = '';
+        <table class="table table--grey" data-id="<?php echo $table; ?>">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th><?php echo $arrContent['head']['translation']['name']; ?></th>
+                    <th><?php echo $arrContent['head']['translation']['email']; ?></th>
+                    <th><?php echo $arrContent['head']['translation']['permission']; ?></th>
+                    <th><?php echo $arrContent['head']['translation']['actions']; ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $string = '';
 
-                    foreach ($arrContent['user'][$list] as $key => &$value) {
-                        $string .= '
+                foreach ($arrContent['user'][$list] as $key => &$value) {
+                    $string .= '
                             <tr>
                                 <td>' . $value['id'] . '</td>
                                 <td>' . $value['name'] . '</td>
@@ -46,12 +43,11 @@ $classDisplay = $listSize === 0 ? 'display-none' : '';
                                 </td>
                             </tr>
                             ';
-                    }
+                }
 
-                    echo $string;
-                    ?>
-                </tbody>
-            </table>
-        </div>
+                echo $string;
+                ?>
+            </tbody>
+        </table>
     </div>
 </section>
