@@ -14,4 +14,3 @@ $objTranslation = new App\Core\Translation();
 $objToken->build();
 $objTranslation->build();
 $objRoute->build();
-?>

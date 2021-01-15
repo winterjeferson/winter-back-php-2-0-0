@@ -13,26 +13,24 @@ class AdminUser {
         this.isEdit = false;
         this.editId = 0;
         this.elPage = document.querySelector('#pageAdminUser');
-        this.elFormRegister = this.elPage.querySelector('[data-id="formRegister"]');
-        this.elFormFieldName = this.elFormRegister.querySelector('[data-id="name"]');
-        this.elFormFieldEmail = this.elFormRegister.querySelector('[data-id="email"]');
-        this.elFormFieldPassword = this.elFormRegister.querySelector('[data-id="password"]');
-        this.elFormFieldPermission = this.elFormRegister.querySelector('[data-id="permission"]');
-        this.elFormSend = this.elFormRegister.querySelector('[data-id="send"]');
+        this.elForm = document.querySelector('#form');
+        this.elFormFieldName = document.querySelector('#form_name');
+        this.elFormFieldEmail = document.querySelector('#form_email');
+        this.elFormFieldPassword = document.querySelector('#form_password');
+        this.elFormFieldPermission = document.querySelector('#form_permission');
+        this.elFormSend = document.querySelector('#form_button_send');
     }
 
     buildMenu() {
-        const self = this;
-
         this.elFormSend.onclick = () => {
-            if (!self.validateForm()) {
+            if (!this.validateForm()) {
                 return;
             }
 
             if (self.isEdit) {
-                self.editSave();
+                this.editSave();
             } else {
-                self.saveContent();
+                this.saveContent();
             }
         };
     }
@@ -190,7 +188,7 @@ class AdminUser {
 
     saveContent() {
         let ajax = new XMLHttpRequest();
-        let url = Url.getController({
+        let url = window.url.getController({
             'folder': 'admin',
             'file': 'UserAjax'
         });
@@ -216,7 +214,7 @@ class AdminUser {
             this.elFormFieldPassword
         ];
 
-        return objWfForm.validateEmpty(arrField);
+        return window.form.validateEmpty(arrField);
     }
 
     buildParameter() {

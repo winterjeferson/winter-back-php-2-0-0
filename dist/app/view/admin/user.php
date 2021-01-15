@@ -1,23 +1,23 @@
 <div class="container">
     <div class="row">
         <h2 class="page__title"><?php echo $arrContent['head']['translation']['register']; ?></h2>
-        <form class="form form--grey" data-id="formRegister">
+        <form class="form form--grey" id="form">
             <div class="row">
                 <div class="column form__field">
-                    <label class="form__label" for="input_name"><?php echo $arrContent['head']['translation']['name']; ?>:</label>
-                    <input class="form__fill" type="text" value="" data-id="name" id="input_name">
+                    <label class="form__label" for="form_name"><?php echo $arrContent['head']['translation']['name']; ?>:</label>
+                    <input class="form__fill" type="text" value="" id="form_name">
                 </div>
                 <div class="column form__field">
-                    <label class="form__label"><?php echo $arrContent['head']['translation']['email']; ?>:</label>
-                    <input class="form__fill" type="text" value="" data-id="email">
+                    <label class="form__label" for="form_email"><?php echo $arrContent['head']['translation']['email']; ?>:</label>
+                    <input class="form__fill" type="text" value="" id="form_email">
                 </div>
                 <div class="column form__field">
-                    <label class="form__label"><?php echo $arrContent['head']['translation']['password']; ?>:</label>
-                    <input class="form__fill" type="password" value="" placeholder="" data-id="password">
+                    <label class="form__label" for="form_password"><?php echo $arrContent['head']['translation']['password']; ?>:</label>
+                    <input class="form__fill" type="password" value="" placeholder="" id="form_password">
                 </div>
                 <div class="column form__field">
-                    <label class="form__label"><?php echo $arrContent['head']['translation']['permission']; ?>:</label>
-                    <select class="form__fill" aria-label="select" data-id="permission">
+                    <label class="form__label" for="form_permission"><?php echo $arrContent['head']['translation']['permission']; ?>:</label>
+                    <select class="form__fill" aria-label="select" id="form_permission">
                         <?php
                         $string = '';
 
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="row">
-                <button type="button" class="button button--regular button--blue" data-id="send">
+                <button type="button" class="button button--regular button--blue" id="form_button_send">
                     <?php echo $arrContent['head']['translation']['register']; ?>
                 </button>
             </div>

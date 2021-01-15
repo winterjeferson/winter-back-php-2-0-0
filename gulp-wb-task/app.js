@@ -12,6 +12,10 @@ const srcApplication = configuration.src + folderApp;
 const fileIndex = `${srcApplication + configuration.index}.${extension}`;
 const fileAll = [
     srcApplication + configuration.allFolderFile,
+    fileIndex
+];
+const fileApp = [
+    srcApplication + configuration.allFolderFile,
     `!${fileIndex}`,
 ];
 
@@ -20,9 +24,14 @@ gulp.task('buildAppClean', (done) => {
     done();
 });
 
+gulp.task('buildAppCleanIndex', (done) => {
+    clean(`${configuration.dist + configuration.index}.${extension}`);
+    done();
+});
+
 gulp.task('buildAppMove', (done) => {
     gulp
-        .src(fileAll)
+        .src(fileApp)
         .pipe(gulp.dest(configuration.dist + folderApp))
     return done();
 });
@@ -46,6 +55,7 @@ gulp.task('buildAppMinify', (done) => {
 
 gulp.task('buildApp', gulp.series(
     'buildAppClean',
+    'buildAppCleanIndex',
     'buildAppMoveIndex',
     'buildAppMove',
 ));
