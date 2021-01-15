@@ -1,12 +1,12 @@
 <div class="row">
-    <h1 class="page__title"><?php echo $arrContent['head']['translation']['thumbnail']; ?></h1>
+    <h1 class="page__title"><?php echo $translation['thumbnail']; ?></h1>
 </div>
 <div class="row">
     <table class="table table--grey thumbnail-table">
         <thead>
             <tr>
-                <th><?php echo $arrContent['head']['translation']['image']; ?></th>
-                <th><?php echo $arrContent['head']['translation']['name']; ?></th>
+                <th><?php echo $translation['image']; ?></th>
+                <th><?php echo $translation['name']; ?></th>
             </tr>
         </thead>
         <tbody>
@@ -15,7 +15,7 @@
                 $string =  '
                         <tr>
                             <td colspan="2" class="text-center">
-                                ' . $arrContent['head']['translation']['emptyList'] . '
+                                ' . $translation['emptyList'] . '
                             </td>
                         </tr>
                         ';

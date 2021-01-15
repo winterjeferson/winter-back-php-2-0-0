@@ -12,7 +12,7 @@
             $string .= '
                     <li class="carousel__item background--' . $value['color'] . '">
                         <span class="carousel__content">
-                            ' . $arrContent['head']['translation'][$value['translation']] . '
+                            ' . $translation[$value['translation']] . '
                         </span>
                     </li>
                     ';
@@ -22,12 +22,12 @@
         ?>
     </ul>
     <div class="navigation-change button-wrapper row center">
-        <button type="button" class="button button--big" data-id="previous" aria-label="<?php echo $arrContent['head']['translation']['previous']; ?>">
+        <button type="button" class="button button--big" data-id="previous" aria-label="<?php echo $translation['previous']; ?>">
             <svg class="icon icon--extra-big">
                 <use xlink:href="./assets/img/icon.svg#previous"></use>
             </svg>
         </button>
-        <button type="button" class="button button--big" data-id="next" aria-label="<?php echo $arrContent['head']['translation']['next']; ?>">
+        <button type="button" class="button button--big" data-id="next" aria-label="<?php echo $translation['next']; ?>">
             <svg class="icon icon--extra-big rotate-180">
                 <use xlink:href="./assets/img/icon.svg#previous"></use>
             </svg>

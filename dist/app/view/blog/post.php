@@ -2,7 +2,7 @@
     <div class="row">
         <h1 class="page__title"><?php echo $arrContent['post']['postTitle']; ?></h1>
         <?php echo $arrContent['post']['postContent']; ?>
-        <h4 class="author"><?php echo $arrContent['head']['translation']['author'] . ': ' . $arrContent['post']['postAuthor']; ?></h4>
+        <h4 class="author"><?php echo $translation['author'] . ': ' . $arrContent['post']['postAuthor']; ?></h4>
     </div>
     <?php
     $tag = $arrContent['post']['postTag'];

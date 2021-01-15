@@ -11,9 +11,9 @@ include __DIR__ . '/../shared/loading.php';
         include __DIR__ . '/../shared/menu.php';
         ?>
     </section>
-    <article id="<?php echo $arrDefinedVars['data']['content']['id'] ?>" class="grid__content page">
+    <article id="<?php echo $templateId ?>" class="grid__content page">
         <?php
-        include  __DIR__ . '/../' . $arrDefinedVars['data']['content']['folder'] . '/' . $arrDefinedVars['data']['content']['file'] . '.php';
+        include  __DIR__ . '/../' . $templateFolder . '/' . $templateFile . '.php';
         ?>
     </article>
     <?php

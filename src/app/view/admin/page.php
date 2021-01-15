@@ -39,7 +39,7 @@ function buildListHTML($value, $language, $status)
             <ul>
                 <li>
                     <button type="button" class="bt bt-re bt-green" data-id="btRegister">
-                        <?php echo $arrContent['head']['translation']['save']; ?>
+                        <?php echo $translation['save']; ?>
                     </button>
                 </li>
             </ul>

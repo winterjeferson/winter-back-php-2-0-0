@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../../../translation/' . ucfirst($language) . '.php'
 
 $class = '\\App\Translation\\' . ucfirst($language);
 $obj = new $class();
-$arrTranslation = $obj->translation;
+$translation = $obj->translation;
 ?>
 
 <head>

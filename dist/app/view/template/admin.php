@@ -13,10 +13,10 @@ include __DIR__ . '/../admin/admin-layout.php';
         ?>
     </section>
     <section id="mainContent" class="grid-content page">
-        <div id="<?php echo $arrDefinedVars['data']['content']['id'] ?>" class="row right">
+        <div id="<?php echo $templateId ?>" class="row right">
             <div class="user">
                 <?php
-                $wellcome = $arrContent['head']['translation']['wellcome'];
+                $wellcome = $translation['wellcome'];
                 $name = $arrContent['head']['user']['name'];
 
                 echo  $wellcome . ' <strong>' . $name . '</strong>'
@@ -29,8 +29,8 @@ include __DIR__ . '/../admin/admin-layout.php';
 
             foreach ($arrContent['admin']['menu'] as $key => &$value) {
                 $string .= '
-                        <a href="' . $arrContent['head']['urlMain'] . $arrContent['head']['lang'] . '/' . 'admin/' . $value['id'] . '/" data-id="btAdmin' . ucfirst($value['id']) . '" class="button button--regular button--blue">
-                            ' . $arrContent['head']['translation'][$value['translation']] . '
+                        <a href="' . $urlBackEnd . $lang . '/' . 'admin/' . $value['id'] . '/" data-id="btAdmin' . ucfirst($value['id']) . '" class="button button--regular button--blue">
+                            ' . $translation[$value['translation']] . '
                         </a>
                     ';
             }
@@ -40,7 +40,7 @@ include __DIR__ . '/../admin/admin-layout.php';
         </div>
         <div class="row">
             <?php
-            include  __DIR__ . '/../' . $arrDefinedVars['data']['content']['folder'] . '/' . $arrDefinedVars['data']['content']['file'] . '.php';
+            include  __DIR__ . '/../' . $templateFolder . '/' . $templateFile . '.php';
             ?>
         </div>
         </div>

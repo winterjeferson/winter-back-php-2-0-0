@@ -6,17 +6,17 @@ require __DIR__ . '/shared/header.php';
         <tr>
             <td>
                 <h1 style="text-align: center;  font-family: Arial, Helvetica, sans-serif; color: #626262; font-size: 32px;">
-                    <?php echo $arrTranslation['contactForm']; ?>:
+                    <?php echo $translation['contactForm']; ?>:
                 </h1>
             </td>
         </tr>
         <tr>
             <td>
                 <p style="text-align: left;  font-family: Arial, Helvetica, sans-serif; color: #626262; font-size: 16px;">
-                    <b><?php echo $arrTranslation['email']; ?>: </b><?php echo $email ?>
+                    <b><?php echo $translation['email']; ?>: </b><?php echo $email ?>
                 </p>
                 <p style="text-align: left;  font-family: Arial, Helvetica, sans-serif; color: #626262; font-size: 16px;">
-                    <b><?php echo $arrTranslation['message']; ?>: </b><?php echo $message; ?>
+                    <b><?php echo $translation['message']; ?>: </b><?php echo $message; ?>
                 </p>
             </td>
         </tr>

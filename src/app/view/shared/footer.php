@@ -1,5 +1,5 @@
         <script>
-            const globalLanguage = '<?php echo $arrContent['head']['lang'] ?>';
+            const globalLanguage = '<?php echo $lang ?>';
             const globalUrl = '<?php echo $arrContent['head']['urlMain'] ?>';
             const globalTranslation = <?php echo $arrContent['head']['translationJson']; ?>;
             const globalToken = '<?php echo $arrContent['head']['token']; ?>';

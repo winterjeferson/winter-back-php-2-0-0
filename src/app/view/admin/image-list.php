@@ -3,7 +3,7 @@ $list = 'list' . ucfirst($temp);
 ?>
 <div class="col-es-12 col-eb-6">
     <h2 class="page-title">
-        <?php echo $arrContent['head']['translation'][$temp]; ?>
+        <?php echo $translation[$temp]; ?>
     </h2>
     <div class="padding-bi">
         <form class="row form form-grey text-left" ]>
@@ -11,9 +11,9 @@ $list = 'list' . ucfirst($temp);
                 <label>
                     <?php
                     if ($temp === 'thumbnail') {
-                        echo $arrContent['head']['translation']['recommendedSize150'];
+                        echo $translation['recommendedSize150'];
                     } else {
-                        echo $arrContent['head']['translation']['recommendedSize1300'];
+                        echo $translation['recommendedSize1300'];
                     }
                     ?>
                 </label>
@@ -24,7 +24,7 @@ $list = 'list' . ucfirst($temp);
                     <ul>
                         <li>
                             <button type="button" class="bt bt-re bt-green" data-id="btUpload<?php echo ucfirst($temp); ?>">
-                                <?php echo $arrContent['head']['translation']['send']; ?>
+                                <?php echo $translation['send']; ?>
                             </button>
                         </li>
                     </ul>
@@ -35,9 +35,9 @@ $list = 'list' . ucfirst($temp);
             <table class="table table-grey thumbnail-table" data-path="blog/<?php echo $temp; ?>">
                 <thead>
                     <tr>
-                        <th><?php echo $arrContent['head']['translation']['image']; ?></th>
-                        <th><?php echo $arrContent['head']['translation']['name']; ?></th>
-                        <th><?php echo $arrContent['head']['translation']['menu']; ?></th>
+                        <th><?php echo $translation['image']; ?></th>
+                        <th><?php echo $translation['name']; ?></th>
+                        <th><?php echo $translation['menu']; ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,7 +46,7 @@ $list = 'list' . ucfirst($temp);
                         $string =  '
                         <tr>
                             <td colspan="3" class="text-center">
-                                ' . $arrContent['head']['translation']['emptyList'] . '
+                                ' . $translation['emptyList'] . '
                             </td>
                         </tr>
                         ';
@@ -65,14 +65,14 @@ $list = 'list' . ucfirst($temp);
                                     ' . $value[1] . '
                                 </td>
                                 <td class="minimum">
-                                    <nav class="menu menu-horizontal text-right">           
-                                        <ul>           
+                                    <nav class="menu menu-horizontal text-right">
+                                        <ul>
                                             <li>
-                                                <button type="button" class="bt bt-red bt-sm" data-action="delete" title="' . $arrContent['head']['translation']['delete'] . '">   
+                                                <button type="button" class="bt bt-red bt-sm" data-action="delete" title="' . $translation['delete'] . '">
                                                     <span class="fa fa-close" aria-hidden="true"></span>
                                                 </button>
-                                            </li>           
-                                        </ul>        
+                                            </li>
+                                        </ul>
                                     </nav>
                                 </td>
                             </tr>

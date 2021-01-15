@@ -1,6 +1,6 @@
 <header id="header" class="grid__header">
     <div class="row theme-header">
-        <a href="<?php echo $arrContent['head']['urlMain'] . $arrContent['head']['lang'] . '/'; ?>home/" class="button button--regular button--regular--proportional button--grey" aria-label="<?php echo $arrContent['head']['translation']['home']; ?>">
+        <a href="<?php echo $arrContent['head']['urlMain'] . $lang . '/'; ?>home/" class="button button--regular button--regular--proportional button--grey" aria-label="<?php echo $arrContent['head']['translation']['home']; ?>">
             <svg class="icon icon--regular icon--grey">
                 <use xlink:href="./assets/img/icon.svg#home"></use>
             </svg>
@@ -11,8 +11,8 @@
                 <?php
                 $string = '';
                 foreach (getUrArrLanguage() as $key => &$valeu) {
-                    $lang = $valeu['lang'];
-                    $string .= '<option value="' . $lang . '" data-url="' . $arrContent['head']['url' . ucfirst($lang)] . '">' . $arrContent['head']['translation'][$lang] . '</option>';
+                    $langSelect = $valeu['lang'];
+                    $string .= '<option value="' . $langSelect . '" data-url="' . $arrContent['head']['url' . ucfirst($langSelect)] . '">' . $arrContent['head']['translation'][$lang] . '</option>';
                 }
                 echo $string;
                 ?>
