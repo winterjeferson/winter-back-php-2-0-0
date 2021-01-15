@@ -1,10 +1,8 @@
 const gulp = require('gulp');
 const rename = require("gulp-rename"); //npm install gulp-rename --save-dev // https://www.npmjs.com/package/gulp-rename/
 const htmlmin = require('gulp-htmlmin'); //npm install gulp-htmlmin --save-dev  //https://www.npmjs.com/package/gulp-htmlmin/
-const debug = require("gulp-debug"); //npm install --save-dev gulp-debug // https://www.npmjs.com/package/gulp-debug
 const del = require('del'); //npm install del --save-dev //https://www.npmjs.com/package/del
 const configuration = require('./configuration.js');
-const helper = require('./helper.js');
 const folderApp = 'app/';
 const folderView = 'view/';
 
@@ -25,7 +23,6 @@ gulp.task('buildAppClean', (done) => {
 gulp.task('buildAppMove', (done) => {
     gulp
         .src(fileAll)
-        .pipe(debug())
         .pipe(gulp.dest(configuration.dist + folderApp))
     return done();
 });
@@ -33,7 +30,6 @@ gulp.task('buildAppMove', (done) => {
 gulp.task('buildAppMoveIndex', (done) => {
     gulp
         .src(fileIndex)
-        .pipe(debug())
         .pipe(gulp.dest(configuration.dist))
     return done();
 });

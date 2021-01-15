@@ -1,14 +1,14 @@
 const gulp = require('gulp');
 const del = require('del'); //npm install del --save-dev //https://www.npmjs.com/package/del
-const image = require('./image.js');
+const taskApplication = require('./app.js');
 const css = require('./css.js');
 const js = require('./js.js');
-const taskApplication = require('./app.js');
 const other = require('./other.js');
+const image = require('./image.js');
 
 
 gulp.task('deploy', gulp.series(
-    // 'buildAppMinify',
+    'buildAppMinify',
     'buildCssMinify',
     'buildJsRemoveCode',
     'buildJsMinify',
@@ -16,7 +16,7 @@ gulp.task('deploy', gulp.series(
 ));
 
 gulp.task('initialize', gulp.series(
-    // 'buildApp',
+    'buildApp',
     'buildCss',
     'buildJs',
     'buildImage',
