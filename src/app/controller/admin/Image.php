@@ -24,7 +24,7 @@ class Image extends \App\Controller\Main
     function getView($model)
     {
         $data = [
-            'template' => ['file' => 'template-admin'],
+            'template' => ['file' => 'admin'],
             'content' => ['id' => 'pageAdminImage', 'folder' => 'admin', 'file' => 'image', 'model' => $model],
         ];
 

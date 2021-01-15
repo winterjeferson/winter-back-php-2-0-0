@@ -23,7 +23,7 @@ class Login extends \App\Controller\Main
     function getView($model)
     {
         $data = [
-            'template' => ['file' => 'template-default'],
+            'template' => ['file' => 'default'],
             'content' => ['id' => 'pageAdminLogin', 'folder' => 'admin', 'file' => 'login', 'model' => $model],
         ];
 

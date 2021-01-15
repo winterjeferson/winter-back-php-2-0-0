@@ -23,7 +23,7 @@ class Page extends \App\Controller\Main
     function getView($model)
     {
         $data = [
-            'template' => ['file' => 'template-default'],
+            'template' => ['file' => 'default'],
             'content' => ['id' => 'page', 'folder' => 'page', 'file' => 'page', 'model' => $model],
         ];
 

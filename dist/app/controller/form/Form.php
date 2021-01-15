@@ -22,7 +22,7 @@ class Form extends \App\Controller\Main
     function getView($model)
     {
         $data = [
-            'template' => ['file' => 'template-default'],
+            'template' => ['file' => 'default'],
             'content' => ['id' => 'pageForm', 'folder' => 'form', 'file' => 'form', 'model' => $model],
         ];
 

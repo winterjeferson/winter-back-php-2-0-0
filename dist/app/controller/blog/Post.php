@@ -23,7 +23,7 @@ class Post extends \App\Controller\Main
     function getView($model)
     {
         $data = [
-            'template' => ['file' => 'template-default'],
+            'template' => ['file' => 'default'],
             'content' => ['id' => 'pageBlogPost', 'folder' => 'blog', 'file' => 'post', 'model' => $model],
         ];
 

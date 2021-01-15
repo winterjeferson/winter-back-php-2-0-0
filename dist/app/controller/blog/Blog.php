@@ -23,7 +23,7 @@ class Blog extends \App\Controller\Main
     function getView($model)
     {
         $data = [
-            'template' => ['file' => 'template-default'],
+            'template' => ['file' => 'default'],
             'content' => ['id' => 'pageBlog', 'folder' => 'blog', 'file' => 'blog', 'model' => $model],
         ];
 

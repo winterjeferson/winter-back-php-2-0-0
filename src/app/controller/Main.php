@@ -27,6 +27,6 @@ class Main
     {
         $arrDefinedVars = get_defined_vars();
         $arrContent = $arrDefinedVars['data']['content']['model'];
-        require_once __DIR__ . '/../view/shared/' . $arrDefinedVars['data']['template']['file'] . '.php';
+        require_once __DIR__ . '/../view/template/' . $arrDefinedVars['data']['template']['file'] . '.php';
     }
 }

@@ -24,7 +24,7 @@ class Blog extends \App\Controller\Main
     function getView($model)
     {
         $data = [
-            'template' => ['file' => 'template-admin'],
+            'template' => ['file' => 'admin'],
             'content' => ['id' => 'pageAdminBlog', 'folder' => 'admin', 'file' => 'blog', 'model' => $model],
         ];
 

@@ -43,7 +43,7 @@ gulp.task('buildCssMinify', () => {
 });
 
 gulp.task('buildCssLint', function lintCssTask(done) {
-    return gulp
+    gulp
         .src(fileAll)
         .pipe(gulpStylelint({
             failAfterError: true,

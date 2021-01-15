@@ -23,7 +23,7 @@ class BlogThumbnail extends \App\Controller\Main
     function getView($model)
     {
         $data = [
-            'template' => ['file' => 'template-empty'],
+            'template' => ['file' => 'empty'],
             'content' => ['id' => 'pageAdminImage', 'folder' => 'admin', 'file' => 'blog-thumbnail', 'model' => $model],
         ];
 

@@ -1,5 +1,5 @@
 const gulp = require('gulp');
-const application = require('./application.js');
+const taskApplication = require('./app.js');
 const css = require('./css.js');
 const js = require('./js.js');
 const other = require('./other.js');
@@ -8,7 +8,7 @@ const image = require('./image.js');
 
 
 gulp.task('watch', (callback) => {
-    gulp.watch(application.fileAll, gulp.series('buildApplication'))
+    gulp.watch(taskApplication.fileAll, gulp.series('buildApp'))
         .on('change', (event) => {
             console.log(event);
         });

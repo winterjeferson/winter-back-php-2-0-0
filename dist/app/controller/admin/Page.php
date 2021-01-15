@@ -24,7 +24,7 @@ class Page extends \App\Controller\Main
     function getView($model)
     {
         $data = [
-            'template' => ['file' => 'template-admin'],
+            'template' => ['file' => 'admin'],
             'content' => ['id' => 'pageAdminPage', 'folder' => 'admin', 'file' => 'page', 'model' => $model],
         ];
 

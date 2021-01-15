@@ -13,7 +13,7 @@ include __DIR__ . '/../admin/admin-layout.php';
         ?>
     </section>
     <section id="mainContent" class="grid-content page">
-        <div id="<?php echo $arrDefinedVars['data']['content']['id'] ?>" class="row">
+        <div id="<?php echo $arrDefinedVars['data']['content']['id'] ?>" class="row right">
             <div class="user">
                 <?php
                 $wellcome = $arrContent['head']['translation']['wellcome'];

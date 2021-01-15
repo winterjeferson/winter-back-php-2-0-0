@@ -24,7 +24,7 @@ class User extends \App\Controller\Main
     function getView($model)
     {
         $data = [
-            'template' => ['file' => 'template-admin'],
+            'template' => ['file' => 'admin'],
             'content' => ['id' => 'pageAdminUser', 'folder' => 'admin', 'file' => 'user', 'model' => $model],
         ];
 
