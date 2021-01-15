@@ -1082,12 +1082,11 @@ class Login {
 }
 
 window.login = new Login();
-window.addEventListener('load',
-    window.login.build(),
-    window.admin.build(),
-    window.adminBlog.build(),
-    window.adminUploadImage.build(),
-    window.adminUser.build(),
-    window.adminPage.build(), {
-        once: true
-    });
+document.addEventListener('DOMContentLoaded', () => {
+    window.login.build();
+    window.admin.build();
+    window.adminBlog.build();
+    window.adminUploadImage.build();
+    window.adminUser.build();
+    window.adminPage.build();
+});

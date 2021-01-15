@@ -49,6 +49,28 @@ $templateId = $arrDefinedVars['data']['content']['id'];
     <link href="<?php echo $urlFrontEnd . 'assets/css/wf-plugin.css' ?>" rel="stylesheet">
     <link href="<?php echo $urlFrontEnd . 'assets/css/wf-theme.css' ?>" rel="stylesheet">
     <link href="<?php echo $urlBackEnd  . 'assets/css/wb-theme.css' ?>" rel="stylesheet">
+
+    <script>
+        const globalLanguage = '<?php echo $lang ?>';
+        const globalUrl = '<?php echo $urlBackEnd ?>';
+        const globalTranslation = <?php echo $arrContent['head']['translationJson']; ?>;
+        const globalToken = '<?php echo $arrContent['head']['token']; ?>';
+    </script>
+
+    <?php
+    if ($arrContent['head']['isNoIdex']) {
+        echo '<meta name="robots" content="noindex">';
+    }
+
+    if ($arrContent['head']['isAdmin']) {
+        echo '
+            <link href="' . $urlBackEnd . 'assets/css/wb-admin.css" rel="stylesheet">
+            <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+            <script src="' . $urlBackEnd . 'assets/js/wb-admin.js"></script>
+        ';
+    }
+    ?>
 </head>
 
 <body class="overflow-hidden">
