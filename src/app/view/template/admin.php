@@ -22,27 +22,26 @@ include __DIR__ . '/../admin/admin-layout.php';
                 echo  $wellcome . ' <strong>' . $name . '</strong>'
                 ?>!
             </div>
-        </div>
-        <div class="button-wrapper row center tab tab--blue" id="pageAdminMenu">
-            <?php
-            $string = '';
+            <div class="button-wrapper row center tab tab--blue" id="pageAdminMenu">
+                <?php
+                $string = '';
 
-            foreach ($arrContent['admin']['menu'] as $key => &$value) {
-                $string .= '
+                foreach ($arrContent['admin']['menu'] as $key => &$value) {
+                    $string .= '
                         <a href="' . $urlBackEnd . $lang . '/' . 'admin/' . $value['id'] . '/" data-id="btAdmin' . ucfirst($value['id']) . '" class="button button--regular button--blue">
                             ' . $translation[$value['translation']] . '
                         </a>
                     ';
-            }
+                }
 
-            echo removeLineBreak($string);
-            ?>
-        </div>
-        <div class="row">
-            <?php
-            include  __DIR__ . '/../' . $templateFolder . '/' . $templateFile . '.php';
-            ?>
-        </div>
+                echo removeLineBreak($string);
+                ?>
+            </div>
+            <div class="row">
+                <?php
+                include  __DIR__ . '/../' . $templateFolder . '/' . $templateFile . '.php';
+                ?>
+            </div>
         </div>
     </section>
     <?php

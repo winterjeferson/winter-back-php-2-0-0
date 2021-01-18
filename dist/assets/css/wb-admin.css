@@ -24,3 +24,6 @@
   margin: auto;
   max-width: 500px;
   padding: 8px; }
+
+.form__label {
+  text-align: left; }

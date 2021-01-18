@@ -30,8 +30,12 @@
  }
 
  .login-wrapper {
-    height: auto;
-    margin: auto;
-    max-width: 500px;
-    padding: $bi;
-}
+     height: auto;
+     margin: auto;
+     max-width: 500px;
+     padding: $bi;
+ }
+
+ .form__label {
+     text-align: left;
+ }

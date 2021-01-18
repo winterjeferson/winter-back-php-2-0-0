@@ -39,8 +39,8 @@ class AdminUploadImage {
     deleteImage(button) {
         this.deleteElement = button;
 
-        objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
-        objWfModal.buildContentConfirmationAction('window.adminUploadImage.deleteImageAjax()');
+        window.modal.buildModal('confirmation', globalTranslation.confirmationDelete);
+        window.modal.buildContentConfirmationAction('window.adminUploadImage.deleteImageAjax()');
     }
 
     deleteImageAjax() {
@@ -63,7 +63,7 @@ class AdminUploadImage {
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
                 self.buildResponse(ajax.responseText, $return);
-                objWfModal.closeModal();
+                window.modal.closeModal();
             }
         };
 

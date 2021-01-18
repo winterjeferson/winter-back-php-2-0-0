@@ -66,7 +66,7 @@ class AdminBlog {
 
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
-                    objWfModal.buildModal('ajax', window.url.getController({
+                    window.modal.buildModal('ajax', window.url.getController({
                         'folder': 'admin',
                         'file': 'BlogThumbnail'
                     }), 'eb');
@@ -86,8 +86,8 @@ class AdminBlog {
 
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
-                    objWfModal.buildModal('confirmation', globalTranslation.confirmationInactivate);
-                    objWfModal.buildContentConfirmationAction('window.adminBlog.modify(' + item.getAttribute('data-id') + ', "inactivate")');
+                    window.modal.buildModal('confirmation', globalTranslation.confirmationInactivate);
+                    window.modal.buildContentConfirmationAction('window.adminBlog.modify(' + item.getAttribute('data-id') + ', "inactivate")');
                 };
             });
         });
@@ -115,8 +115,8 @@ class AdminBlog {
 
             Array.prototype.forEach.call($buttonDelete, function (item) {
                 item.onclick = function () {
-                    objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
-                    objWfModal.buildContentConfirmationAction('window.adminBlog.delete(' + item.getAttribute('data-id') + ')');
+                    window.modal.buildModal('confirmation', globalTranslation.confirmationDelete);
+                    window.modal.buildContentConfirmationAction('window.adminBlog.delete(' + item.getAttribute('data-id') + ')');
                 };
             });
         });
@@ -288,7 +288,7 @@ class AdminBlog {
         let imageName = elCard.querySelector('[data-id="imageName"]').innerText;
 
         this.thumbnail = imageName;
-        objWfModal.closeModal();
+        window.modal.closeModal();
         this.modifyThumbnail();
     }
 

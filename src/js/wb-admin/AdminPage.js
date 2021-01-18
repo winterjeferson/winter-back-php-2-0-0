@@ -56,8 +56,8 @@ class AdminPage {
 
             Array.prototype.forEach.call($button, function (item) {
                 item.onclick = function () {
-                    objWfModal.buildModal('confirmation', globalTranslation.confirmationInactivate);
-                    objWfModal.buildContentConfirmationAction('window.adminPage.modify(' + item.getAttribute('data-id') + ', "inactivate")');
+                    window.modal.buildModal('confirmation', globalTranslation.confirmationInactivate);
+                    window.modal.buildContentConfirmationAction('window.adminPage.modify(' + item.getAttribute('data-id') + ', "inactivate")');
                 };
             });
         });
@@ -85,8 +85,8 @@ class AdminPage {
 
             Array.prototype.forEach.call(elButtonDelete, function (item) {
                 item.onclick = function () {
-                    objWfModal.buildModal('confirmation', globalTranslation.confirmationDelete);
-                    objWfModal.buildContentConfirmationAction('window.adminPage.delete(' + item.getAttribute('data-id') + ')');
+                    window.modal.buildModal('confirmation', globalTranslation.confirmationDelete);
+                    window.modal.buildContentConfirmationAction('window.adminPage.delete(' + item.getAttribute('data-id') + ')');
                 };
             });
         });
