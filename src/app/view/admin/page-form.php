@@ -1,8 +1,4 @@
- <h2 class="page__title">
-     <?php
-        echo $translation['register'];
-        ?>
- </h2>
+ <h2 class="page__title"><?php echo $translation['register']; ?></h2>
  <form class="row form form--grey" data-id="formRegister">
      <div class="row">
          <div class="column form__field">
@@ -21,7 +17,7 @@
      <div class="row">
          <div class="column form__field">
              <label class="form__label"><?php echo $translation['content']; ?></label>
-             <textarea style="width: 100%;" class="form__fill" id="fieldContent" data-id="fieldContent" aria-label="<?php echo $arrContent['page']['page']['content']; ?>"></textarea>
+             <textarea class="form__fill" id="fieldContent" data-id="fieldContent" aria-label="<?php echo $arrContent['page']['page']['content']; ?>"></textarea>
          </div>
      </div>
  </form>

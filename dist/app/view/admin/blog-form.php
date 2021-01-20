@@ -1,25 +1,23 @@
 <h1 class="page__title"><?php echo $translation['register']; ?></h1>
-<div class="card card-es card-grey">
-    <form class="row form form-grey" data-id="formRegister">
-        <div class="col-es-12 col-eb-6 form-field text-left">
-            <label><?php echo $translation['title']; ?></label>
-            <input type="text" data-id="fieldTitle" aria-label="<?php echo $translation['title']; ?>">
+<form class="row form form--grey" data-id="formRegister">
+    <div class="row">
+        <div class="column form__field">
+            <label class="form__label"><?php echo $translation['title']; ?></label>
+            <input class="form__fill" type="text" data-id="fieldTitle" aria-label="<?php echo $translation['title']; ?>">
         </div>
-        <div class="col-es-12 col-eb-6 form-field text-left">
-            <label><?php echo $translation['friendlyUrl']; ?></label>
-            <input type="text" data-id="fieldUrl" aria-label="<?php echo $translation['pageAdminBlogTitle']; ?>">
+        <div class="column form__field">
+            <label class="form__label"><?php echo $translation['friendlyUrl']; ?></label>
+            <input class="form__fill" type="text" data-id="fieldUrl" aria-label="<?php echo $translation['pageAdminBlogTitle']; ?>">
         </div>
-        <div class="col-es-12 form-field text-left">
-            <label><?php echo $translation['content']; ?></label>
-            <textarea id="fieldContent" data-id="fieldContent" aria-label="<?php echo $translation['content']; ?>"></textarea>
+    </div>
+    <div class="row">
+        <div class="column form__field">
+            <label class="form__label"><?php echo $translation['tags']; ?></label>
+            <input class="form__fill" type="text" data-id="fieldTag" aria-label="<?php echo $translation['pageAdminBlogTagsSeparator']; ?>" placeholder="<?php echo $translation['pageAdminBlogTagsSeparator']; ?>">
         </div>
-        <div class="col-es-12 col-eb-6 form-field text-left">
-            <label><?php echo $translation['tags']; ?></label>
-            <input type="text" data-id="fieldTag" aria-label="<?php echo $translation['pageAdminBlogTagsSeparator']; ?>" placeholder="<?php echo $translation['pageAdminBlogTagsSeparator']; ?>">
-        </div>
-        <div class="col-es-12 col-eb-6 form-field text-left">
-            <label><?php echo $translation['author']; ?></label>
-            <select aria-label="select" data-id="author">
+        <div class="column form__field">
+            <label class="form__label"><?php echo $translation['author']; ?></label>
+            <select class="form__fill" aria-label="select" data-id="author">
                 <?php
                 $string = '';
 
@@ -31,17 +29,25 @@
                 ?>
             </select>
         </div>
-        <div class="col-es-6 form-field text-left">
-            <label><?php echo $translation['datePost']; ?></label>
-            <input type="date" data-id="fieldDatePost" aria-label="<?php echo $translation['datePost']; ?>">
+        <div class="column form__field">
+            <label class="form__label"><?php echo $translation['datePost']; ?></label>
+            <input class="form__fill" type="date" data-id="fieldDatePost" aria-label="<?php echo $translation['datePost']; ?>">
         </div>
-        <div class="col-es-6 form-field text-left">
-            <label><?php echo $translation['dateEdit']; ?></label>
-            <input type="date" data-id="fieldDateEdit" aria-label="<?php echo $translation['dateEdit']; ?>">
+        <div class="column form__field">
+            <label class="form__label"><?php echo $translation['dateEdit']; ?></label>
+            <input class="form__fill" type="date" data-id="fieldDateEdit" aria-label="<?php echo $translation['dateEdit']; ?>">
         </div>
-        <div class="col-es-12 form-field text-left" data-id="thumbnailWrapper">
-            <label><?php echo $translation['thumbnail']; ?></label>
-            <table class="table table-grey thumbnail-table">
+    </div>
+    <div class="row">
+        <div class="column form__field">
+            <label class="form__label"><?php echo $translation['content']; ?></label>
+            <textarea class="form__fill" id="fieldContent" data-id="fieldContent" aria-label="<?php echo $translation['content']; ?>"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column form__field" data-id="thumbnailWrapper">
+            <label class="form__label"><?php echo $translation['thumbnail']; ?></label>
+            <table class="table table--grey thumbnail-table">
                 <thead>
                     <tr>
                         <th><?php echo $translation['image']; ?></th>
@@ -56,19 +62,15 @@
                         </td>
                         <td data-id="name">blog-thumbnail.jpg</td>
                         <td class="minimum">
-                            <nav class="menu menu-horizontal text-right">
-                                <ul>
-                                    <li>
-                                        <button type="button" class="bt bt-sm bt-blue" data-action="edit" title="<?php echo $translation['edit']; ?>">
-                                            <span class="fa fa-pencil" aria-hidden="true"></span>
-                                        </button>
-                                    </li>
-                                </ul>
-                            </nav>
+                            <div class="button-wrapper row">
+                                <button type="button" class="button button--small button--small--proportional button--blue" data-action="edit" title="<?php echo $translation['edit']; ?>">
+                                    <span class="fa fa-pencil" aria-hidden="true"></span>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-    </form>
-</div>
+    </div>
+</form>

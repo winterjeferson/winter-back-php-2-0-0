@@ -113,7 +113,7 @@ class AdminBlog {
         this.elThumbnailWrapper = this.elContentEdit.querySelector('[data-id="thumbnailWrapper"]');
         this.elFormFieldAuthor = document.querySelector('[data-id="author"]');
         this.elCkEditor = CKEDITOR.instances.fieldContent;
-        this.elButtonRegister = this.elPage.querySelector('[data-id="btRegister"]');
+        this.elButtonRegister = this.elPage.querySelector('#btRegister');
 
         this.isEdit = false;
         this.editId = 0;
@@ -124,102 +124,117 @@ class AdminBlog {
     }
 
     buildMenu() {
-        const self = this;
-
         this.elButtonRegister.onclick = () => {
-            if (!self.validateForm()) {
-                return;
-            }
+            if (!this.validateForm()) return;
 
-            if (self.isEdit) {
-                self.editSave();
+            if (this.isEdit) {
+                this.editSave();
             } else {
-                self.saveContent();
+                this.saveContent();
             }
         };
     }
 
     buildMenuThumbnail() {
-        const $target = this.elContentEditThumbnail.querySelectorAll('.table');
+        const elTarget = this.elContentEditThumbnail.querySelectorAll('.table');
 
-        Array.prototype.forEach.call($target, function (table) {
-            let $button = table.querySelectorAll('[data-action="edit"]');
+        Array.prototype.forEach.call(elTarget, (table) => {
+            this.buildMenuThumbnailButton(table);
+        });
+    }
 
-            Array.prototype.forEach.call($button, function (item) {
-                item.onclick = function () {
-                    window.modal.buildModal('ajax', window.url.getController({
-                        'folder': 'admin',
-                        'file': 'BlogThumbnail'
-                    }), 'eb');
-                };
-            });
+    buildMenuThumbnailButton(table) {
+        const elButton = table.querySelectorAll('[data-action="edit"]');
+
+        Array.prototype.forEach.call(elButton, (item) => {
+            item.onclick = () => {
+                window.modal.buildModal('ajax', window.url.getController({
+                    'folder': 'admin',
+                    'file': 'BlogThumbnail'
+                }), 'eb');
+            };
+        });
+    }
+
+    buildMenuTableActive(table) {
+        const elButton = table.querySelectorAll('[data-action="inactivate"]');
+
+        Array.prototype.forEach.call(elButton, (item) => {
+            item.onclick = () => {
+                window.modal.buildModal({
+                    'kind': 'confirmation',
+                    'content': globalTranslation.confirmationInactivate,
+                    'size': 'small',
+                    'click': `window.adminBlog.modify(${item.getAttribute('data-id')}, 'inactivate')`
+                });
+            };
+        });
+    }
+
+    buildMenuTableInactive(table) {
+        const elButton = table.querySelectorAll('[data-action="activate"]');
+
+        Array.prototype.forEach.call(elButton, (item) => {
+            item.onclick = () => {
+                this.modify(item.getAttribute('data-id'), 'activate');
+            };
+        });
+    }
+
+    buildMenuTableDefault(table) {
+        const elButtonEdit = table.querySelectorAll('[data-action="edit"]');
+        const elButtonDelete = table.querySelectorAll('[data-action="delete"]');
+
+        Array.prototype.forEach.call(elButtonEdit, (item) => {
+            item.onclick = () => {
+                this.editId = item.getAttribute('data-id');
+                this.editLoadData(this.editId);
+            };
+        });
+
+        Array.prototype.forEach.call(elButtonDelete, (item) => {
+            item.onclick = () => {
+                window.modal.buildModal('confirmation', globalTranslation.confirmationDelete);
+                window.modal.buildContentConfirmationAction(`window.adminBlog.delete(${item.getAttribute('data-id')})`);
+            };
         });
     }
 
     buildMenuTable() {
-        const self = this;
-        const $table = this.elContentList.querySelectorAll('.table');
-        const $tableActive = this.elContentList.querySelectorAll('[data-id="tableActive"]');
-        const $tableInactive = this.elContentList.querySelectorAll('[data-id="tableInactive"]');
+        const elTable = this.elContentList.querySelectorAll('.table');
+        const elTableActive = this.elContentList.querySelectorAll('[data-id="tableActive"]');
+        const elTableInactive = this.elContentList.querySelectorAll('[data-id="tableInactive"]');
 
-        Array.prototype.forEach.call($tableActive, function (table) {
-            let $button = table.querySelectorAll('[data-action="inactivate"]');
-
-            Array.prototype.forEach.call($button, function (item) {
-                item.onclick = function () {
-                    window.modal.buildModal('confirmation', globalTranslation.confirmationInactivate);
-                    window.modal.buildContentConfirmationAction('window.adminBlog.modify(' + item.getAttribute('data-id') + ', "inactivate")');
-                };
-            });
+        Array.prototype.forEach.call(elTableActive, (table) => {
+            this.buildMenuTableActive(table);
         });
 
-        Array.prototype.forEach.call($tableInactive, function (table) {
-            let $button = table.querySelectorAll('[data-action="activate"]');
-
-            Array.prototype.forEach.call($button, function (item) {
-                item.onclick = function () {
-                    self.modify(item.getAttribute('data-id'), 'activate');
-                };
-            });
+        Array.prototype.forEach.call(elTableInactive, (table) => {
+            this.buildMenuTableInactive(table);
         });
 
-        Array.prototype.forEach.call($table, function (table) {
-            let $buttonEdit = table.querySelectorAll('[data-action="edit"]');
-            let $buttonDelete = table.querySelectorAll('[data-action="delete"]');
-
-            Array.prototype.forEach.call($buttonEdit, function (item) {
-                item.onclick = function () {
-                    self.editId = item.getAttribute('data-id');
-                    self.editLoadData(self.editId);
-                };
-            });
-
-            Array.prototype.forEach.call($buttonDelete, function (item) {
-                item.onclick = function () {
-                    window.modal.buildModal('confirmation', globalTranslation.confirmationDelete);
-                    window.modal.buildContentConfirmationAction('window.adminBlog.delete(' + item.getAttribute('data-id') + ')');
-                };
-            });
+        Array.prototype.forEach.call(elTable, (table) => {
+            this.buildMenuTableDefault(table);
         });
     }
 
     editSave() {
         const self = this;
-        let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
+        const url = window.url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
-        let parameter =
+        const parameter =
             '&action=doUpdate' +
             '&id=' + self.editId +
             this.buildParameter() +
             '&token=' + globalToken;
+        let ajax = new XMLHttpRequest();
 
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-        ajax.onreadystatechange = function () {
+        ajax.onreadystatechange = () => {
             if (ajax.readyState === 4 && ajax.status === 200) {
                 window.admin.showResponse(ajax.responseText);
             }
@@ -242,7 +257,7 @@ class AdminBlog {
 
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = function () {
+        ajax.onreadystatechange = () => {
             if (ajax.readyState === 4 && ajax.status === 200) {
                 let obj = JSON.parse(ajax.responseText);
 
@@ -269,7 +284,7 @@ class AdminBlog {
         this.editId = obj['id'];
         this.elFormFieldAuthor.value = obj['author_id'];
 
-        this.elCkEditor.setData(obj['content_' + globalLanguage], function () {
+        this.elCkEditor.setData(obj['content_' + globalLanguage], () => {
             this.checkDirty();
         });
     }
@@ -288,7 +303,7 @@ class AdminBlog {
 
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = function () {
+        ajax.onreadystatechange = () => {
             if (ajax.readyState === 4 && ajax.status === 200) {
                 window.admin.showResponse(ajax.responseText);
             }
@@ -298,19 +313,19 @@ class AdminBlog {
     }
 
     delete(id) {
-        let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
+        const url = window.url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
-        let parameter =
+        const parameter =
             '&action=doDelete' +
             '&id=' + id +
             '&token=' + globalToken;
+        let ajax = new XMLHttpRequest();
 
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = function () {
+        ajax.onreadystatechange = () => {
             if (ajax.readyState === 4 && ajax.status === 200) {
                 window.admin.showResponse(ajax.responseText);
             }
@@ -320,7 +335,7 @@ class AdminBlog {
     }
 
     validateForm() {
-        let arrField = [
+        const arrField = [
             this.elFormFieldTitle,
             this.elFormFieldUrl
         ];
@@ -343,19 +358,19 @@ class AdminBlog {
     }
 
     saveContent() {
-        let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
+        const url = window.url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
-        let parameter =
+        const parameter =
             '&action=doSave' +
             this.buildParameter() +
             '&token=' + globalToken;
+        let ajax = new XMLHttpRequest();
 
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = function () {
+        ajax.onreadystatechange = () => {
             if (ajax.readyState === 4 && ajax.status === 200) {
                 window.admin.showResponse(ajax.responseText);
             }
@@ -365,8 +380,8 @@ class AdminBlog {
     }
 
     selectImage(target) {
-        let elCard = target.parentNode.parentNode;
-        let imageName = elCard.querySelector('[data-id="imageName"]').innerText;
+        const elCard = target.parentNode.parentNode;
+        const imageName = elCard.querySelector('[data-id="imageName"]').innerText;
 
         this.thumbnail = imageName;
         window.modal.closeModal();
@@ -374,8 +389,8 @@ class AdminBlog {
     }
 
     modifyThumbnail() {
-        let elImage = this.elThumbnailWrapper.querySelector('table').querySelector('[data-id="thumbnail"]');
-        let elName = this.elThumbnailWrapper.querySelector('table').querySelector('[data-id="name"]');
+        const elImage = this.elThumbnailWrapper.querySelector('table').querySelector('[data-id="thumbnail"]');
+        const elName = this.elThumbnailWrapper.querySelector('table').querySelector('[data-id="name"]');
 
         if (this.thumbnail === '' || this.thumbnail === null) {
             this.thumbnail = this.thumbnailDefault;

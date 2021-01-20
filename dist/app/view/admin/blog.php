@@ -31,12 +31,10 @@ function buildListHTML($value, $language, $status)
                 <td class="minimum"><small>' . $value['date_post_' . $language] . '</small></td>
                 <td class="minimum"><small>' . $value['date_edit_' . $language] . '</small></td>
                 <td class="minimum">
-                    <div class="menu menu-horizontal">
-                        <ul>
-                            <li>' . buildHTMLBt('edit', $value['id']) . '</li>
-                            <li>' . $btActive . '</li>
-                            <li>' . buildHTMLBt('delete', $value['id']) . '</li>
-                        </ul>
+                    <div class="button-wrapper row">
+                    ' . buildHTMLBt('edit', $value['id']) . '
+                    ' . $btActive . '
+                    ' . buildHTMLBt('delete', $value['id']) . '
                     </div>
                 </td>
             </tr>
@@ -53,16 +51,10 @@ function buildListHTML($value, $language, $status)
     include __DIR__ . '/blog-form.php';
     ?>
 
-    <div class="row form__field">
-        <nav class="menu menu-horizontal text-right">
-            <ul>
-                <li>
-                    <button type="button" class="bt bt-re bt-green" data-id="btRegister">
-                        <?php echo $translation['save']; ?>
-                    </button>
-                </li>
-            </ul>
-        </nav>
+    <div class="row">
+        <button type="button" class="button button--regular button--green" id="btRegister">
+            <?php echo $translation['save']; ?>
+        </button>
     </div>
 
 </section>
