@@ -71,7 +71,10 @@ class Admin {
                 break;
         }
 
-        objWfNotification.add(response, color);
+        window.notification.add({
+            'text': response,
+            'color': color
+        });
     }
 }
 

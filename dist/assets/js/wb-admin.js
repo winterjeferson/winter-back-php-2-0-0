@@ -71,7 +71,10 @@ class Admin {
                 break;
         }
 
-        objWfNotification.add(response, color);
+        window.notification.add({
+            'text': response,
+            'color': color
+        });
     }
 }
 
@@ -753,9 +756,7 @@ class AdminUploadImage {
 window.adminUploadImage = new AdminUploadImage();
 class AdminUser {
     build() {
-        if (!window.helper.getUrlWord('admin/user')) {
-            return;
-        }
+        if (!window.helper.getUrlWord('admin/user')) return;
 
         this.updateVariable();
         this.buildMenu();
@@ -772,11 +773,9 @@ class AdminUser {
 
     buildMenu() {
         this.elFormSend.onclick = () => {
-            if (!this.validateForm()) {
-                return;
-            }
+            if (!this.validateForm()) return;
 
-            if (self.isEdit) {
+            if (this.isEdit) {
                 this.editSave();
             } else {
                 this.saveContent();
@@ -844,8 +843,12 @@ class AdminUser {
 
         Array.prototype.forEach.call(elButtonDelete, (item) => {
             item.onclick = () => {
-                window.modal.buildModal('confirmation', globalTranslation.confirmationDelete);
-                window.modal.buildContentConfirmationAction('window.adminUser.delete(' + item.getAttribute('data-id') + ')');
+                window.modal.buildModal({
+                    'kind': 'confirmation',
+                    'content': globalTranslation.confirmationDelete,
+                    'size': 'small',
+                    'click': `window.adminUser.delete(${item.getAttribute('data-id')})`
+                });
             };
         });
     }
