@@ -12,12 +12,10 @@ function buildListHTML($value, $language, $status)
                 <td><div class="td-wrapper">' . encode(strip_tags($value['content'])) . '</div></td>
                 <td class="minimum">' . $value['url'] . '</td>
                 <td class="minimum">
-                    <div class="menu menu-horizontal">
-                        <ul>
-                            <li>' . buildHTMLBt('edit', $value['id']) . '</li>
-                            <li>' . $btActive . '</li>
-                            <li>' . buildHTMLBt('delete', $value['id']) . '</li>
-                        </ul>
+                    <div class="button-wrapper row">
+                    ' . buildHTMLBt('edit', $value['id']) . '
+                    ' . $btActive . '
+                    ' . buildHTMLBt('delete', $value['id']) . '
                     </div>
                 </td>
             </tr>
@@ -27,23 +25,15 @@ function buildListHTML($value, $language, $status)
 }
 ?>
 
-
-
 <section id="pageAdminPageEdit" class="row">
     <?php
     include __DIR__ . '/page-form.php';
     ?>
 
-    <div class="form__field">
-        <nav class="menu menu-horizontal text-right">
-            <ul>
-                <li>
-                    <button type="button" class="bt bt-re bt-green" data-id="btRegister">
-                        <?php echo $translation['save']; ?>
-                    </button>
-                </li>
-            </ul>
-        </nav>
+    <div class="row">
+        <button type="button" class="button button--regular button--green" id="btRegister">
+            <?php echo $translation['save']; ?>
+        </button>
     </div>
 </section>
 

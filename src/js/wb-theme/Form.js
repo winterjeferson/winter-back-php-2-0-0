@@ -18,7 +18,7 @@ class WBForm {
         const self = this;
 
         this.elButtonSend.addEventListener('click', () => {
-            if (objWfForm.validateEmpty([self.elFormFieldEmail, self.elFormFieldMessage])) {
+            if (window.form.validateEmpty([self.elFormFieldEmail, self.elFormFieldMessage])) {
                 self.send();
             }
         });

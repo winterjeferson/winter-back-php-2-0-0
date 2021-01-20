@@ -2,6 +2,9 @@
 .table .menu {
   white-space: nowrap; }
 
+.table .button-wrapper {
+  flex-flow: nowrap; }
+
 .table-wrapper {
   max-height: 300px;
   overflow-y: auto; }
@@ -27,3 +30,6 @@
 
 .form__label {
   text-align: left; }
+
+.form .cke {
+  width: 100%; }

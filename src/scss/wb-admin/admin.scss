@@ -2,6 +2,10 @@
      .menu {
          white-space: nowrap;
      }
+
+     .button-wrapper {
+         flex-flow: nowrap;
+     }
  }
 
  .table-wrapper {
@@ -36,6 +40,12 @@
      padding: $bi;
  }
 
- .form__label {
-     text-align: left;
+ .form {
+     &__label {
+         text-align: left;
+     }
+
+     .cke {
+         width: 100%;
+     }
  }

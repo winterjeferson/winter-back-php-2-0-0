@@ -23,72 +23,87 @@ class AdminPage {
         this.elFormFieldMenu = this.elPage.querySelector('[data-id="formFieldMenu"]');
         this.elFormFieldTitle = this.elPage.querySelector('[data-id="formFieldTitle"]');
         this.elFormFieldUrl = this.elPage.querySelector('[data-id="formFieldUrl"]');
-        this.elButtonRegister = this.elPage.querySelector('[data-id="btRegister"]');
+        this.elButtonRegister = this.elPage.querySelector('#btRegister');
 
         this.isEdit = false;
         this.editId = 0;
     }
 
     buildMenu() {
-        const self = this;
+        this.elButtonRegister.onclick = () => {
+            if (!this.validateForm()) return;
 
-        this.elButtonRegister.onclick = function () {
-            if (!self.validateForm()) {
-                return;
-            }
-
-            if (self.isEdit) {
-                self.editSave();
+            if (this.isEdit) {
+                this.editSave();
             } else {
-                self.saveContent();
+                this.saveContent();
             }
         };
     }
 
     buildMenuTable() {
-        const self = this;
         const elTable = this.elContentList.querySelectorAll('.table');
         const elTableActive = this.elContentList.querySelectorAll('[data-id="tableActive"]');
         const elTableInactive = this.elContentList.querySelectorAll('[data-id="tableInactive"]');
 
-        Array.prototype.forEach.call(elTableActive, function (table) {
-            let $button = table.querySelectorAll('[data-action="inactivate"]');
-
-            Array.prototype.forEach.call($button, function (item) {
-                item.onclick = function () {
-                    window.modal.buildModal('confirmation', globalTranslation.confirmationInactivate);
-                    window.modal.buildContentConfirmationAction('window.adminPage.modify(' + item.getAttribute('data-id') + ', "inactivate")');
-                };
-            });
+        Array.prototype.forEach.call(elTableActive, (table) => {
+            this.buildMenuTableActive(table);
         });
 
-        Array.prototype.forEach.call(elTableInactive, function (table) {
-            let $button = table.querySelectorAll('[data-action="activate"]');
-
-            Array.prototype.forEach.call($button, function (item) {
-                item.onclick = function () {
-                    self.modify(item.getAttribute('data-id'), 'activate');
-                };
-            });
+        Array.prototype.forEach.call(elTableInactive, (table) => {
+            this.buildMenuTableInactive(table);
         });
 
-        Array.prototype.forEach.call(elTable, function (table) {
-            let elButtonEdit = table.querySelectorAll('[data-action="edit"]');
-            let elButtonDelete = table.querySelectorAll('[data-action="delete"]');
+        Array.prototype.forEach.call(elTable, (table) => {
+            this.buildMenuTableDefault(table);
+        });
+    }
 
-            Array.prototype.forEach.call(elButtonEdit, function (item) {
-                item.onclick = function () {
-                    self.editId = item.getAttribute('data-id');
-                    self.editLoadData(self.editId);
-                };
-            });
+    buildMenuTableActive(table) {
+        let elButton = table.querySelectorAll('[data-action="inactivate"]');
 
-            Array.prototype.forEach.call(elButtonDelete, function (item) {
-                item.onclick = function () {
-                    window.modal.buildModal('confirmation', globalTranslation.confirmationDelete);
-                    window.modal.buildContentConfirmationAction('window.adminPage.delete(' + item.getAttribute('data-id') + ')');
-                };
-            });
+        Array.prototype.forEach.call(elButton, (item) => {
+            item.onclick = () => {
+                window.modal.buildModal({
+                    'kind': 'confirmation',
+                    'content': globalTranslation.confirmationInactivate,
+                    'size': 'small',
+                    'click': `window.adminPage.modify(${item.getAttribute('data-id')}, "inactivate")`
+                });
+            };
+        });
+    }
+
+    buildMenuTableInactive(table) {
+        let elButton = table.querySelectorAll('[data-action="activate"]');
+
+        Array.prototype.forEach.call(elButton, (item) => {
+            item.onclick = () => {
+                this.modify(item.getAttribute('data-id'), 'activate');
+            };
+        });
+    }
+
+    buildMenuTableDefault(table) {
+        let elButtonEdit = table.querySelectorAll('[data-action="edit"]');
+        let elButtonDelete = table.querySelectorAll('[data-action="delete"]');
+
+        Array.prototype.forEach.call(elButtonEdit, (item) => {
+            item.onclick = () => {
+                this.editId = item.getAttribute('data-id');
+                this.editLoadData(this.editId);
+            };
+        });
+
+        Array.prototype.forEach.call(elButtonDelete, (item) => {
+            item.onclick = () => {
+                window.modal.buildModal({
+                    'kind': 'confirmation',
+                    'content': globalTranslation.confirmationDelete,
+                    'size': 'small',
+                    'click': `window.adminPage.delete(${item.getAttribute('data-id')})`
+                });
+            };
         });
     }
 
@@ -98,7 +113,7 @@ class AdminPage {
             this.elFormFieldTitle
         ];
 
-        return objWfForm.validateEmpty(arrField);
+        return window.form.validateEmpty(arrField);
     }
 
     saveContent() {

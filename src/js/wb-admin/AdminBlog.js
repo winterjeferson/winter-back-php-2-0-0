@@ -244,7 +244,7 @@ class AdminBlog {
             this.elFormFieldUrl
         ];
 
-        return objWfForm.validateEmpty(arrField);
+        return window.form.validateEmpty(arrField);
     }
 
     buildParameter() {
