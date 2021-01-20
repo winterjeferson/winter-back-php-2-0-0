@@ -683,20 +683,19 @@ class AdminUploadImage {
     }
 
     buildMenu() {
-        const self = this;
         let elButtonDelete = document.querySelectorAll('[data-action="delete"]');
 
         this.elButtonUploadThumbnail.addEventListener('click', () => {
-            self.upload(this, 'blog/thumbnail/');
+            this.upload(this.elButtonUploadThumbnail, 'blog/thumbnail/');
         });
 
         this.elButtonUploadBanner.addEventListener('click', () => {
-            self.upload(this, 'blog/banner/');
+            this.upload(this.elButtonUploadBanner, 'blog/banner/');
         });
 
-        Array.prototype.forEach.call(elButtonDelete, function (item) {
-            item.onclick = function () {
-                self.deleteImage(item);
+        Array.prototype.forEach.call(elButtonDelete, (item) => {
+            item.onclick = () => {
+                this.deleteImage(item);
             };
         });
     }
@@ -704,17 +703,22 @@ class AdminUploadImage {
     deleteImage(button) {
         this.deleteElement = button;
 
-        window.modal.buildModal('confirmation', globalTranslation.confirmationDelete);
-        window.modal.buildContentConfirmationAction('window.adminUploadImage.deleteImageAjax()');
+        window.modal.buildModal({
+            'kind': 'confirmation',
+            'content': globalTranslation.confirmationDelete,
+            'size': 'small',
+            'click': 'window.adminUploadImage.deleteImageAjax()'
+        });
     }
 
     deleteImageAjax() {
         const self = this;
         const data = new FormData();
         const ajax = new XMLHttpRequest();
-        let file = this.deleteElement.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('[data-id="fileName"]').innerText;
-        let path = this.deleteElement.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.getAttribute('data-path');
-        let $return = this.deleteElement.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        const el = this.deleteElement.parentNode.parentNode.parentNode;
+        let file = el.querySelector('[data-id="fileName"]').innerText;
+        let path = el.parentNode.parentNode.getAttribute('data-path');
+        let elReturn = el.parentNode.parentNode.parentNode.parentNode.parentNode;
 
         data.append('f', file);
         data.append('p', path);
@@ -727,7 +731,7 @@ class AdminUploadImage {
 
         ajax.onreadystatechange = function () {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                self.buildResponse(ajax.responseText, $return);
+                self.buildResponse(ajax.responseText, elReturn);
                 window.modal.closeModal();
             }
         };
@@ -737,7 +741,7 @@ class AdminUploadImage {
 
     upload(target, path) {
         const self = this;
-        const elForm = target.parentNode.parentNode.parentNode.parentNode.parentNode;
+        const elForm = target.parentNode.parentNode.parentNode;
         const elFile = elForm.querySelector('[type=file]');
         const data = new FormData();
         const ajax = new XMLHttpRequest();
@@ -769,17 +773,24 @@ class AdminUploadImage {
         ajax.send(data);
     }
 
-    buildResponse(response, $target) {
+    buildResponse(response) {
+        let color;
+
         switch (response) {
             case 'fileDeleted':
             case 'uploadDone':
-                objWfNotification.add(globalTranslation[response], 'green', $target);
+                color = 'green';
                 document.location.reload();
                 break;
             default:
-                objWfNotification.add(globalTranslation[response], 'red', $target);
+                color = 'red';
                 break;
         }
+
+        window.notification.add({
+            'text': globalTranslation[response],
+            color
+        });
     }
 }
 
