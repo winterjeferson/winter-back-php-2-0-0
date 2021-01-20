@@ -42,28 +42,11 @@ function buildListHTML($value, $language, $status)
 
     return removeLineBreak($string);
 }
-?>
-
-
-
-<section id="pageAdminBlogEdit" class="row">
-    <?php
+?> <section id="pageAdminBlogEdit" class="row"> <?php
     include __DIR__ . '/blog-form.php';
-    ?>
-
-    <div class="row">
-        <button type="button" class="button button--regular button--green" id="btRegister">
-            <?php echo $translation['save']; ?>
-        </button>
-    </div>
-
-</section>
-
-<section id="pageAdminBlogList" class="row">
-    <?php
+    ?> <div class="row"><button type="button" class="button button--regular button--green" id="btRegister"> <?php echo $translation['save']; ?> </button></div></section><section id="pageAdminBlogList" class="row"> <?php
     $temp = 'active';
     include __DIR__ . '/blog-list.php';
     $temp = 'inactive';
     include __DIR__ . '/blog-list.php';
-    ?>
-</section>
+    ?> </section>

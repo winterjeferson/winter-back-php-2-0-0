@@ -1,11 +1,4 @@
-<div class="theme-menu button-wrapper">
-    <button type="button" class="button button--regular button--regular--proportional button--grey toggle-menu" aria-label="<?php echo $translation['menu']; ?>">
-        <svg class="icon icon--regular">
-            <use xlink:href="./assets/img/icon.svg#menu"></use>
-        </svg>
-    </button>
-    <nav class="column toggle-menu__content">
-        <?php
+<div class="theme-menu button-wrapper"><button type="button" class="button button--regular button--regular--proportional button--grey toggle-menu" aria-label="<?php echo $translation['menu']; ?>"><svg class="icon icon--regular"><use xlink:href="./assets/img/icon.svg#menu"></use></svg></button><nav class="column toggle-menu__content"> <?php
         $string = '';
         $arr = [
             ['id' => 'admin', 'translation' => 'administrativePanel'],
@@ -35,6 +28,4 @@
             }
         }
         echo removeLineBreak($string);
-        ?>
-    </nav>
-</div>
+        ?> </nav></div>

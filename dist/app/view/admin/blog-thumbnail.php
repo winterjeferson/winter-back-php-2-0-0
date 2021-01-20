@@ -1,16 +1,4 @@
-<div class="row">
-    <h1 class="page__title"><?php echo $translation['thumbnail']; ?></h1>
-</div>
-<div class="row">
-    <table class="table table--grey thumbnail-table">
-        <thead>
-            <tr>
-                <th><?php echo $translation['image']; ?></th>
-                <th><?php echo $translation['name']; ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
+<div class="row"><h1 class="page__title"><?php echo $translation['thumbnail']; ?></h1></div><div class="row"><table class="table table--grey thumbnail-table"><thead><tr><th><?php echo $translation['image']; ?></th><th><?php echo $translation['name']; ?></th></tr></thead><tbody> <?php
             if ($arrContent['admin']['listThumbnail']['isEmpty']) {
                 $string =  '
                         <tr>
@@ -41,7 +29,4 @@
 
                 echo $string;
             }
-            ?>
-        </tbody>
-    </table>
-</div>
+            ?> </tbody></table></div>
