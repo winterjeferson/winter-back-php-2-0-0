@@ -1,9 +1,9 @@
 window.adminUser = new AdminUser();
 window.adminBlog = new AdminBlog();
 window.adminPage = new AdminPage();
+window.adminUploadImage = new AdminUploadImage();
 
 const admin = new Admin();
-const adminUploadImage = new AdminUploadImage();
 const login = new Login();
 
 document.addEventListener('DOMContentLoaded', () => {

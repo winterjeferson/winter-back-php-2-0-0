@@ -24,7 +24,7 @@ class Tag extends \App\Controller\Main
     {
         $data = [
             'template' => ['file' => 'default'],
-            'content' => ['id' => 'pageBlog', 'folder' => 'blog', 'file' => 'tagSearch', 'model' => $model],
+            'content' => ['id' => 'pageBlog', 'folder' => 'blog', 'file' => 'blog', 'model' => $model],
         ];
 
         return $this->renderView($data);

@@ -45,7 +45,6 @@ class AdminUploadImage {
     }
 
     deleteImageAjax() {
-        const self = this;
         const data = new FormData();
         const ajax = new XMLHttpRequest();
         const el = this.deleteElement.parentNode.parentNode.parentNode;
@@ -57,14 +56,14 @@ class AdminUploadImage {
         data.append('p', path);
         data.append('token', globalToken);
 
-        ajax.open('POST', url.getController({
+        ajax.open('POST', window.wbUrl.getController({
             'folder': 'admin',
             'file': 'ImageDelete'
         }));
 
-        ajax.onreadystatechange = function () {
+        ajax.onreadystatechange = () => {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                self.buildResponse(ajax.responseText, elReturn);
+                this.buildResponse(ajax.responseText, elReturn);
                 window.modal.closeModal();
             }
         };
@@ -73,16 +72,15 @@ class AdminUploadImage {
     }
 
     upload(target, path) {
-        const self = this;
         const elForm = target.parentNode.parentNode.parentNode;
         const elFile = elForm.querySelector('[type=file]');
-        const data = new FormData();
-        const ajax = new XMLHttpRequest();
         const file = elFile.files[0];
         const url = window.wbUrl.getController({
             'folder': 'admin',
             'file': 'ImageUpload'
         });
+        let data = new FormData();
+        let ajax = new XMLHttpRequest();
 
         if (elFile.files.length === 0) {
             elFile.click();
@@ -96,14 +94,18 @@ class AdminUploadImage {
         this.elButtonUploadThumbnail.setAttribute('disabled', 'disabled');
         ajax.open('POST', url);
 
-        ajax.onreadystatechange = function () {
+        ajax.onreadystatechange = () => {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                self.elButtonUploadThumbnail.removeAttribute('disabled');
-                self.buildResponse(ajax.responseText, elForm);
+                this.uploadSuccess(ajax.responseText);
             }
         };
 
         ajax.send(data);
+    }
+
+    uploadSuccess(data) {
+        this.elButtonUploadThumbnail.removeAttribute('disabled');
+        this.buildResponse(data);
     }
 
     buildResponse(response) {

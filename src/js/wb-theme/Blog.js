@@ -2,6 +2,7 @@ class Blog {
     constructor() {
         this.cssLoadMore = 'loadMore';
         this.cssLoadMoreSelector = `[data-id="${this.cssLoadMore}"]`;
+        this.cssDisabled = 'button--blue--disabled';
     }
 
     build() {
@@ -39,37 +40,36 @@ class Blog {
     }
 
     loadMore(target) {
-        let self = this;
-        let id = target.parentNode.parentNode.getAttribute('id');
-        let idString = id.substring(this.page.length);
-        let ajax = new XMLHttpRequest();
-        let url = url.getController({
+        const id = target.parentNode.parentNode.getAttribute('id');
+        const idString = id.substring(this.page.length);
+        const controller = window.wbUrl.getController({
             'folder': 'blog',
             'file': 'LoadMore'
         });
-        let parameter = `&target=${idString}`;
-
-        target.classList.add('disabled');
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = () => {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                target.classList.remove('disabled');
-                self.loadMoreSuccess(id, ajax.responseText);
-            }
+        const parameter =
+            `&target=${idString}`;
+        const obj = {
+            controller,
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        target.classList.add(this.cssDisabled);
+
+        data.then((result) => {
+            target.classList.remove(this.cssDisabled);
+            this.loadMoreSuccess(id, result);
+        });
     }
 
     loadMoreSuccess(id, value) {
-        let json = JSON.parse(value);
-        let elSection = document.querySelector(`#${id}`);
-        let elSectionList = elSection.querySelector('.blog-list');
-        let elButton = elSection.querySelector(`[data-id="${this.cssLoadMore}"]`);
+        const json = JSON.parse(value);
+        const elSection = document.querySelector(`#${id}`);
+        const elSectionList = elSection.querySelector('.blog-list');
+        const elButton = elSection.querySelector(`[data-id="${this.cssLoadMore}"]`);
 
         if (!json[this.cssLoadMore]) {
-            elButton.classList.add('disabled');
+            elButton.classList.add(this.cssDisabled);
         }
 
         elSectionList.insertAdjacentHTML('beforeend', json['html']);

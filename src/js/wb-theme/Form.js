@@ -1,4 +1,8 @@
 class Form {
+    constructor() {
+        this.cssDisabled = 'button--blue--disabled';
+    }
+
     build() {
         if (!window.helper.getUrlWord('form')) return;
 
@@ -23,43 +27,32 @@ class Form {
     }
 
     send() {
-        const self = this;
-        const ajax = new XMLHttpRequest();
-        const url = url.getController({
+        const getData = JSON.stringify(this.getData());
+        const controller = window.wbUrl.getController({
             'folder': 'form',
             'file': 'FormAjax'
         });
-        let parameter =
+        const parameter =
             '&method=sendForm' +
-            '&data=' + JSON.stringify(self.getData()) +
-            '&token=' + globalToken;
-
-        this.elButtonSend.setAttribute('disabled', 'disabled');
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-        ajax.onreadystatechange = function () {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                self.elButtonSend.removeAttribute('disabled');
-                self.response(ajax.responseText);
-            }
+            `&data=${getData}`;
+        const obj = {
+            controller,
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        this.elButtonSend.classList.add(this.cssDisabled);
+
+        data.then((result) => {
+            this.sendSuccess(result);
+        });
     }
 
-    getData() {
-        let arr = [];
-
-        arr.push(this.elForm.querySelector('[data-id="email"]').value);
-        arr.push(this.elForm.querySelector('[data-id="message"]').value);
-
-        return arr;
-    }
-
-    response(data) {
+    sendSuccess(data) {
         let response = '';
         let color = '';
+
+        this.elButtonSend.classList.remove(this.cssDisabled);
 
         switch (data) {
             case 'ok':
@@ -72,7 +65,19 @@ class Form {
                 break;
         }
 
-        window.notification.add(response, color, this.elForm);
+        window.notification.add({
+            'text': response,
+            'color': color
+        });
+    }
+
+    getData() {
+        let arr = [];
+
+        arr.push(this.elForm.querySelector('[data-id="email"]').value);
+        arr.push(this.elForm.querySelector('[data-id="message"]').value);
+
+        return arr;
     }
 }
 
