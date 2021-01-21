@@ -13,7 +13,7 @@ class AdminPage {
         this.update();
         this.buildMenu();
         this.buildMenuTable();
-        window.url.watch(this.elFormFieldTitle, this.elFormFieldUrl);
+        url.watch(this.elFormFieldTitle, this.elFormFieldUrl);
     }
 
     update() {
@@ -118,7 +118,7 @@ class AdminPage {
 
     saveContent() {
         let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
+        let url = url.getController({
             'folder': 'admin',
             'file': 'PageAjax'
         });
@@ -141,7 +141,7 @@ class AdminPage {
     editSave() {
         const self = this;
         let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
+        let url = url.getController({
             'folder': 'admin',
             'file': 'PageAjax'
         });
@@ -166,7 +166,7 @@ class AdminPage {
     editLoadData(id) {
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
+        let url = url.getController({
             'folder': 'admin',
             'file': 'PageAjax'
         });
@@ -211,7 +211,7 @@ class AdminPage {
 
     modify(id, status) {
         let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
+        let url = url.getController({
             'folder': 'admin',
             'file': 'PageAjax'
         });
@@ -234,7 +234,7 @@ class AdminPage {
 
     delete(id) {
         let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
+        let url = url.getController({
             'folder': 'admin',
             'file': 'PageAjax'
         });
@@ -255,4 +255,6 @@ class AdminPage {
     }
 }
 
-window.adminPage = new AdminPage();
+export {
+    AdminPage
+};

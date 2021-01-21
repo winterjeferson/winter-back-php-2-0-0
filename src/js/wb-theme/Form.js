@@ -1,4 +1,4 @@
-class WBForm {
+class Form {
     build() {
         if (!window.helper.getUrlWord('form')) return;
 
@@ -15,11 +15,9 @@ class WBForm {
     }
 
     buildMenu() {
-        const self = this;
-
         this.elButtonSend.addEventListener('click', () => {
-            if (window.form.validateEmpty([self.elFormFieldEmail, self.elFormFieldMessage])) {
-                self.send();
+            if (window.form.validateEmpty([this.elFormFieldEmail, this.elFormFieldMessage])) {
+                this.send();
             }
         });
     }
@@ -27,7 +25,7 @@ class WBForm {
     send() {
         const self = this;
         const ajax = new XMLHttpRequest();
-        const url = window.url.getController({
+        const url = url.getController({
             'folder': 'form',
             'file': 'FormAjax'
         });
@@ -74,8 +72,10 @@ class WBForm {
                 break;
         }
 
-        objWfNotification.add(response, color, this.elForm);
+        window.notification.add(response, color, this.elForm);
     }
 }
 
-window.wbForm = new WBForm();
+export {
+    Form
+};

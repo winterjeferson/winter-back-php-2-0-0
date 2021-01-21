@@ -43,17 +43,16 @@ class Blog {
         let id = target.parentNode.parentNode.getAttribute('id');
         let idString = id.substring(this.page.length);
         let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
+        let url = url.getController({
             'folder': 'blog',
             'file': 'LoadMore'
         });
-        let parameter =
-            '&target=' + idString;
+        let parameter = `&target=${idString}`;
 
         target.classList.add('disabled');
         ajax.open('POST', url, true);
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = function () {
+        ajax.onreadystatechange = () => {
             if (ajax.readyState === 4 && ajax.status === 200) {
                 target.classList.remove('disabled');
                 self.loadMoreSuccess(id, ajax.responseText);
@@ -65,9 +64,9 @@ class Blog {
 
     loadMoreSuccess(id, value) {
         let json = JSON.parse(value);
-        let elSection = document.querySelector('#' + id);
+        let elSection = document.querySelector(`#${id}`);
         let elSectionList = elSection.querySelector('.blog-list');
-        let elButton = elSection.querySelector('[data-id="' + this.cssLoadMore + '"]');
+        let elButton = elSection.querySelector(`[data-id="${this.cssLoadMore}"]`);
 
         if (!json[this.cssLoadMore]) {
             elButton.classList.add('disabled');
@@ -79,4 +78,6 @@ class Blog {
     }
 }
 
-window.blog = new Blog();
+export {
+    Blog
+};

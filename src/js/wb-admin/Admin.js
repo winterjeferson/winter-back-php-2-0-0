@@ -18,9 +18,9 @@ class Admin {
 
         if (!document.contains(this.elPage)) return;
 
-        this.$btBlog = this.elPage.querySelector('[data-id="btAdminBlog"]');
-        this.$btUpload = this.elPage.querySelector('[data-id="btAdminImage"]');
-        this.$btLogout = this.elPage.querySelector('[data-id="btAdminLogout"]');
+        this.elButtonBlog = this.elPage.querySelector('[data-id="btAdminBlog"]');
+        this.elButtonUpload = this.elPage.querySelector('[data-id="btAdminImage"]');
+        this.elButtonLogout = this.elPage.querySelector('[data-id="btAdminLogout"]');
     }
 
     buildMenuDifeneActive() {
@@ -40,15 +40,15 @@ class Admin {
     }
 
     builTableTdWrapper() {
-        let td = document.querySelectorAll('.td-wrapper');
-        let currentClass = 'td-wrapper-auto';
+        const cssWrapper = 'table-td-wrapper';
+        const el = document.querySelectorAll(`.${cssWrapper}`);
 
-        Array.prototype.forEach.call(td, function (item) {
-            item.onclick = function () {
-                if (item.classList.contains(currentClass)) {
-                    item.classList.remove(currentClass);
+        Array.prototype.forEach.call(el, (item) => {
+            item.onclick = () => {
+                if (item.classList.contains(cssWrapper)) {
+                    item.classList.remove(cssWrapper);
                 } else {
-                    item.classList.add(currentClass);
+                    item.classList.add(cssWrapper);
                 }
             };
         });
@@ -78,4 +78,6 @@ class Admin {
     }
 }
 
-window.admin = new Admin();
+export {
+    Admin
+};

@@ -24,52 +24,37 @@ class Login {
     }
 
     validate() {
-        if (this.elFieldLogin.value === '') {
-            this.elFieldLogin.focus();
-            this.buildLoginResponse('empty_email');
-            return;
-        }
+        const arrField = [this.elFieldLogin, this.elFieldPassword];
+        const validate = window.FormData.validateEmpty(arrField);
 
-        if (this.elFieldPassword.value === '') {
-            this.elFieldPassword.focus();
-            this.buildLoginResponse('empty_password');
-            return;
+        if (validate) {
+            return true;
         }
-
-        return true;
     }
 
     buildLogin() {
-        let self = this;
-        let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
+        const controller = wbUrl.getController({
             'folder': 'admin',
             'file': 'LoginAjax'
         });
-        let parameter =
-            '&email=' + this.elFieldLogin.value +
-            '&password=' + this.elFieldPassword.value +
-            '&token=' + globalToken;
-
-        if (!this.validate()) {
-            return;
-        }
-
-        this.elButtonLogin.setAttribute('disabled', 'disabled');
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = function () {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                self.elButtonLogin.removeAttribute('disabled');
-                self.buildLoginResponse(ajax.responseText);
-            }
+        const parameter =
+            `&email=${this.elFieldLogin.value}` +
+            `&password=${this.elFieldPassword.value}`;
+        const obj = {
+            controller,
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        data.then((result) => {
+            this.buildLoginSuccess(result);
+        });
     }
 
-    buildLoginResponse(data) {
+    buildLoginSuccess(data) {
         let response = '';
+
+        this.elButtonLogin.removeAttribute('disabled');
 
         switch (data) {
             case 'inactive':
@@ -88,7 +73,7 @@ class Login {
                 this.elFieldPassword.focus();
                 break;
             default:
-                window.url.build('admin');
+                wbUrl.buildUrl('admin');
                 break;
         }
 
@@ -99,4 +84,6 @@ class Login {
     }
 }
 
-window.login = new Login();
+export {
+    Login
+};

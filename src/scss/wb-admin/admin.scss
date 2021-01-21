@@ -6,11 +6,11 @@
      .button-wrapper {
          flex-flow: nowrap;
      }
- }
 
- .table-wrapper {
-     max-height: 300px;
-     overflow-y: auto;
+     &-td-wrapper {
+         max-height: 100px;
+         overflow-y: auto;
+     }
  }
 
  .thumbnail-table {

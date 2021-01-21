@@ -10,9 +10,13 @@
             <select id="translationSelect" class="form__fill" aria-label="<?php echo $arrContent['head']['translation']['language']; ?>">
                 <?php
                 $string = '';
-                foreach (getUrArrLanguage() as $key => &$valeu) {
-                    $langSelect = $valeu['lang'];
-                    $string .= '<option value="' . $langSelect . '" data-url="' . $arrContent['head']['url' . ucfirst($langSelect)] . '">' . $arrContent['head']['translation'][$lang] . '</option>';
+                $arr = getUrArrLanguage();
+
+                foreach ($arr as $key => $valeu) {
+                    $langSelect = $arr[$key]['lang'];
+                    $url = $arrContent['head']['url' . ucfirst($langSelect)];
+
+                    $string .= '<option value="' . $langSelect . '" data-url="' . $url . '">' . $arrContent['head']['translation'][$langSelect] . '</option>';
                 }
                 echo $string;
                 ?>

@@ -59,7 +59,7 @@ class AdminUploadImage {
         data.append('p', path);
         data.append('token', globalToken);
 
-        ajax.open('POST', window.url.getController({
+        ajax.open('POST', url.getController({
             'folder': 'admin',
             'file': 'ImageDelete'
         }));
@@ -81,7 +81,7 @@ class AdminUploadImage {
         const data = new FormData();
         const ajax = new XMLHttpRequest();
         const file = elFile.files[0];
-        const url = window.url.getController({
+        const url = url.getController({
             'folder': 'admin',
             'file': 'ImageUpload'
         });
@@ -129,4 +129,6 @@ class AdminUploadImage {
     }
 }
 
-window.adminUploadImage = new AdminUploadImage();
+export {
+    AdminUploadImage
+};

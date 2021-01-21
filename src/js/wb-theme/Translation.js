@@ -1,4 +1,4 @@
-class WBTranslation {
+class Translation {
     build() {
         this.update();
         this.defineActive();
@@ -24,4 +24,6 @@ class WBTranslation {
     }
 }
 
-window.wbTranslation = new WBTranslation();
+export {
+    Translation
+};

@@ -1,5 +1,12 @@
+window.wbUrl = new Url();
+window.wbHelper = new Helper();
+
+const blog = new Blog();
+const form = new Form();
+const translation = new Translation();
+
 document.addEventListener('DOMContentLoaded', () => {
-    window.wbTranslation.build();
-    window.blog.build();
-    window.wbForm.build();
+    translation.build();
+    blog.build();
+    form.build();
 });

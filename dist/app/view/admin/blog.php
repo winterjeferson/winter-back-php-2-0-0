@@ -14,7 +14,7 @@ function buildListHTML($value, $language, $status)
                 <td><b>' . encode($value['title_' . $language]) . '</b></td>
                 <td class="minimum">' . $value['view'] . '</td>
                 <td class="minimum">' . $value['name'] . '</td>
-                <td><div class="td-wrapper">' . encode(strip_tags($value['content_' . $language])) . '</div></td>
+                <td><div class="table-td-wrapper">' . encode(strip_tags($value['content_' . $language])) . '</div></td>
                 <td class="minimum">' . $value['url_' . $language] . '</td>
                 <td class="minimum">
         ';
@@ -42,11 +42,28 @@ function buildListHTML($value, $language, $status)
 
     return removeLineBreak($string);
 }
-?> <section id="pageAdminBlogEdit" class="row"> <?php
+?>
+
+
+
+<section id="pageAdminBlogEdit" class="row">
+    <?php
     include __DIR__ . '/blog-form.php';
-    ?> <div class="row"><button type="button" class="button button--regular button--green" id="btRegister"> <?php echo $translation['save']; ?> </button></div></section><section id="pageAdminBlogList" class="row"> <?php
+    ?>
+
+    <div class="row">
+        <button type="button" class="button button--regular button--green" id="btRegister">
+            <?php echo $translation['save']; ?>
+        </button>
+    </div>
+
+</section>
+
+<section id="pageAdminBlogList" class="row">
+    <?php
     $temp = 'active';
     include __DIR__ . '/blog-list.php';
     $temp = 'inactive';
     include __DIR__ . '/blog-list.php';
-    ?> </section>
+    ?>
+</section>

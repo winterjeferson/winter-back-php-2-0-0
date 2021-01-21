@@ -14,7 +14,7 @@ class AdminBlog {
         this.buildMenu();
         this.buildMenuTable();
         this.buildMenuThumbnail();
-        window.url.watch(this.elFormFieldTitle, this.elFormFieldUrl);
+        url.watch(this.elFormFieldTitle, this.elFormFieldUrl);
     }
 
     update() {
@@ -67,7 +67,7 @@ class AdminBlog {
 
         Array.prototype.forEach.call(elButton, (item) => {
             item.onclick = () => {
-                window.modal.buildModal('ajax', window.url.getController({
+                window.modal.buildModal('ajax', url.getController({
                     'folder': 'admin',
                     'file': 'BlogThumbnail'
                 }), 'eb');
@@ -113,8 +113,12 @@ class AdminBlog {
 
         Array.prototype.forEach.call(elButtonDelete, (item) => {
             item.onclick = () => {
-                window.modal.buildModal('confirmation', globalTranslation.confirmationDelete);
-                window.modal.buildContentConfirmationAction(`window.adminBlog.delete(${item.getAttribute('data-id')})`);
+                window.modal.buildModal({
+                    'kind': 'confirmation',
+                    'content': globalTranslation.confirmationDelete,
+                    'size': 'small',
+                    'click': `window.adminBlog.delete(${item.getAttribute('data-id')})`
+                });
             };
         });
     }
@@ -139,7 +143,7 @@ class AdminBlog {
 
     editSave() {
         const self = this;
-        const url = window.url.getController({
+        const url = url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
@@ -155,7 +159,7 @@ class AdminBlog {
 
         ajax.onreadystatechange = () => {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                window.admin.showResponse(ajax.responseText);
+                admin.showResponse(ajax.responseText);
             }
         };
 
@@ -165,7 +169,7 @@ class AdminBlog {
     editLoadData(id) {
         let self = this;
         let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
+        let url = url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
@@ -210,7 +214,7 @@ class AdminBlog {
 
     modify(id, status) {
         let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
+        let url = url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
@@ -224,7 +228,7 @@ class AdminBlog {
         ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         ajax.onreadystatechange = () => {
             if (ajax.readyState === 4 && ajax.status === 200) {
-                window.admin.showResponse(ajax.responseText);
+                admin.showResponse(ajax.responseText);
             }
         };
 
@@ -232,7 +236,7 @@ class AdminBlog {
     }
 
     delete(id) {
-        const url = window.url.getController({
+        const url = url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
@@ -277,7 +281,7 @@ class AdminBlog {
     }
 
     saveContent() {
-        const url = window.url.getController({
+        const url = url.getController({
             'folder': 'admin',
             'file': 'BlogAjax'
         });
@@ -323,4 +327,6 @@ class AdminBlog {
     }
 }
 
-window.adminBlog = new AdminBlog();
+export {
+    AdminBlog
+};

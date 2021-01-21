@@ -12,8 +12,8 @@ class Url {
             .replace(/-*$/, ''); // Remove trailing dashes
     }
 
-    build(target) {
-        window.location = globalUrl + globalLanguage + '/' + target + '/';
+    buildUrl(target) {
+        window.location = `${globalUrl + globalLanguage}/${target}/`;
     }
 
     getController(obj) {
@@ -21,12 +21,12 @@ class Url {
     }
 
     watch(fieldWatch, fieldReturn) {
-        const self = this;
-
-        fieldWatch.addEventListener('focusout', function () {
-            fieldReturn.value = self.buildSEO(fieldWatch.value);
+        fieldWatch.addEventListener('focusout', () => {
+            fieldReturn.value = this.buildSEO(fieldWatch.value);
         });
     }
 }
 
-window.url = new Url();
+export {
+    Url
+};

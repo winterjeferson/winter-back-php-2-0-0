@@ -1,1 +1,35 @@
-.table .menu{white-space:nowrap}.table .button-wrapper{flex-flow:nowrap}.table-wrapper{max-height:300px;overflow-y:auto}.thumbnail-table{text-align:left}.modal-content .table img,.page-admin-blog .table img,.page-admin-image .table img{height:50px;width:auto}.user{padding:4px;text-align:right}.login-wrapper{height:auto;margin:auto;max-width:500px;padding:8px}.form__label{text-align:left}.form .cke{width:100%}
+/* ------------------------------------------------------------------ SOCIAL */
+.table .menu {
+  white-space: nowrap; }
+
+.table .button-wrapper {
+  flex-flow: nowrap; }
+
+.table-td-wrapper {
+  max-height: 100px;
+  overflow-y: auto; }
+
+.thumbnail-table {
+  text-align: left; }
+
+.modal-content .table img,
+.page-admin-image .table img,
+.page-admin-blog .table img {
+  height: 50px;
+  width: auto; }
+
+.user {
+  padding: 4px;
+  text-align: right; }
+
+.login-wrapper {
+  height: auto;
+  margin: auto;
+  max-width: 500px;
+  padding: 8px; }
+
+.form__label {
+  text-align: left; }
+
+.form .cke {
+  width: 100%; }

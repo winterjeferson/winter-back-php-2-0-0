@@ -9,7 +9,7 @@ function buildListHTML($value, $language, $status)
                 <td class="minimum">' . $value['id'] . '</td>
                 <td><b>' . encode($value['title']) . '</b></td>
                 <td>' . $value['menu'] . '</td>
-                <td><div class="td-wrapper">' . encode(strip_tags($value['content'])) . '</div></td>
+                <td><div class="table-td-wrapper">' . encode(strip_tags($value['content'])) . '</div></td>
                 <td class="minimum">' . $value['url'] . '</td>
                 <td class="minimum">
                     <div class="button-wrapper row">
@@ -23,11 +23,25 @@ function buildListHTML($value, $language, $status)
 
     return removeLineBreak($string);
 }
-?> <section id="pageAdminPageEdit" class="row"> <?php
+?>
+
+<section id="pageAdminPageEdit" class="row">
+    <?php
     include __DIR__ . '/page-form.php';
-    ?> <div class="row"><button type="button" class="button button--regular button--green" id="btRegister"> <?php echo $translation['save']; ?> </button></div></section><section id="pageAdminPageList" class="row"> <?php
+    ?>
+
+    <div class="row">
+        <button type="button" class="button button--regular button--green" id="btRegister">
+            <?php echo $translation['save']; ?>
+        </button>
+    </div>
+</section>
+
+<section id="pageAdminPageList" class="row">
+    <?php
     $temp = 'active';
     include __DIR__ . '/page-list.php';
     $temp = 'inactive';
     include __DIR__ . '/page-list.php';
-    ?> </section>
+    ?>
+</section>

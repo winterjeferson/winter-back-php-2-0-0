@@ -1,4 +1,10 @@
-<article class="container"><div class="row"><h1 class="page__title"><?php echo $arrContent['post']['postTitle']; ?></h1> <?php echo $arrContent['post']['postContent']; ?> <h4 class="author"><?php echo $translation['author'] . ': ' . $arrContent['post']['postAuthor']; ?></h4></div> <?php
+<article class="container">
+    <div class="row">
+        <h1 class="page__title"><?php echo $arrContent['post']['postTitle']; ?></h1>
+        <?php echo $arrContent['post']['postContent']; ?>
+        <h4 class="author"><?php echo $translation['author'] . ': ' . $arrContent['post']['postAuthor']; ?></h4>
+    </div>
+    <?php
     $tag = $arrContent['post']['postTag'];
 
     if (!is_null($tag) && $tag !== '') {
@@ -28,4 +34,5 @@
 
         echo removeLineBreak($string);
     }
-    ?> </article>
+    ?>
+</article>

@@ -9,7 +9,7 @@ function buildListHTML($value, $language, $status)
                 <td class="minimum">' . $value['id'] . '</td>
                 <td><b>' . encode($value['title']) . '</b></td>
                 <td>' . $value['menu'] . '</td>
-                <td><div class="td-wrapper">' . encode(strip_tags($value['content'])) . '</div></td>
+                <td><div class="table-td-wrapper">' . encode(strip_tags($value['content'])) . '</div></td>
                 <td class="minimum">' . $value['url'] . '</td>
                 <td class="minimum">
                     <div class="button-wrapper row">

@@ -4,30 +4,62 @@ class AdminUser {
 
         this.updateVariable();
         this.buildMenu();
-        this.buildMenuTable();
+    }
+
+    buildController() {
+        const controller = wbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
+
+        return controller;
     }
 
     buildParameter() {
-        return '' +
-            '&name=' + this.elFormFieldName.value +
-            '&email=' + this.elFormFieldEmail.value +
-            '&permission=' + this.elFormFieldPermission.value +
-            '&password=' + this.elFormFieldPassword.value;
+        const parameter =
+            `&name=${this.elFormFieldName.value}` +
+            `&email=${this.elFormFieldEmail.value}` +
+            `&permission=${this.elFormFieldPermission.value}` +
+            `&password=${this.elFormFieldPassword.value}`;
+
+        return parameter;
     }
 
     buildMenu() {
+        let elTable = this.elPage.querySelectorAll('.table');
+        let elTableActive = this.elPage.querySelectorAll('[data-id="tableActive"]');
+        let elTableInactive = this.elPage.querySelectorAll('[data-id="tableInactive"]');
+
         this.elFormSend.onclick = () => {
             if (!this.validateForm()) return;
-
-            if (this.isEdit) {
-                this.editSave();
-            } else {
-                this.saveContent();
-            }
+            this.isEdit ? this.editSave() : this.saveContent();
         };
+
+        Array.prototype.forEach.call(elTable, (item) => {
+            this.buildMenuEdit(item);
+            this.buildMenuDelete(item);
+        });
+
+        Array.prototype.forEach.call(elTableActive, (item) => {
+            this.buildMenuInactivate(item);
+        });
+
+        Array.prototype.forEach.call(elTableInactive, (item) => {
+            this.buildMenuActivate(item);
+        });
     }
 
-    buildMenuTableInactivate(table) {
+    buildMenuActivate(table) {
+        const elButton = table.querySelectorAll('[data-action="activate"]');
+
+        Array.prototype.forEach.call(elButton, (item) => {
+            item.onclick = () => {
+                this.modify(item.getAttribute('data-id'), 'activate');
+            };
+        });
+    }
+
+    buildMenuInactivate(table) {
         const elButton = table.querySelectorAll('[data-action="inactivate"]');
 
         Array.prototype.forEach.call(elButton, (item) => {
@@ -42,36 +74,7 @@ class AdminUser {
         });
     }
 
-    buildMenuTable() {
-        let elTable = this.elPage.querySelectorAll('.table');
-        let elTableActive = this.elPage.querySelectorAll('[data-id="tableActive"]');
-        let elTableInactive = this.elPage.querySelectorAll('[data-id="tableInactive"]');
-
-        Array.prototype.forEach.call(elTableActive, (table) => {
-            this.buildMenuTableInactivate(table);
-        });
-
-        Array.prototype.forEach.call(elTableInactive, (table) => {
-            this.buildMenuTableActivate(table);
-        });
-
-        Array.prototype.forEach.call(elTable, (table) => {
-            this.buildMenuTableEdit(table);
-            this.buildMenuTableDelete(table);
-        });
-    }
-
-    buildMenuTableActivate(table) {
-        const elButton = table.querySelectorAll('[data-action="activate"]');
-
-        Array.prototype.forEach.call(elButton, (item) => {
-            item.onclick = () => {
-                this.modify(item.getAttribute('data-id'), 'activate');
-            };
-        });
-    }
-
-    buildMenuTableEdit(table) {
+    buildMenuEdit(table) {
         const elButtonEdit = table.querySelectorAll('[data-action="edit"]');
 
         Array.prototype.forEach.call(elButtonEdit, (item) => {
@@ -82,7 +85,7 @@ class AdminUser {
         });
     }
 
-    buildMenuTableDelete(table) {
+    buildMenuDelete(table) {
         const elButtonDelete = table.querySelectorAll('[data-action="delete"]');
 
         Array.prototype.forEach.call(elButtonDelete, (item) => {
@@ -98,50 +101,40 @@ class AdminUser {
     }
 
     delete(id) {
-        let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
-            'folder': 'admin',
-            'file': 'UserAjax'
-        });
-        let parameter =
+        const parameter =
             '&action=doDelete' +
-            '&id=' + id +
-            '&token=' + globalToken;
-
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = () => {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                window.admin.showResponse(ajax.responseText);
-            }
+            `&id=${id}`;
+        const obj = {
+            controller: this.buildController(),
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        data.then((result) => {
+            admin.showResponse(result);
+        });
     }
 
     editLoadData(id) {
-        let self = this;
-        let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
-            'folder': 'admin',
-            'file': 'UserAjax'
-        });
-        let parameter =
-            '&action=' + 'editLoadData' +
-            '&id=' + id +
-            '&token=' + globalToken;
-
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = () => {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                let obj = JSON.parse(ajax.responseText);
-                document.documentElement.scrollTop = 0;
-                self.editFillField(obj);
-            }
+        const parameter =
+            '&action=editLoadData' +
+            `&id=${id}`;
+        const obj = {
+            controller: this.buildController(),
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        data.then((result) => {
+            this.editLoadDataSuccess(result);
+        });
+    }
+
+    editLoadDataSuccess(data) {
+        let obj = JSON.parse(data);
+
+        document.documentElement.scrollTop = 0;
+        this.editFillField(obj);
     }
 
     editFillField(obj) {
@@ -154,73 +147,50 @@ class AdminUser {
     }
 
     editSave() {
-        let self = this;
-        let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
-            'folder': 'admin',
-            'file': 'UserAjax'
-        });
-        let parameter =
+        const parameter =
             '&action=doUpdate' +
-            '&id=' + self.editId +
-            this.buildParameter() +
-            '&token=' + globalToken;
-
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-        ajax.onreadystatechange = () => {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                window.admin.showResponse(ajax.responseText);
-            }
+            `&id=${this.editId}` +
+            this.buildParameter();
+        const obj = {
+            controller: this.buildController(),
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        data.then((result) => {
+            admin.showResponse(result);
+        });
     }
 
     modify(id, status) {
-        let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
-            'folder': 'admin',
-            'file': 'UserAjax'
-        });
-        let parameter =
-            '&action=doModify' +
-            '&status=' + status +
-            '&id=' + id +
-            '&token=' + globalToken;
-
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = () => {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                window.admin.showResponse(ajax.responseText);
-            }
+        const parameter =
+            '&action=doUpdate' +
+            `&status=${status}` +
+            `&id=${id}`;
+        const obj = {
+            controller: this.buildController(),
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        data.then((result) => {
+            admin.showResponse(result);
+        });
     }
 
     saveContent() {
-        let ajax = new XMLHttpRequest();
-        let url = window.url.getController({
-            'folder': 'admin',
-            'file': 'UserAjax'
-        });
-        let parameter =
+        const parameter =
             '&action=doSave' +
-            this.buildParameter() +
-            '&token=' + globalToken;
-
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = () => {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                window.admin.showResponse(ajax.responseText);
-            }
+            this.buildParameter();
+        const obj = {
+            controller: this.buildController(),
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        data.then((result) => {
+            admin.showResponse(result);
+        });
     }
 
     updateVariable() {
@@ -246,4 +216,6 @@ class AdminUser {
     }
 }
 
-window.adminUser = new AdminUser();
+export {
+    AdminUser
+};

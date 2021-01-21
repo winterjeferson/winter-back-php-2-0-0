@@ -14,7 +14,7 @@ function buildListHTML($value, $language, $status)
                 <td><b>' . encode($value['title_' . $language]) . '</b></td>
                 <td class="minimum">' . $value['view'] . '</td>
                 <td class="minimum">' . $value['name'] . '</td>
-                <td><div class="td-wrapper">' . encode(strip_tags($value['content_' . $language])) . '</div></td>
+                <td><div class="table-td-wrapper">' . encode(strip_tags($value['content_' . $language])) . '</div></td>
                 <td class="minimum">' . $value['url_' . $language] . '</td>
                 <td class="minimum">
         ';

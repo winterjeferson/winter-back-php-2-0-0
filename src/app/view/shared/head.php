@@ -65,9 +65,12 @@ $templateId = $arrDefinedVars['data']['content']['id'];
     if ($arrContent['head']['isAdmin']) {
         echo '
             <link href="' . $urlBackEnd . 'assets/css/wb-admin.css" rel="stylesheet">
-            <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-            <script src="' . $urlBackEnd . 'assets/js/wb-admin.js"></script>
+
+            <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+            <script type="module">
+                import * as wb from "./assets/js/wb-admin.js";
+            </script>
         ';
     }
     ?>
