@@ -1,8 +1,8 @@
 window.adminUser = new AdminUser();
 window.adminBlog = new AdminBlog();
+window.adminPage = new AdminPage();
 
 const admin = new Admin();
-const adminPage = new AdminPage();
 const adminUploadImage = new AdminUploadImage();
 const login = new Login();
 

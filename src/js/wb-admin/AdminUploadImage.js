@@ -79,7 +79,7 @@ class AdminUploadImage {
         const data = new FormData();
         const ajax = new XMLHttpRequest();
         const file = elFile.files[0];
-        const url = url.getController({
+        const url = window.wbUrl.getController({
             'folder': 'admin',
             'file': 'ImageUpload'
         });

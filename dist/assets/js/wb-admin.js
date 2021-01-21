@@ -280,6 +280,15 @@ class AdminBlog {
         });
     }
 
+    getController() {
+        const controller = wbUrl.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
+
+        return controller;
+    }
+
     modify(id, status) {
         const parameter =
             '&action=doModify' +
@@ -294,15 +303,6 @@ class AdminBlog {
         data.then((result) => {
             admin.showResponse(result);
         });
-    }
-
-    getController() {
-        const controller = wbUrl.getController({
-            'folder': 'admin',
-            'file': 'BlogAjax'
-        });
-
-        return controller;
     }
 
     modifyThumbnail() {
@@ -478,133 +478,108 @@ class AdminPage {
     }
 
     delete(id) {
-        let ajax = new XMLHttpRequest();
-        let url = url.getController({
-            'folder': 'admin',
-            'file': 'PageAjax'
-        });
-        let parameter =
+        const parameter =
             '&action=doDelete' +
-            '&id=' + id +
-            '&token=' + globalToken;
-
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = function () {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                window.admin.showResponse(ajax.responseText);
-            }
+            `&id=${id}`;
+        const obj = {
+            controller: this.getController(),
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        data.then((result) => {
+            admin.showResponse(result);
+        });
     }
 
     editSave() {
-        const self = this;
-        let ajax = new XMLHttpRequest();
-        let url = url.getController({
-            'folder': 'admin',
-            'file': 'PageAjax'
-        });
-        let parameter =
+        const parameter =
             '&action=doUpdate' +
-            '&id=' + self.editId +
-            this.buildParameter() +
-            '&token=' + globalToken;
-
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-        ajax.onreadystatechange = function () {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                window.admin.showResponse(ajax.responseText);
-            }
+            `&id=${this.editId}` +
+            this.buildParameter();
+        const obj = {
+            controller: this.getController(),
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        data.then((result) => {
+            admin.showResponse(result);
+        });
     }
 
     editLoadData(id) {
-        let self = this;
-        let ajax = new XMLHttpRequest();
-        let url = url.getController({
-            'folder': 'admin',
-            'file': 'PageAjax'
-        });
-        let parameter =
-            '&action=' + 'editLoadData' +
-            '&id=' + id +
-            '&token=' + globalToken;
-
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = function () {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                let obj = JSON.parse(ajax.responseText);
-
-                document.documentElement.scrollTop = 0;
-                self.isEdit = true;
-                self.editFillField(obj);
-            }
+        const parameter =
+            '&action=editLoadData' +
+            `&id=${id}`;
+        const obj = {
+            controller: this.getController(),
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        data.then((result) => {
+            this.editLoadDataSuccess(result);
+        });
+    }
+
+    editLoadDataSuccess(data) {
+        let obj = JSON.parse(data);
+
+        document.documentElement.scrollTop = 0;
+        this.isEdit = true;
+        this.editFillField(obj);
     }
 
     editFillField(obj) {
-        this.elFormFieldTitle.value = obj['title_' + globalLanguage];
-        this.elFormFieldUrl.value = obj['url_' + globalLanguage];
-        this.elFormFieldMenu.value = obj['menu_' + globalLanguage];
+        this.elFormFieldTitle.value = obj[`title_${globalLanguage}`];
+        this.elFormFieldUrl.value = obj[`url_${globalLanguage}`];
+        this.elFormFieldMenu.value = obj[`menu_${globalLanguage}`];
         this.editId = obj['id'];
 
-        this.elCkEditor.setData(obj['content_' + globalLanguage], function () {
-            this.checkDirty();
+        this.elCkEditor.setData(obj[`content_${globalLanguage}`], () => {
+            this.elCkEditor.checkDirty();
         });
+    }
+
+    getController() {
+        const controller = wbUrl.getController({
+            'folder': 'admin',
+            'file': 'PageAjax'
+        });
+
+        return controller;
     }
 
     modify(id, status) {
-        let ajax = new XMLHttpRequest();
-        let url = url.getController({
-            'folder': 'admin',
-            'file': 'PageAjax'
-        });
-        let parameter =
+        const parameter =
             '&action=doModify' +
-            '&status=' + status +
-            '&id=' + id +
-            '&token=' + globalToken;
-
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = function () {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                window.admin.showResponse(ajax.responseText);
-            }
+            `&status=${status}` +
+            `&id=${id}`;
+        const obj = {
+            controller: this.getController(),
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        data.then((result) => {
+            admin.showResponse(result);
+        });
     }
 
     saveContent() {
-        let ajax = new XMLHttpRequest();
-        let url = url.getController({
-            'folder': 'admin',
-            'file': 'PageAjax'
-        });
-        let parameter =
+        const parameter =
             '&action=doSave' +
-            this.buildParameter() +
-            '&token=' + globalToken;
-
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = function () {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                window.admin.showResponse(ajax.responseText);
-            }
+            this.buildParameter();
+        const obj = {
+            controller: this.getController(),
+            parameter
         };
+        let data = wbHelper.ajax(obj);
 
-        ajax.send(parameter);
+        data.then((result) => {
+            admin.showResponse(result);
+        });
     }
 
     update() {
@@ -714,7 +689,7 @@ class AdminUploadImage {
         const data = new FormData();
         const ajax = new XMLHttpRequest();
         const file = elFile.files[0];
-        const url = url.getController({
+        const url = window.wbUrl.getController({
             'folder': 'admin',
             'file': 'ImageUpload'
         });
@@ -1075,9 +1050,9 @@ export {
 };
 window.adminUser = new AdminUser();
 window.adminBlog = new AdminBlog();
+window.adminPage = new AdminPage();
 
 const admin = new Admin();
-const adminPage = new AdminPage();
 const adminUploadImage = new AdminUploadImage();
 const login = new Login();
 

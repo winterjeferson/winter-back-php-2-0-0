@@ -198,6 +198,15 @@ class AdminBlog {
         });
     }
 
+    getController() {
+        const controller = wbUrl.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
+
+        return controller;
+    }
+
     modify(id, status) {
         const parameter =
             '&action=doModify' +
@@ -212,15 +221,6 @@ class AdminBlog {
         data.then((result) => {
             admin.showResponse(result);
         });
-    }
-
-    getController() {
-        const controller = wbUrl.getController({
-            'folder': 'admin',
-            'file': 'BlogAjax'
-        });
-
-        return controller;
     }
 
     modifyThumbnail() {
