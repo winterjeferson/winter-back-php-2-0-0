@@ -1,57 +1,34 @@
 class Admin {
     constructor() {
         this.pageCurrent = '';
+        this.cssActive = 'tab--active';
+        this.cssWrapper = 'table-td-wrapper';
+        this.idPage = 'mainContent';
+        this.idButton = 'button_admin_';
     }
 
     build() {
-        if (!window.helper.getUrlWord('admin')) {
-            return;
-        }
+        if (!window.helper.getUrlWord('admin')) return;
 
-        this.updateVariable();
-        this.buildMenuDifeneActive();
-        this.builTableTdWrapper();
+        this.update();
+        this.buildMenuActive();
+        this.wrappTable();
     }
 
-    updateVariable() {
-        this.elPage = document.querySelector('#mainContent');
+    buildMenuActive() {
+        const href = window.location.href;
+        const split = href.split('/');
+        const length = split.length;
+        const target = split[length - 2];
+        const el = this.elPage.querySelector(`[data-id="${this.idButton + target}"]`);
 
-        if (!document.contains(this.elPage)) return;
+        if (el === null) return;
 
-        this.elButtonBlog = this.elPage.querySelector('[data-id="btAdminBlog"]');
-        this.elButtonUpload = this.elPage.querySelector('[data-id="btAdminImage"]');
-        this.elButtonLogout = this.elPage.querySelector('[data-id="btAdminLogout"]');
+        el.classList.add(this.cssActive);
     }
 
-    buildMenuDifeneActive() {
-        let classActive = 'menu-tab-active';
-        let href = window.location.href;
-        let split = href.split('/');
-        let length = split.length;
-        let target = split[length - 2];
-        let capitalized = target.charAt(0).toUpperCase() + target.slice(1);
-        let selector = document.querySelector('#mainContent [data-id="btAdmin' + capitalized + '"]');
-
-        if (selector === null) {
-            return;
-        }
-
-        selector.parentNode.classList.add(classActive);
-    }
-
-    builTableTdWrapper() {
-        const cssWrapper = 'table-td-wrapper';
-        const el = document.querySelectorAll(`.${cssWrapper}`);
-
-        Array.prototype.forEach.call(el, (item) => {
-            item.onclick = () => {
-                if (item.classList.contains(cssWrapper)) {
-                    item.classList.remove(cssWrapper);
-                } else {
-                    item.classList.add(cssWrapper);
-                }
-            };
-        });
+    update() {
+        this.elPage = document.querySelector(`#${this.idPage}`);
     }
 
     showResponse(data) {
@@ -76,6 +53,20 @@ class Admin {
             'color': color
         });
     }
+
+    wrappTable() {
+        const el = document.querySelectorAll(`.${this.cssWrapper}`);
+
+        Array.prototype.forEach.call(el, (item) => {
+            item.onclick = () => {
+                if (item.classList.contains(this.cssWrapper)) {
+                    item.classList.remove(this.cssWrapper);
+                } else {
+                    item.classList.add(this.cssWrapper);
+                }
+            };
+        });
+    }
 }
 
 export {
@@ -83,9 +74,7 @@ export {
 };
 class AdminBlog {
     build() {
-        if (!window.helper.getUrlWord('admin/blog')) {
-            return;
-        }
+        if (!window.helper.getUrlWord('admin/blog')) return;
 
         CKEDITOR.replace('fieldContent', {});
         CKEDITOR.config.basicEntities = false;
@@ -100,40 +89,10 @@ class AdminBlog {
         url.watch(this.elFormFieldTitle, this.elFormFieldUrl);
     }
 
-    update() {
-        this.elPage = document.querySelector('#pageAdminBlog');
-        this.elContentEdit = document.querySelector('#pageAdminBlogEdit');
-        this.elContentEditThumbnail = this.elContentEdit.querySelector('[data-id="thumbnailWrapper"]');
-        this.elContentList = document.querySelector('#pageAdminBlogList');
-        this.elFormRegister = this.elContentEdit.querySelector('[data-id="formRegister"]');
-        this.elFormFieldTitle = this.elContentEdit.querySelector('[data-id="fieldTitle"]');
-        this.elFormFieldUrl = this.elContentEdit.querySelector('[data-id="fieldUrl"]');
-        this.elFormFieldContent = this.elContentEdit.querySelector('[data-id="fieldContent"]');
-        this.elFormFieldTag = this.elContentEdit.querySelector('[data-id="fieldTag"]');
-        this.elFormFieldDatePost = this.elContentEdit.querySelector('[data-id="fieldDatePost"]');
-        this.elFormFieldDateEdit = this.elContentEdit.querySelector('[data-id="fieldDateEdit"]');
-        this.elThumbnailWrapper = this.elContentEdit.querySelector('[data-id="thumbnailWrapper"]');
-        this.elFormFieldAuthor = document.querySelector('[data-id="author"]');
-        this.elCkEditor = CKEDITOR.instances.fieldContent;
-        this.elButtonRegister = this.elPage.querySelector('#btRegister');
-
-        this.isEdit = false;
-        this.editId = 0;
-        this.thumbnail = '';
-        this.thumbnailDefault = 'blog-thumbnail.jpg';
-        this.pathImage = '';
-        this.pathThumbnail = 'dynamic/blog/thumbnail/';
-    }
-
     buildMenu() {
         this.elButtonRegister.onclick = () => {
             if (!this.validateForm()) return;
-
-            if (this.isEdit) {
-                this.editSave();
-            } else {
-                this.saveContent();
-            }
+            this.isEdit ? this.editSave() : this.saveContent();
         };
     }
 
@@ -222,6 +181,43 @@ class AdminBlog {
         Array.prototype.forEach.call(elTable, (table) => {
             this.buildMenuTableDefault(table);
         });
+    }
+
+    buildParameter() {
+        const thumbnail = this.thumbnail === this.thumbnailDefault ? '' : this.thumbnail;
+        const parameter =
+            `&title=${this.elFormFieldTitle.value}` +
+            `&url=${this.elFormFieldUrl.value}` +
+            `&content=${this.elCkEditor.getData()}` +
+            `&datePost=${this.elFormFieldDatePost.value}` +
+            `&dateEdit=${this.elFormFieldDateEdit.value}` +
+            `&authorId=${this.elFormFieldAuthor.value}` +
+            `&thumbnail=${thumbnail}` +
+            `&tag=${this.elFormFieldTag.value}`;
+
+        return parameter;
+    }
+
+    delete(id) {
+        const url = url.getController({
+            'folder': 'admin',
+            'file': 'BlogAjax'
+        });
+        const parameter =
+            '&action=doDelete' +
+            '&id=' + id +
+            '&token=' + globalToken;
+        let ajax = new XMLHttpRequest();
+
+        ajax.open('POST', url, true);
+        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        ajax.onreadystatechange = () => {
+            if (ajax.readyState === 4 && ajax.status === 200) {
+                window.admin.showResponse(ajax.responseText);
+            }
+        };
+
+        ajax.send(parameter);
     }
 
     editSave() {
@@ -318,49 +314,19 @@ class AdminBlog {
         ajax.send(parameter);
     }
 
-    delete(id) {
-        const url = url.getController({
-            'folder': 'admin',
-            'file': 'BlogAjax'
-        });
-        const parameter =
-            '&action=doDelete' +
-            '&id=' + id +
-            '&token=' + globalToken;
-        let ajax = new XMLHttpRequest();
+    modifyThumbnail() {
+        const elImage = this.elThumbnailWrapper.querySelector('table').querySelector('[data-id="thumbnail"]');
+        const elName = this.elThumbnailWrapper.querySelector('table').querySelector('[data-id="name"]');
 
-        ajax.open('POST', url, true);
-        ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        ajax.onreadystatechange = () => {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-                window.admin.showResponse(ajax.responseText);
-            }
-        };
+        if (this.thumbnail === '' || this.thumbnail === null) {
+            this.thumbnail = this.thumbnailDefault;
+            this.pathImage = '';
+        } else {
+            this.pathImage = this.pathThumbnail;
+        }
 
-        ajax.send(parameter);
-    }
-
-    validateForm() {
-        const arrField = [
-            this.elFormFieldTitle,
-            this.elFormFieldUrl
-        ];
-
-        return window.form.validateEmpty(arrField);
-    }
-
-    buildParameter() {
-        const thumbnail = this.thumbnail === this.thumbnailDefault ? '' : this.thumbnail;
-
-        return '' +
-            '&title=' + this.elFormFieldTitle.value +
-            '&url=' + this.elFormFieldUrl.value +
-            '&content=' + this.elCkEditor.getData() +
-            '&datePost=' + this.elFormFieldDatePost.value +
-            '&dateEdit=' + this.elFormFieldDateEdit.value +
-            '&authorId=' + this.elFormFieldAuthor.value +
-            '&thumbnail=' + thumbnail +
-            '&tag=' + this.elFormFieldTag.value;
+        elImage.setAttribute('src', 'assets/img/' + this.pathImage + this.thumbnail);
+        elName.innerHTML = this.thumbnail;
     }
 
     saveContent() {
@@ -394,19 +360,38 @@ class AdminBlog {
         this.modifyThumbnail();
     }
 
-    modifyThumbnail() {
-        const elImage = this.elThumbnailWrapper.querySelector('table').querySelector('[data-id="thumbnail"]');
-        const elName = this.elThumbnailWrapper.querySelector('table').querySelector('[data-id="name"]');
+    update() {
+        this.elPage = document.querySelector('#pageAdminBlog');
+        this.elContentEdit = document.querySelector('#pageAdminBlogEdit');
+        this.elContentEditThumbnail = this.elContentEdit.querySelector('[data-id="thumbnailWrapper"]');
+        this.elContentList = document.querySelector('#pageAdminBlogList');
+        this.elFormRegister = this.elContentEdit.querySelector('[data-id="formRegister"]');
+        this.elFormFieldTitle = this.elContentEdit.querySelector('[data-id="fieldTitle"]');
+        this.elFormFieldUrl = this.elContentEdit.querySelector('[data-id="fieldUrl"]');
+        this.elFormFieldContent = this.elContentEdit.querySelector('[data-id="fieldContent"]');
+        this.elFormFieldTag = this.elContentEdit.querySelector('[data-id="fieldTag"]');
+        this.elFormFieldDatePost = this.elContentEdit.querySelector('[data-id="fieldDatePost"]');
+        this.elFormFieldDateEdit = this.elContentEdit.querySelector('[data-id="fieldDateEdit"]');
+        this.elThumbnailWrapper = this.elContentEdit.querySelector('[data-id="thumbnailWrapper"]');
+        this.elFormFieldAuthor = document.querySelector('[data-id="author"]');
+        this.elCkEditor = CKEDITOR.instances.fieldContent;
+        this.elButtonRegister = this.elPage.querySelector('#btRegister');
 
-        if (this.thumbnail === '' || this.thumbnail === null) {
-            this.thumbnail = this.thumbnailDefault;
-            this.pathImage = '';
-        } else {
-            this.pathImage = this.pathThumbnail;
-        }
+        this.isEdit = false;
+        this.editId = 0;
+        this.thumbnail = '';
+        this.thumbnailDefault = 'blog-thumbnail.jpg';
+        this.pathImage = '';
+        this.pathThumbnail = 'dynamic/blog/thumbnail/';
+    }
 
-        elImage.setAttribute('src', 'assets/img/' + this.pathImage + this.thumbnail);
-        elName.innerHTML = this.thumbnail;
+    validateForm() {
+        const arrField = [
+            this.elFormFieldTitle,
+            this.elFormFieldUrl
+        ];
+
+        return window.form.validateEmpty(arrField);
     }
 }
 
@@ -679,9 +664,7 @@ class AdminUploadImage {
     }
 
     build() {
-        if (!window.helper.getUrlWord('admin/image')) {
-            return;
-        }
+        if (!window.helper.getUrlWord('admin/image')) return;
 
         this.updateVariable();
         this.buildMenu();
@@ -815,15 +798,6 @@ class AdminUser {
         this.buildMenu();
     }
 
-    buildController() {
-        const controller = wbUrl.getController({
-            'folder': 'admin',
-            'file': 'UserAjax'
-        });
-
-        return controller;
-    }
-
     buildParameter() {
         const parameter =
             `&name=${this.elFormFieldName.value}` +
@@ -914,7 +888,7 @@ class AdminUser {
             '&action=doDelete' +
             `&id=${id}`;
         const obj = {
-            controller: this.buildController(),
+            controller: this.getController(),
             parameter
         };
         let data = wbHelper.ajax(obj);
@@ -929,7 +903,7 @@ class AdminUser {
             '&action=editLoadData' +
             `&id=${id}`;
         const obj = {
-            controller: this.buildController(),
+            controller: this.getController(),
             parameter
         };
         let data = wbHelper.ajax(obj);
@@ -961,7 +935,7 @@ class AdminUser {
             `&id=${this.editId}` +
             this.buildParameter();
         const obj = {
-            controller: this.buildController(),
+            controller: this.getController(),
             parameter
         };
         let data = wbHelper.ajax(obj);
@@ -971,13 +945,22 @@ class AdminUser {
         });
     }
 
+    getController() {
+        const controller = wbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
+
+        return controller;
+    }
+
     modify(id, status) {
         const parameter =
-            '&action=doUpdate' +
+            '&action=doModify' +
             `&status=${status}` +
             `&id=${id}`;
         const obj = {
-            controller: this.buildController(),
+            controller: this.getController(),
             parameter
         };
         let data = wbHelper.ajax(obj);
@@ -992,7 +975,7 @@ class AdminUser {
             '&action=doSave' +
             this.buildParameter();
         const obj = {
-            controller: this.buildController(),
+            controller: this.getController(),
             parameter
         };
         let data = wbHelper.ajax(obj);
@@ -1030,9 +1013,7 @@ export {
 };
 class Login {
     build() {
-        if (!window.helper.getUrlWord('login')) {
-            return;
-        }
+        if (!window.helper.getUrlWord('login')) return;
 
         this.update();
         this.buildMenu();

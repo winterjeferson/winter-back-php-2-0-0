@@ -4,9 +4,7 @@ class AdminUploadImage {
     }
 
     build() {
-        if (!window.helper.getUrlWord('admin/image')) {
-            return;
-        }
+        if (!window.helper.getUrlWord('admin/image')) return;
 
         this.updateVariable();
         this.buildMenu();

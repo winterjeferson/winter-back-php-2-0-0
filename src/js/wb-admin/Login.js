@@ -1,8 +1,6 @@
 class Login {
     build() {
-        if (!window.helper.getUrlWord('login')) {
-            return;
-        }
+        if (!window.helper.getUrlWord('login')) return;
 
         this.update();
         this.buildMenu();

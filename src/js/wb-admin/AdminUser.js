@@ -6,15 +6,6 @@ class AdminUser {
         this.buildMenu();
     }
 
-    buildController() {
-        const controller = wbUrl.getController({
-            'folder': 'admin',
-            'file': 'UserAjax'
-        });
-
-        return controller;
-    }
-
     buildParameter() {
         const parameter =
             `&name=${this.elFormFieldName.value}` +
@@ -105,7 +96,7 @@ class AdminUser {
             '&action=doDelete' +
             `&id=${id}`;
         const obj = {
-            controller: this.buildController(),
+            controller: this.getController(),
             parameter
         };
         let data = wbHelper.ajax(obj);
@@ -120,7 +111,7 @@ class AdminUser {
             '&action=editLoadData' +
             `&id=${id}`;
         const obj = {
-            controller: this.buildController(),
+            controller: this.getController(),
             parameter
         };
         let data = wbHelper.ajax(obj);
@@ -152,7 +143,7 @@ class AdminUser {
             `&id=${this.editId}` +
             this.buildParameter();
         const obj = {
-            controller: this.buildController(),
+            controller: this.getController(),
             parameter
         };
         let data = wbHelper.ajax(obj);
@@ -162,13 +153,22 @@ class AdminUser {
         });
     }
 
+    getController() {
+        const controller = wbUrl.getController({
+            'folder': 'admin',
+            'file': 'UserAjax'
+        });
+
+        return controller;
+    }
+
     modify(id, status) {
         const parameter =
-            '&action=doUpdate' +
+            '&action=doModify' +
             `&status=${status}` +
             `&id=${id}`;
         const obj = {
-            controller: this.buildController(),
+            controller: this.getController(),
             parameter
         };
         let data = wbHelper.ajax(obj);
@@ -183,7 +183,7 @@ class AdminUser {
             '&action=doSave' +
             this.buildParameter();
         const obj = {
-            controller: this.buildController(),
+            controller: this.getController(),
             parameter
         };
         let data = wbHelper.ajax(obj);

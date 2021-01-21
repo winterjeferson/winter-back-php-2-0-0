@@ -28,7 +28,7 @@ include __DIR__ . '/../admin/admin-layout.php';
 
                 foreach ($arrContent['admin']['menu'] as $key => &$value) {
                     $string .= '
-                        <a href="' . $urlBackEnd . $lang . '/' . 'admin/' . $value['id'] . '/" data-id="btAdmin' . ucfirst($value['id']) . '" class="button button--regular button--blue">
+                        <a href="' . $urlBackEnd . $lang . '/' . 'admin/' . $value['id'] . '/" data-id="button_admin_' . $value['id'] . '" class="button button--regular button--blue">
                             ' . $translation[$value['translation']] . '
                         </a>
                     ';

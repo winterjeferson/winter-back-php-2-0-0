@@ -1,57 +1,34 @@
 class Admin {
     constructor() {
         this.pageCurrent = '';
+        this.cssActive = 'tab--active';
+        this.cssWrapper = 'table-td-wrapper';
+        this.idPage = 'mainContent';
+        this.idButton = 'button_admin_';
     }
 
     build() {
-        if (!window.helper.getUrlWord('admin')) {
-            return;
-        }
+        if (!window.helper.getUrlWord('admin')) return;
 
-        this.updateVariable();
-        this.buildMenuDifeneActive();
-        this.builTableTdWrapper();
+        this.update();
+        this.buildMenuActive();
+        this.wrappTable();
     }
 
-    updateVariable() {
-        this.elPage = document.querySelector('#mainContent');
+    buildMenuActive() {
+        const href = window.location.href;
+        const split = href.split('/');
+        const length = split.length;
+        const target = split[length - 2];
+        const el = this.elPage.querySelector(`[data-id="${this.idButton + target}"]`);
 
-        if (!document.contains(this.elPage)) return;
+        if (el === null) return;
 
-        this.elButtonBlog = this.elPage.querySelector('[data-id="btAdminBlog"]');
-        this.elButtonUpload = this.elPage.querySelector('[data-id="btAdminImage"]');
-        this.elButtonLogout = this.elPage.querySelector('[data-id="btAdminLogout"]');
+        el.classList.add(this.cssActive);
     }
 
-    buildMenuDifeneActive() {
-        let classActive = 'menu-tab-active';
-        let href = window.location.href;
-        let split = href.split('/');
-        let length = split.length;
-        let target = split[length - 2];
-        let capitalized = target.charAt(0).toUpperCase() + target.slice(1);
-        let selector = document.querySelector('#mainContent [data-id="btAdmin' + capitalized + '"]');
-
-        if (selector === null) {
-            return;
-        }
-
-        selector.parentNode.classList.add(classActive);
-    }
-
-    builTableTdWrapper() {
-        const cssWrapper = 'table-td-wrapper';
-        const el = document.querySelectorAll(`.${cssWrapper}`);
-
-        Array.prototype.forEach.call(el, (item) => {
-            item.onclick = () => {
-                if (item.classList.contains(cssWrapper)) {
-                    item.classList.remove(cssWrapper);
-                } else {
-                    item.classList.add(cssWrapper);
-                }
-            };
-        });
+    update() {
+        this.elPage = document.querySelector(`#${this.idPage}`);
     }
 
     showResponse(data) {
@@ -74,6 +51,20 @@ class Admin {
         window.notification.add({
             'text': response,
             'color': color
+        });
+    }
+
+    wrappTable() {
+        const el = document.querySelectorAll(`.${this.cssWrapper}`);
+
+        Array.prototype.forEach.call(el, (item) => {
+            item.onclick = () => {
+                if (item.classList.contains(this.cssWrapper)) {
+                    item.classList.remove(this.cssWrapper);
+                } else {
+                    item.classList.add(this.cssWrapper);
+                }
+            };
         });
     }
 }
