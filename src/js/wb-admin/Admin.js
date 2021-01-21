@@ -27,8 +27,12 @@ class Admin {
         el.classList.add(this.cssActive);
     }
 
-    update() {
-        this.elPage = document.querySelector(`#${this.idPage}`);
+    setCKEditor() {
+        CKEDITOR.replace('fieldContent', {});
+        CKEDITOR.config.basicEntities = false;
+        CKEDITOR.config.entities_greek = false;
+        CKEDITOR.config.entities_latin = false;
+        CKEDITOR.config.entities_additional = '';
     }
 
     showResponse(data) {
@@ -52,6 +56,10 @@ class Admin {
             'text': response,
             'color': color
         });
+    }
+
+    update() {
+        this.elPage = document.querySelector(`#${this.idPage}`);
     }
 
     wrappTable() {

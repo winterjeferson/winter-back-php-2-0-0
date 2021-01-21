@@ -13,7 +13,7 @@ include __DIR__ . '/../shared/loading.php';
     </section>
     <article id="<?php echo $templateId ?>" class="grid__content page">
         <?php
-        include  __DIR__ . '/../' . $templateFolder . '/' . $templateFile . '.php';
+        include __DIR__ . '/../' . $templateFolder . '/' . $templateFile . '.php';
         ?>
     </article>
     <?php

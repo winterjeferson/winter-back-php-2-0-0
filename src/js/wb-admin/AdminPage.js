@@ -1,43 +1,18 @@
 class AdminPage {
     build() {
-        if (!window.helper.getUrlWord('admin/page')) {
-            return;
-        }
+        if (!window.helper.getUrlWord('admin/page')) return;
 
-        CKEDITOR.replace('fieldContent', {});
-        CKEDITOR.config.basicEntities = false;
-        CKEDITOR.config.entities_greek = false;
-        CKEDITOR.config.entities_latin = false;
-        CKEDITOR.config.entities_additional = '';
-
+        admin.setCKEditor();
         this.update();
         this.buildMenu();
         this.buildMenuTable();
-        url.watch(this.elFormFieldTitle, this.elFormFieldUrl);
-    }
-
-    update() {
-        this.elPage = document.querySelector('#pageAdminPageEdit');
-        this.elCkEditor = CKEDITOR.instances.fieldContent;
-        this.elContentList = document.querySelector('#pageAdminPageList');
-        this.elFormFieldMenu = this.elPage.querySelector('[data-id="formFieldMenu"]');
-        this.elFormFieldTitle = this.elPage.querySelector('[data-id="formFieldTitle"]');
-        this.elFormFieldUrl = this.elPage.querySelector('[data-id="formFieldUrl"]');
-        this.elButtonRegister = this.elPage.querySelector('#btRegister');
-
-        this.isEdit = false;
-        this.editId = 0;
+        window.wbUrl.watch(this.elFormFieldTitle, this.elFormFieldUrl);
     }
 
     buildMenu() {
         this.elButtonRegister.onclick = () => {
             if (!this.validateForm()) return;
-
-            if (this.isEdit) {
-                this.editSave();
-            } else {
-                this.saveContent();
-            }
+            this.isEdit ? this.editSave() : this.saveContent();
         };
     }
 
@@ -107,24 +82,25 @@ class AdminPage {
         });
     }
 
-    validateForm() {
-        let arrField = [
-            this.elFormFieldMenu,
-            this.elFormFieldTitle
-        ];
+    buildParameter() {
+        const parameter =
+            `&title=${this.elFormFieldTitle.value}` +
+            `&url=${this.elFormFieldUrl.value}` +
+            `&menu=${this.elFormFieldMenu.value}` +
+            `&content=${this.elCkEditor.getData()}`;
 
-        return window.form.validateEmpty(arrField);
+        return parameter;
     }
 
-    saveContent() {
+    delete(id) {
         let ajax = new XMLHttpRequest();
         let url = url.getController({
             'folder': 'admin',
             'file': 'PageAjax'
         });
         let parameter =
-            '&action=doSave' +
-            this.buildParameter() +
+            '&action=doDelete' +
+            '&id=' + id +
             '&token=' + globalToken;
 
         ajax.open('POST', url, true);
@@ -201,14 +177,6 @@ class AdminPage {
         });
     }
 
-    buildParameter() {
-        return '' +
-            '&title=' + this.elFormFieldTitle.value +
-            '&url=' + this.elFormFieldUrl.value +
-            '&menu=' + this.elFormFieldMenu.value +
-            '&content=' + this.elCkEditor.getData();
-    }
-
     modify(id, status) {
         let ajax = new XMLHttpRequest();
         let url = url.getController({
@@ -232,15 +200,15 @@ class AdminPage {
         ajax.send(parameter);
     }
 
-    delete(id) {
+    saveContent() {
         let ajax = new XMLHttpRequest();
         let url = url.getController({
             'folder': 'admin',
             'file': 'PageAjax'
         });
         let parameter =
-            '&action=doDelete' +
-            '&id=' + id +
+            '&action=doSave' +
+            this.buildParameter() +
             '&token=' + globalToken;
 
         ajax.open('POST', url, true);
@@ -252,6 +220,28 @@ class AdminPage {
         };
 
         ajax.send(parameter);
+    }
+
+    update() {
+        this.elPage = document.querySelector('#pageAdminPageEdit');
+        this.elCkEditor = CKEDITOR.instances.fieldContent;
+        this.elContentList = document.querySelector('#pageAdminPageList');
+        this.elFormFieldMenu = this.elPage.querySelector('[data-id="formFieldMenu"]');
+        this.elFormFieldTitle = this.elPage.querySelector('[data-id="formFieldTitle"]');
+        this.elFormFieldUrl = this.elPage.querySelector('[data-id="formFieldUrl"]');
+        this.elButtonRegister = this.elPage.querySelector('#btRegister');
+
+        this.isEdit = false;
+        this.editId = 0;
+    }
+
+    validateForm() {
+        let arrField = [
+            this.elFormFieldMenu,
+            this.elFormFieldTitle
+        ];
+
+        return window.form.validateEmpty(arrField);
     }
 }
 

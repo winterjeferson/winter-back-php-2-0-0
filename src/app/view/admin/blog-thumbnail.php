@@ -28,7 +28,7 @@
                     $string .= '
                             <tr>
                                 <td class="minimum">
-                                    <button type="button" onclick="objWbAdminBlog.selectImage(this)" >
+                                    <button type="button" onclick="window.adminBlog.selectImage(this)" >
                                         <img data-src="assets/img/dynamic/blog/' . $value[0] . '/' . $value[1] . '" data-lazy-load="true">
                                     </button>
                                 </td>

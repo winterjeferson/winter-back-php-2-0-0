@@ -39,7 +39,7 @@ include __DIR__ . '/../admin/admin-layout.php';
             </div>
             <div class="row">
                 <?php
-                include  __DIR__ . '/../' . $templateFolder . '/' . $templateFile . '.php';
+                include __DIR__ . '/../' . $templateFolder . '/' . $templateFile . '.php';
                 ?>
             </div>
         </div>
