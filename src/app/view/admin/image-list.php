@@ -10,7 +10,7 @@ $size = $temp === 'thumbnail' ? 'recommendedSize150' : 'recommendedSize1300';
             <input class="form__fill" type="file">
         </div>
         <div class="row form__field">
-            <div class="button-wrapper row">
+            <div class="button-wrapper row right">
                 <button type="button" class="button button--regular button--green" data-id="btUpload<?php echo ucfirst($temp); ?>">
                     <?php echo $translation['send']; ?>
                 </button>

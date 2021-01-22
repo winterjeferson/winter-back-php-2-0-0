@@ -1,5 +1,5 @@
 <div class="container">
-    <form class="form black">
+    <form class="form form--grey">
         <h1 class="page__title"><?php echo $translation['form'] ?></h1>
         <div class="row form__field">
             <label class="form__label" for="formEmail"><?php echo $translation['email'] ?></label>

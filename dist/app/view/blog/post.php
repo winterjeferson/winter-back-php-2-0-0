@@ -1,13 +1,15 @@
-<article class="container"><div class="row"><h1 class="page__title"><?php echo $arrContent['post']['postTitle']; ?></h1> <?php
-        $author = $arrContent['post']['postAuthor'];
+<article class="container"><div class="row"> <?php
+        $title = !is_null($arrContent['post']) ? $arrContent['post']['postTitle'] : null;
+        $author = !is_null($arrContent['post']) ? $arrContent['post']['postAuthor'] : null;
+        $content = !is_null($arrContent['post']) ? $arrContent['post']['postContent'] : null;
+        $tag = !is_null($arrContent['post']) ? $arrContent['post']['postTag'] : null;
+        ?> <h1 class="page__title"><?php echo $title; ?></h1> <?php
 
-        echo $arrContent['post']['postContent'];
+        echo $content;
         if (!is_null($author)) {
             echo '<h4 class="author">' . $translation['author'] . ': ' . $author . '</h4>';
         }
         ?> </div> <?php
-    $tag = $arrContent['post']['postTag'];
-
     if (!is_null($tag) && $tag !== '') {
         $explode = explode('#', $tag);
         $length = count($explode);

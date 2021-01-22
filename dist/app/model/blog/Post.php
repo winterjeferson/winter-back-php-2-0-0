@@ -25,6 +25,10 @@ class Post
         $id = isset($arrUrl['paramether0']) ? $arrUrl['paramether0'] : $this->objRoute->build404();
         $post = $this->getPost($id);
 
+        if (!$post) {
+            return;
+        }
+
         $this->updatePostView($id);
         $this->objRoute->setUrlSeo($post);
 

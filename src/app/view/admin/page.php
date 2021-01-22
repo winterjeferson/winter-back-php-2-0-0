@@ -30,7 +30,7 @@ function buildListHTML($value, $language, $status)
     include __DIR__ . '/page-form.php';
     ?>
 
-    <div class="row">
+    <div class="row right">
         <button type="button" class="button button--regular button--green" id="btRegister">
             <?php echo $translation['save']; ?>
         </button>

@@ -26,7 +26,7 @@ class Content
 
         $arr = [
             'title' =>  $page["title"],
-            'content' => $page["content"],
+            'content' => replaceTag($page["content"]),
         ];
 
         return $arr;

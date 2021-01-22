@@ -25,7 +25,7 @@ function buildListHTML($value, $language, $status)
 }
 ?> <section id="pageAdminPageEdit" class="row"> <?php
     include __DIR__ . '/page-form.php';
-    ?> <div class="row"><button type="button" class="button button--regular button--green" id="btRegister"> <?php echo $translation['save']; ?> </button></div></section><section id="pageAdminPageList" class="row"> <?php
+    ?> <div class="row right"><button type="button" class="button button--regular button--green" id="btRegister"> <?php echo $translation['save']; ?> </button></div></section><section id="pageAdminPageList" class="row"> <?php
     $temp = 'active';
     include __DIR__ . '/page-list.php';
     $temp = 'inactive';
