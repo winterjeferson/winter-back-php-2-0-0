@@ -95,9 +95,15 @@
     }
 }
 
+
+.tag-title,
 .author {
     font-size: 1rem;
     font-style: italic;
     margin: initial;
     padding-left: 1rem;
+}
+
+.tag-title {
+    margin-top: 20px;
 }

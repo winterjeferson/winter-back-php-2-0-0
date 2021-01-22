@@ -47,13 +47,19 @@ class Blog
         return $arr;
     }
 
-    function getList($target)
+    function getList($target, $isLoadMore = false)
     {
         $list = 'getListQuery' . $target;
         $queryAdd = $this->$list();
         $query = $this->getListQueryDefault($queryAdd);
         $this->buildLoadMore($target, $query);
-        $html = $this->buildHtml($query);
+        $html = $query;
+
+        if ($isLoadMore) {
+            $lang = $this->language;
+            $translation = $this->objSession->get('translation');
+            $html = require __DIR__ . '/../../view/blog/blog-item.php';
+        }
 
         return json_encode(['html' => $html, 'loadMore' => $this->objSession->get($this->prefixLoadMore . $target)]);
     }
@@ -125,43 +131,6 @@ class Blog
             ";
     }
 
-    function buildHtml($query)
-    {
-        $string = '';
-
-        foreach ($query as $key => $value) {
-            $thumbnail = !is_null($value['thumbnail']) && $value['thumbnail'] !== '' ? 'dynamic/blog/thumbnail/' . $value['thumbnail'] : 'blog-thumbnail.jpg';
-            $dateEdit = $value['date_edit_' . $this->language];
-            $datePost = $value['date_post_' . $this->language];
-            $dateEditText = is_null($dateEdit) ? '' :  ' / ' . $this->objSession->getArray('translation', 'editedOn') . ' ' . $dateEdit;
-            $ternaryDate =  $datePost !==  $dateEdit ?  $dateEditText : '';
-            $url = $this->language . '/blog/post/' . $value['id'] . '/' . $value['url_' . $this->language] . '/';
-            $removeImage = strip_tags($value['content_' . $this->language]);
-
-            $string .= '
-                    <a href="' . $url . '" class="link">
-                        <div class="blog-list-image">
-                            <img class="img-responsive" data-src="assets/img/' . $thumbnail . '" alt="image" data-lazy-load="true">
-                        </div>
-                        <div class="blog-list-text">
-                                <h2 class="blog-list-title">
-                                ' . encode($value['title_' . $this->language]) . '
-                                </h2>
-                            <p class="text">
-                            ' . substr($removeImage, 0, 80) . '...
-                            </p>
-                            <small class="date">
-                            ' . $value['date_post_' . $this->language] . '
-                            ' . $ternaryDate . '
-                            </small>
-                        </div>
-                    </a>
-                ';
-        }
-
-        return removeLineBreak($string);
-    }
-
     function resetSession()
     {
         $this->objSession->set($this->prefixPagination  . $this->suffixPaginationLastPost, 0);
@@ -191,14 +160,12 @@ class Blog
 
     function buildLoadMoreButton($target)
     {
-        if ($this->objSession->get($this->prefixLoadMore . $target)) {
-            $string = '
-                <button type="button" class="button button-load-more button--regular button--blue" data-id="loadMore">
-                    ' . $this->objSession->getArray('translation', 'loadMore') . '
-                </button>
-            ';
+        $element = $this->objSession->get($this->prefixLoadMore . $target);
 
-            return removeLineBreak($string);
+        if ($element) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -208,6 +175,6 @@ class Blog
 
         $this->setSession($target);
 
-        return $this->getList(lcfirst($target));
+        return $this->getList(lcfirst($target), true);
     }
 }

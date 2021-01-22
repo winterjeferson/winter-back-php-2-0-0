@@ -1,8 +1,14 @@
 <article class="container">
     <div class="row">
         <h1 class="page__title"><?php echo $arrContent['post']['postTitle']; ?></h1>
-        <?php echo $arrContent['post']['postContent']; ?>
-        <h4 class="author"><?php echo $translation['author'] . ': ' . $arrContent['post']['postAuthor']; ?></h4>
+        <?php
+        $author = $arrContent['post']['postAuthor'];
+
+        echo $arrContent['post']['postContent'];
+        if (!is_null($author)) {
+            echo '<h4 class="author">' . $translation['author'] . ': ' . $author . '</h4>';
+        }
+        ?>
     </div>
     <?php
     $tag = $arrContent['post']['postTag'];
@@ -11,8 +17,8 @@
         $explode = explode('#', $tag);
         $length = count($explode);
         $string = '
-            <div class="row">
-                tags: <div class="row tag-wrapper">
+                <span class="row tag-title">Tags:</span>
+                <div class="row tag-wrapper">
         ';
 
         for ($i = 0; $i < $length; $i++) {
@@ -29,7 +35,6 @@
 
         $string .= '
             </div>
-        </div>
         ';
 
         echo removeLineBreak($string);

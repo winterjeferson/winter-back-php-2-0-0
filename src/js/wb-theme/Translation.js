@@ -1,6 +1,9 @@
 class Translation {
     build() {
         this.update();
+
+        if (!this.elSelect) return;
+
         this.defineActive();
         this.buildMenu();
     }

@@ -64,15 +64,21 @@ class Blog {
 
     loadMoreSuccess(id, value) {
         const json = JSON.parse(value);
+        const arr = json['html'];
         const elSection = document.querySelector(`#${id}`);
         const elSectionList = elSection.querySelector('.blog-list');
         const elButton = elSection.querySelector(`[data-id="${this.cssLoadMore}"]`);
+        let html = '';
 
         if (!json[this.cssLoadMore]) {
             elButton.classList.add(this.cssDisabled);
         }
 
-        elSectionList.insertAdjacentHTML('beforeend', json['html']);
+        for (let i in arr) {
+            html += arr[i];
+        }
+
+        elSectionList.insertAdjacentHTML('beforeend', html);
         window.scrollTo(0, document.documentElement.scrollTop + 1);
         window.scrollTo(0, document.documentElement.scrollTop - 1);
     }
