@@ -11,7 +11,7 @@ How to start:
  * How it works:
 
 Build/edit your project at "src" folder.
-Gulp will compile it at "dist" folder.
-When all the project is done, run the command "gulp deploy" to minify assets at "dist" folder.
-Upload all "dist" files to your host.
+Gulp will compile it at "docs" folder.
+When all the project is done, run the command "gulp deploy" to minify assets at "docs" folder.
+Upload all "docs" files to your host.
 Thats all
